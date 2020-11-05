@@ -11,8 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "knex": "^0.21.6",
+    "passport": "^0.4.1",
     "pg": "^8.4.1"
   },
   "devDependencies": {
