@@ -1,8 +1,12 @@
-const express = require('express');
-const app = express();
+import express from 'express';
+
 const PORT = process.env.PORT || 3000;
 
-app.use('/', require('./src/routes/index'));
+const app = express();
+
+// ROTAS
+app.use('/', require('./src/routes'));
+
 
 app.listen(PORT, () => {
   console.log(`Listening to http://localhost:${PORT}`)
