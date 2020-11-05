@@ -1,7 +1,6 @@
-import  * as yup from 'yup';
+const yup = require('yup')
 
-import User from '../models/User';
-
+const User = require('../models/User');
 
 // Usar o yup para validar a entrada de dados. olhar a documentação do modulo para saber como utiliza-lo
 class UserController {
@@ -49,4 +48,4 @@ class UserController {
   }
 }
 
-export default new UserController()
+module.exports = new UserController();

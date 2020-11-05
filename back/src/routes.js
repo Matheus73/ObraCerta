@@ -1,8 +1,6 @@
-import { Router } from 'express';
-
-import UserController from './UserController';
-
-const router =  new Router();
+const express = require('express')
+const router = express.Router();
+const UserController = require('./controllers/UserController')
 
 // Rotas para a pagina inicial da aplicação
 router.get('/', (req, res) => res.send("hello"))
@@ -13,4 +11,4 @@ router.post('/registrar', UserController.store);
 
 router.get('/login', (req, res) => res.send('Logar'));
 
-export default router
+module.exports = router
