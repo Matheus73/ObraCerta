@@ -1,7 +1,8 @@
 import React from 'react';
+import {Title} from './styles';
 
 function Cadastro(){
-return <h1>CADASTRE-SE</h1>
+return <Title>CADASTRE-SE</Title>
 }
 
 export default Cadastro;
