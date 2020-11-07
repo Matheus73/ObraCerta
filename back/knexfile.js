@@ -1,5 +1,5 @@
 // Update with your config settings.
-require('dotenv').config();
+require('dotenv').config(); //comentar se não tiver utilizando dotenv e alterar dados abaixo
 
 module.exports = {
 
