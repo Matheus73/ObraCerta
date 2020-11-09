@@ -2,10 +2,10 @@
   "name": "back",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "src/sserver.js",
   "scripts": {
-    "start": "node .server.js",
-    "dev": "nodemon .server.js"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,7 @@
     "yup": "^0.29.3"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "eslint": "^7.11.0",
     "nodemon": "^2.0.6"
   }
