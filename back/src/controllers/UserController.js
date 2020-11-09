@@ -1,6 +1,7 @@
-const yup = require('yup')
+const yup = require('yup');
+const bcrypt = require('bcryptjs');
+const knex = require('../database/index.js');
 
-const User = require('../models/User');
 
 // Usar o yup para validar a entrada de dados. olhar a documentação do modulo para saber como utiliza-lo
 class UserController {
@@ -9,7 +10,7 @@ class UserController {
   async store (req, res) {
     // Responsável por cadastrar um usuário
 
-    const schema = yup.object.shape({
+    const schema = yup.object().shape({
       email: yup.string()
       .email()
       .max(50)
@@ -17,26 +18,30 @@ class UserController {
       nomeCompleto: yup.string()
       .max(100)
       .required(),
-      hashSenha: yup.string()
+      senha: yup.string()
       .required(),
       criadoEm: yup.date()
       .default( ()=> { return new Date(); }),
+      telefone: yup.string()
+      .required(),
     })
-
     if (! (await schema.isValid(req.body))){
-      return res.status(400).json({ error: 'Erro de validação'})
+      return res.status(400).json({ error: 'Erro de validação'});
     }
-    const userExists = await User.findOne({ where: { email: req.body.email } });
+
+    const userExists = await knex.from('usuario').where({'email': req.body.email}).first();
 
     if (userExists) return res.status(400).json({ error: 'usuário já existe' });
 
-    const {idUsuaio, email, nomeCompleto} = await User.create(req.body);
+    var newUser = req.body;
 
-    return res.json(
-      {idUsuaio,
-      nomeCompleto,
-      email,
-    });
+    newUser['hashSenha'] = await bcrypt.hash(req.body['senha'], 8);
+    delete newUser.senha;
+    //Criar um usuário
+    await knex('usuario').insert(newUser);
+    
+    return res.json(req.body);
+
   }
 
   async list(req, res) {
