@@ -8,6 +8,9 @@ export const Container = styled.div`
     bottom: 0%;
     background: #14D0AE;
     border-radius: 60px 60px 0px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     /* align-items: center;//totalmente inutil */
 
 a {
