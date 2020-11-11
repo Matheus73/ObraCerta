@@ -1,6 +1,7 @@
 import {createGlobalStyle} from 'styled-components';
-import trianguloBackground from '../assets/triangulobackground.svg';
-
+// import trianguloBackground from '../assets/triangulobackground.svg';
+import trianguloBackground2 from '../assets/triangulobackground2.svg';
+import Background from '../components/Background';
 export default createGlobalStyle`
     *{
         margin:0;
@@ -16,7 +17,7 @@ export default createGlobalStyle`
     }
     body {
         overflow-x: hidden;
-        background: #E5E5E5 url(${trianguloBackground}) no-repeat top;
+        background: #E5E5E5 url(${trianguloBackground2}) no-repeat top;
         background-size: 100%;
         -webkit-font-smoothing: antialiased;
     }
@@ -30,5 +31,8 @@ export default createGlobalStyle`
     table {
         border-collapse: collapse;
         border-spacing: 0;
+    }
+    bottom {
+        overflow-x: hidden;
     }
 `;
