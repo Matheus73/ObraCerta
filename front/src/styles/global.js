@@ -27,6 +27,12 @@ export default createGlobalStyle`
     a, button {
         cursor: pointer;
         font-weight: bold;
+
+    }
+    a{
+        /* color: #E5E5E5; */
+        text-decoration: none;
+        /* transition: color 0.2s; */
     }
     table {
         border-collapse: collapse;
