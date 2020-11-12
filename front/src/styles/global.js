@@ -11,9 +11,12 @@ export default createGlobalStyle`
         box-sizing: border-box;
     }
     #root {
-        max-width: 970px;
         margin: 0 auto;
         padding: 0px 15px;
+    }
+    #content{
+        margin: auto;
+        max-width: 970px;
     }
     body {
         height: 100%;
