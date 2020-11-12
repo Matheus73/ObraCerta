@@ -2,7 +2,6 @@
 import {createGlobalStyle} from 'styled-components';
 // import Footer from '../../components/Footer';
 
-
 export default createGlobalStyle`
     
     body{
