@@ -35,4 +35,11 @@ export default createGlobalStyle`
     bottom {
         overflow-x: hidden;
     }
+
+    h1{
+        text-align: center;
+        font-size: 72px;
+        
+
+    }
 `;

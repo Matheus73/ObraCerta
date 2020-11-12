@@ -1,8 +1,15 @@
-import styled from 'styled-components';
+// import styled from 'styled-components';
+import {createGlobalStyle} from 'styled-components';
+// import Footer from '../../components/Footer';
 
-export const Title = styled.h1`
-font-size: 48px;
-color: #000000;
 
+export default createGlobalStyle`
+    
+    body{
+        background: #14D0AE url(none);
+    }
+
+    
 `;
+
 
