@@ -5,10 +5,12 @@ import Footer from "../Footer"
 function PageDefault({children}){
     return (
         <>
-            <Navbar/>        
+            <div id="content">
+                <Navbar/>        
                 <div id="Main">
                     {children}
                 </div>
+            </div>
             <Footer/>
         </>
     );
