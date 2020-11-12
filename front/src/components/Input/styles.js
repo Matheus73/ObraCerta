@@ -5,6 +5,7 @@ export const Caixa = styled.div`
 padding: 0 16px;
 display: flex;
 align-items: center;
+/* max-width: 970px; */
 width: 100%;
 background: #FFFFFF;
 border-radius: 20px;
