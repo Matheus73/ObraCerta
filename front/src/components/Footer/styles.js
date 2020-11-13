@@ -12,6 +12,7 @@ export const Container = styled.footer`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: baseline;
 
 a {
     display: inline-block;
@@ -22,6 +23,7 @@ a {
     &:hover{
         color: ${shade(0.2, '#888989')}
     }
+
 }
 `;
 
