@@ -39,8 +39,10 @@ class UserController {
     delete newUser.senha;
     //Criar um usuário
     await knex('usuario').insert(newUser);
-    
-    return res.json(req.body);
+
+    delete newUser.hashSenha;
+
+    return res.json(newUser);
 
   }
 
