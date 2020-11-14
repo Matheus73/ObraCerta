@@ -7,10 +7,23 @@ import {FaGithub, FaInstagram, FaTwitter, FaFacebook} from 'react-icons/fa';
 function Footer(){
     return(
         <Container>
-            <FaFacebook /><a href="https://www.facebook.com/jovemnerd">Facebook</a>
-            <FaGithub /> <a href="https://github.com/Matheus73/ObraCerta">Github</a>
-            <FaInstagram /> <a href="https://www.instagram.com/akitaonrails/?hl=pt-br">Instagram</a>
-            <FaTwitter /> <a href="https://twitter.com/whindersson?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">Twitter</a>
+
+            <div>
+                <FaFacebook /><a href="https://www.facebook.com/jovemnerd">Facebook</a>
+            </div>
+
+            <div>
+                <FaGithub /> <a href="https://github.com/Matheus73/ObraCerta">Github</a>
+            </div>
+        
+            <div>
+                <FaInstagram /> <a href="https://www.instagram.com/akitaonrails/?hl=pt-br">Instagram</a>
+            </div>
+
+            <div>
+                <FaTwitter /> <a href="https://twitter.com/whindersson?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">Twitter</a>
+            </div>
+
         </Container>
         )
 };
