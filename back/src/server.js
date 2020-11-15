@@ -4,8 +4,9 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-app.use(bodyParser.json())
 // ROTAS
+app.use(bodyParser.json());
+app.use(express.json());
 app.use('', require('./routes'));
 
 
