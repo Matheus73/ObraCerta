@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export const Card = styled.div``;
+
 const Container = styled.div`
     display: flex;
     flex-direction: row;
@@ -13,7 +15,7 @@ const Container = styled.div`
         transform: rotate(16deg);
     }
 
-    .card div {
+    ${Card} div {
         text-align: center;
         max-width: 400px;
         padding: 42px 20px;
@@ -28,7 +30,7 @@ const Container = styled.div`
             max-width: 55%;
         }
 
-        .card div {
+        ${Card} div {
             max-width: 100%;
             border: 0px;
             background: #F0CA45;
