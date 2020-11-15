@@ -48,7 +48,7 @@ return (
 
             </form>
         </div>
-        <Footer/>
+        <Footer color="#F0CA45"/>
 
     </>
     );
