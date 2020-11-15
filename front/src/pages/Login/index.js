@@ -1,23 +1,18 @@
 import React from 'react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import Item from '../../components/Item';
 import Footer from '../../components/Footer';
 import GlobalStyle from './styles';
+import Item from '../../components/Item';
 
-function Cadastro(){
+function Login(){
 return (
     <>
         <GlobalStyle/>
         <div id="content">
-            <h1>CADASTRE-SE</h1>
-            <p>Cadastre-se para ter acesso a melhor plataforma do mercado!</p>
+            <h1>Login</h1>
+            <p>Logue para encontrar os melhores profissionais para sua obra ou para divulgar o seu trabalho!</p>
             <form>
-                <div>
-                    <br/>
-                    <label for="name">Nome:</label>
-                    <Input type="text" id="name" name="name" placeholder = "Digite seu nome" />
-                </div>
 
                 <div>
                         <br/>
@@ -31,15 +26,13 @@ return (
                     <Input id = "password" type = "password" name="password" placeholder = "Digite sua senha" />
                 </div>
 
-                <div>
-                        <br/>
-                        <label for = "confirm_password">Confirmar senha:</label>
-                    <Input id= "confirm_password" type = "confirm_password" name="confirm_password" placeholder = "Confirme sua senha" />
-                </div>
 
-                        <br/>
-                <input id = "user-terms" type = "checkbox" name = "terms"/>
-                <label for="user-terms"> Li e aceito os <Item>termos de uso</Item></label>
+                <div>
+                    <br/>
+                    <Item>Esqueci minha senha</Item>
+                    
+                    
+                </div>
 
                 <div>
                         <br/>
@@ -54,4 +47,4 @@ return (
     );
 }
 
-export default Cadastro;
+export default Login;

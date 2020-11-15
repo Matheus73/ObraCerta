@@ -51,7 +51,8 @@ export default createGlobalStyle`
     h1{
         text-align: center;
         font-size: 72px;
-        
-
+    }
+    p{
+        text-align: center;
     }
 `;
