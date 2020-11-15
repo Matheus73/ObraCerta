@@ -3,18 +3,16 @@ import {FaGithub, FaInstagram, FaTwitter, FaFacebook} from 'react-icons/fa';
 import styled from 'styled-components';
 import {shade} from 'polished';
 
-var color = "#14D0AE";
-
 function reload(color){
      const Container = styled.footer`
         flex-wrap: wrap;
         position: relative;
         width: 100%;
         height: 100px;
-        botton: 0px;
+        bottom: 0px;
         left: 0px;
         margin-top: 100px;
-        background: ${color};
+        background: ${color || "#14D0AE"};
         border-radius: 60px 60px 0px 0px;
         display: flex;
         flex-direction: row;
@@ -40,7 +38,6 @@ function reload(color){
 
 
 function Footer(props){
-            console.log(color) //não mexa
             var Container = reload(props.color)
             return(
                 <Container>

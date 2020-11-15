@@ -9,8 +9,8 @@ const Container = styled.div`
 
     img {
         border-radius: 25px;
-        transform: rotate(${props => props.rotation});
         box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+        transform: rotate(16deg);
     }
 
     .card div {
