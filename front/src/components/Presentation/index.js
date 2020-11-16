@@ -3,7 +3,7 @@ import Container, { Card } from './styles';
 
 function Presentation(props) {
     return(
-        <Container {...props}>
+        <Container rotation={props.rotation}>
             <img
                 width={props.width}
                 height={props.height || "auto"}
