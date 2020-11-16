@@ -12,7 +12,7 @@ const Container = styled.div`
     img {
         border-radius: 25px;
         box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
-        transform: rotate(16deg);
+        transform: rotate(${props => props.rotation || "0deg"});
     }
 
     ${Card} div {
@@ -27,7 +27,7 @@ const Container = styled.div`
 
     @media screen and (max-width: 900px) {
         img {
-            max-width: 55%;
+            max-width: 90%;
         }
 
         ${Card} div {

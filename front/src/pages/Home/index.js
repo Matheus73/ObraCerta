@@ -10,15 +10,16 @@ function Home(){
     return (
         <PageDefault>
             <Input type="search" placeholder="Pesquise..."/>
-            <Space size="85px" sizeMobile="45px"/>
+            <Space size="85px" sizeMobile="55px"/>
             <Presentation
                 width="400px"
                 src={imgPresetation}
-                >
-            <div>
-                <b>Aqui você encontra o que procura!</b><br/>
-                Os melhores profissionais para a sua obra!
-            </div>
+                rotation="16deg"
+            >
+                <div>
+                    <b>Aqui você encontra o que procura!</b><br/>
+                    Os melhores profissionais para a sua obra!
+                </div>
             </Presentation>
         </PageDefault>
     );
