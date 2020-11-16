@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import Item from '../../components/Item';
 import Footer from '../../components/Footer';
 import GlobalStyle from './styles';
 
@@ -39,7 +38,7 @@ return (
 
                         <br/>
                 <input id = "user-terms" type = "checkbox" name = "terms"/>
-                <label for="user-terms"> Li e aceito os <Item>termos de uso</Item></label>
+                <label for="user-terms"> Li e aceito os <b>termos de uso</b></label>
 
                 <div>
                         <br/>
@@ -48,7 +47,7 @@ return (
 
             </form>
         </div>
-        <Footer color="#F0CA45"/>
+        <Footer orange/>
 
     </>
     );
