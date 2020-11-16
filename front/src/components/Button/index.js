@@ -16,9 +16,16 @@ const Button = styled(Item).attrs({as:"button"})`
     box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
     margin: 0px 0px 14px 4px;
 
+    &:hover{
+        background: #FfCf4f;
+    }
+
     ${props => props.primary && css`
         ${otherButtons};
         background: #14D0AE;
+        &:hover{
+            background: #1fdfaf;
+        }
     `};
 
     ${props => props.second && css`
