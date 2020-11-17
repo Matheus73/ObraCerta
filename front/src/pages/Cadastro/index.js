@@ -13,8 +13,24 @@ class Cadastro extends Component {
             name: '',
             email:'',
             password:'',
-            confirm_password:''
+            confirm_password:'',
+            errPassword:'',
+            errConfirmPassword: ''
 
+        }
+    }
+
+    validate(){
+        if (this.state.password.length < 6){
+            this.setState({
+                errPassword: "Sua senha deve possuir no minimo 6 digitos!"
+            })
+            
+        }
+        if (this.state.password !== this.state.confirm_password) {
+            this.setState({
+                errConfirmPassword: "As senhas não correspodem"
+            })
         }
     }
 
@@ -44,11 +60,13 @@ class Cadastro extends Component {
 
 	handleSubmit = event => {
 		event.preventDefault()
+        this.validate()
+        this.render()
         console.log(this.state)
 	}
 
 	render() {
-        const {name,email,password,confirm_password} = this.state
+        const {name,email,password,confirm_password,errPassword,errConfirmPassword} = this.state
 		return (
             <>
             <GlobalStyle/>
@@ -89,6 +107,7 @@ class Cadastro extends Component {
                             onChange={this.handlePasswordChange}
                         />
                     </label>
+                    <div>{errPassword}</div>
                 <Space/>
 					<label>Confirme sua senha:
                         <Input
@@ -100,6 +119,7 @@ class Cadastro extends Component {
                             onChange={this.handleConfirmPasswordChange}
                         />
                     </label>
+                    <div>{errConfirmPassword}</div>
 
                 <Space/>
                 <label> 
