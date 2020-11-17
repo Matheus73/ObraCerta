@@ -14,8 +14,8 @@ export default createGlobalStyle`
         padding: 0px 15px;
     }
     #content{
+        min-height: 100vh;
         margin: auto;
-        height: 95vh;
         max-width: 970px;
     }
     body {
