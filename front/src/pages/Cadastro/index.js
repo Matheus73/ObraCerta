@@ -1,56 +1,121 @@
-import React from 'react';
+import React,{Component} from 'react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Footer from '../../components/Footer';
 import GlobalStyle from './styles';
+import Space from '../../components/Space';
 
-function Cadastro(){
-return (
-    <>
-        <GlobalStyle/>
-        <div id="content">
+class Cadastro extends Component {
+    constructor(props){
+        super(props)
+
+        this.state = {
+            name: '',
+            email:'',
+            password:'',
+            confirm_password:''
+
+        }
+    }
+
+	handleNameChange = event => {
+		this.setState({
+			name: event.target.value
+		})
+	}
+
+	handleEmailChange = event => {
+		this.setState({
+			email: event.target.value
+		})
+	}
+
+	handlePasswordChange = event => {
+		this.setState({
+			password: event.target.value
+		})
+	}
+
+	handleConfirmPasswordChange = event => {
+		this.setState({
+			confirm_password: event.target.value
+		})
+	}
+
+	handleSubmit = event => {
+		event.preventDefault()
+        console.log(this.state)
+	}
+
+	render() {
+        const {name,email,password,confirm_password} = this.state
+		return (
+            <>
+            <GlobalStyle/>
+            <div id="content">
             <h1>CADASTRE-SE</h1>
             <p>Cadastre-se para ter acesso a melhor plataforma do mercado!</p>
-            <form>
-                <div>
-                    <br/>
-                    <label for="name">Nome:</label>
-                    <Input type="text" id="name" name="name" placeholder = "Digite seu nome" />
-                </div>
+			<form onSubmit={this.handleSubmit}>
+                <Space/>
+					<label>Nome:
+                        <Input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder = "Digite seu nome" 
+                            value={name}
+                            onChange={this.handleNameChange}
+                        />
+                    </label>
+                <Space/>
+					<label>Email:
+                        <Input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder = "Digite seu email" 
+                            value={email}
+                            onChange={this.handleEmailChange}
+                        />
+                    </label>
+                <Space/>
+					<label>Senha:
+                        <Input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder = "Digite sua senha" 
+                            value={password}
+                            onChange={this.handlePasswordChange}
+                        />
+                    </label>
+                <Space/>
+					<label>Confirme sua senha:
+                        <Input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            placeholder = "Confirme sua senha" 
+                            value={confirm_password}
+                            onChange={this.handleConfirmPasswordChange}
+                        />
+                    </label>
 
-                <div>
-                        <br/>
-                        <label for = "email">Email:</label>
-                    <Input type = "text" id = "email" name="email" placeholder = "Digite seu email" />
-                </div>
-
-                <div>
-                        <br/>
-                        <label for = "password">Senha:</label>
-                    <Input id = "password" type = "password" name="password" placeholder = "Digite sua senha" />
-                </div>
-
-                <div>
-                        <br/>
-                        <label for = "confirm_password">Confirmar senha:</label>
-                    <Input id= "confirm_password" type = "confirm_password" name="confirm_password" placeholder = "Confirme sua senha" />
-                </div>
-
-                        <br/>
+                <Space/>
+                <label> 
                 <input id = "user-terms" type = "checkbox" name = "terms"/>
-                <label for="user-terms"> Li e aceito os <b>termos de uso</b></label>
+                Li e aceito os <b>termos de uso</b></label>
 
                 <div>
-                        <br/>
-                    <Button>Enviar</Button>
+                <Space/>
+                <Button>Enviar</Button>
                 </div>
-
-            </form>
-        </div>
-        <Footer orange/>
-
-    </>
-    );
+			</form>
+            </div>
+            <Footer orange />
+            </>
+		)
+	}
 }
 
-export default Cadastro;
+export default Cadastro
