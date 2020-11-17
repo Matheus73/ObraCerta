@@ -50,6 +50,10 @@ export default createGlobalStyle`
     h1{
         text-align: center;
         font-size: 72px;
+
+        @media screen and (max-width: 650px){
+            font-size: 30px;
+        }
     }
     p{
         text-align: center;
