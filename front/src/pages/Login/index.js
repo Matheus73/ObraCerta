@@ -14,12 +14,12 @@ return (
         <form>                
             <br/>
             <label>Email:
-                <Input type = "text" id = "email" name="email" placeholder = "Digite seu email" />             
+                <Input type="text" name="email" placeholder="Digite seu email" />             
             </label>
             
             <br/>
             <label>Senha:
-                <Input type = "password" name="password" placeholder = "Digite sua senha" />
+                <Input type="password" name="password" placeholder="Digite sua senha" />
             </label> 
             <br/>
             <Item href="#">Esqueci minha senha</Item>                              

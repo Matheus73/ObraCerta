@@ -10,6 +10,7 @@ export const Caixa = styled.div`
     box-shadow: 0px 10px 4px rgba(0,0,0,0.25);
 
 input{
+    width: 100%;
     padding: 16px 0;
     color: #000000;
     &::placeholder{
