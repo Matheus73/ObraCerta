@@ -18,19 +18,40 @@ class Cadastro extends Component {
             errConfirmPassword: ''
 
         }
+
+        this.userData = {
+            name : '',
+            email : '',
+            password : ''
+        }
     }
 
     validate(){
+        var isCorrect = true
         if (this.state.password.length < 6){
+            isCorrect = false
             this.setState({
                 errPassword: "Sua senha deve possuir no minimo 6 digitos!"
             })
             
         }
         if (this.state.password !== this.state.confirm_password) {
+            isCorrect = false
             this.setState({
                 errConfirmPassword: "As senhas não correspodem"
             })
+        }
+        if(isCorrect){
+            this.setState({
+                errConfirmPassword : ''
+            })
+            this.setState({
+                errPassword : ''
+            })
+            this.userData.name = this.state.name;
+            this.userData.email = this.state.email;
+            this.userData.password = this.state.password;
+
         }
     }
 
@@ -62,7 +83,7 @@ class Cadastro extends Component {
 		event.preventDefault()
         this.validate()
         this.render()
-        console.log(this.state)
+        console.log(this.userData)
 	}
 
 	render() {
