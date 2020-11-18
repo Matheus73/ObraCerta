@@ -28,7 +28,7 @@ const upload = multer({
 
 // Rotas para a pagina inicial da aplicação
 router.get('/', (req, res) => res.send("hello"));
-router.get('/list', authServices.middlewares, testController.listUsers);//temp
+router.get('/list',  testController.listUsers);//temp
 
 // Rotas de cadastro e login de usuário
 router.get('/registrar', UserController.list);
