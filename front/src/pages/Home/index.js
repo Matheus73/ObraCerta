@@ -22,6 +22,7 @@ function Home(){
                 width="400px"
                 src={imgPresetation}
                 rotation="16deg"
+                alt=""
             >
                 <div>
                     <b>Aqui você encontra o que procura!</b><br/>
@@ -31,15 +32,15 @@ function Home(){
             <Space size="85px" sizeMobile="10px"/>
             <CardGroup>
                 <Card vertical>
-                    <img src={imgCard1}/>
+                    <img alt="" src={imgCard1}/>
                     <p>Encontre a pessoa certa de maneira rápida e fácil!</p>
                 </Card>
                 <Card>
-                    <img src={imgCard2}/>
+                    <img alt="" src={imgCard2}/>
                     <p>Avalie profissionais pelo seus serviços!</p>
                 </Card>
                 <Card>
-                    <img src={imgCard3}/>
+                    <img alt="" src={imgCard3}/>
                     <p>Publique seu projeto para que profissionais te encontrem!</p>
                 </Card>
             </CardGroup>
