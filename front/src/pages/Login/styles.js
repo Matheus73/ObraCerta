@@ -6,10 +6,8 @@ export default createGlobalStyle`
         background: #14D0AE url(none);
     }
     #warning{
-        margin-top:10px;
+        marging-top: 15px;
     }
-
-
     
 `;
 
