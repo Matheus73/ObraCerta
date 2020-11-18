@@ -2,12 +2,11 @@ import styled, { css } from 'styled-components';
 
 const Box = styled.div`
     display: flex;
-    margin: 20px 15px;
+    margin: 10px 15px;
     text-align: center;
     
     ${props => (props.vertical || !props.horizontal) && css`
-        max-width: ${props => props.width || "30%"};
-        min-height: ${props => props.height || "320px"};
+        width: ${props => props.width || "255px"};
     
         flex-direction: column;
         align-items: center;
@@ -21,17 +20,25 @@ const Box = styled.div`
     `}
 
     ${props => props.horizontal && css`
-        max-width: ${props => props.width || "100%"};
-        min-height: ${props => props.height || "320px"};
-
+        max-width: ${props => props.width};
         flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-around;
-
-        img {
-            
-        }
+        flex-wrap: row nowrap;
     `}
+
+    @media screen and (max-width: 900px) {
+        width: 450px;
+        flex-direction: row;
+        flex-wrap: row nowrap;
+        
+        img {
+            width: 100px;
+            margin: 20px 20px;
+        }
+    }
+
+    @media screen and (max-width: 520px) {
+        flex-direction: column;
+    }
 
     padding: 25px 50px;
     background: #ECF0F1;

@@ -28,7 +28,7 @@ function Home(){
                     Os melhores profissionais para a sua obra!
                 </div>
             </Presentation>
-            <Space size="85px" sizeMobile="55px"/>
+            <Space size="85px" sizeMobile="10px"/>
             <CardGroup>
                 <Card vertical>
                     <img src={imgCard1}/>
@@ -36,7 +36,6 @@ function Home(){
                 </Card>
                 <Card>
                     <img src={imgCard2}/>
-                    <b>Descrição</b>
                     <p>Avalie profissionais pelo seus serviços!</p>
                 </Card>
                 <Card>
