@@ -15,7 +15,9 @@ class Cadastro extends Component {
             password:'',
             confirm_password:'',
             errPassword:'',
-            errConfirmPassword: ''
+            errConfirmPassword: '',
+            terms: false,
+            errTerms: ''
 
         }
 
@@ -41,6 +43,12 @@ class Cadastro extends Component {
                 errConfirmPassword: "As senhas não correspodem"
             })
         }
+        if(!this.state.terms){
+            isCorrect = false
+            this.setState({
+                errTerms: "Você precisa concordar com os termos de uso!"
+            })
+        }
         if(isCorrect){
             this.setState({
                 errConfirmPassword : ''
@@ -53,6 +61,12 @@ class Cadastro extends Component {
             this.userData.password = this.state.password;
 
         }
+    }
+
+    handleTermsClicked = () => {
+        this.setState({
+            terms: !this.state.terms
+        })
     }
 
 	handleNameChange = event => {
@@ -87,7 +101,7 @@ class Cadastro extends Component {
 	}
 
 	render() {
-        const {name,email,password,confirm_password,errPassword,errConfirmPassword} = this.state
+        const {name,email,password,confirm_password,errPassword,errConfirmPassword,terms,errTerms} = this.state
 		return (
             <>
             <GlobalStyle/>
@@ -144,8 +158,10 @@ class Cadastro extends Component {
 
                 <Space/>
                 <label> 
-                <input id = "user-terms" type = "checkbox" name = "terms"/>
-                Li e aceito os <b>termos de uso</b></label>
+                <input id = "user-terms" type = "checkbox" name = "terms" onClick = {this.handleTermsClicked} value={terms}/>
+                Li e aceito os <b>termos de uso</b>
+                </label>
+                <div>{errTerms}</div>
 
                 <div>
                 <Space/>
