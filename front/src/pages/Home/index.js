@@ -5,6 +5,7 @@ import Input from '../../components/Input';
 import Presentation from '../../components/Presentation';
 import Space from '../../components/Space';
 import Card from '../../components/Card';
+import CardGroup from '../../components/CardGroup';
 
 import imgPresetation from '../../assets/imgPresetation.png';
 import imgCard1 from '../../assets/VerticalCards/HomeCards/Card1.svg';
@@ -27,21 +28,22 @@ function Home(){
                     Os melhores profissionais para a sua obra!
                 </div>
             </Presentation>
-
             <Space size="85px" sizeMobile="55px"/>
-            <Card vertical>
-                <img src={imgCard1}/>
-                <p>Encontre a pessoa certa de maneira rápida e fácil!</p>
-            </Card>
-            <Card>
-                <img src={imgCard2}/>
-                <b>Descrição</b>
-                <p>Avalie profissionais pelo seus serviços!</p>
-            </Card>
-            <Card>
-                <img src={imgCard3}/>
-                <p>Publique seu projeto para que profissionais te encontrem!</p>
-            </Card>
+            <CardGroup>
+                <Card vertical>
+                    <img src={imgCard1}/>
+                    <p>Encontre a pessoa certa de maneira rápida e fácil!</p>
+                </Card>
+                <Card>
+                    <img src={imgCard2}/>
+                    <b>Descrição</b>
+                    <p>Avalie profissionais pelo seus serviços!</p>
+                </Card>
+                <Card>
+                    <img src={imgCard3}/>
+                    <p>Publique seu projeto para que profissionais te encontrem!</p>
+                </Card>
+            </CardGroup>
         </PageDefault>
     );
 }
