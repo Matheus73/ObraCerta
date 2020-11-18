@@ -11,7 +11,7 @@ function PageDefault({children}){
                     {children}
                 </div>
             </div>
-            <Footer/>
+            <Footer white/>
         </>
     );
 

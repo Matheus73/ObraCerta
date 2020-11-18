@@ -9,8 +9,8 @@ function Navbar(props){
     return (
         <Nav>
             <Item white mobileOff>Sobre</Item>
-            <Item white>Entrar</Item>
-            <Button second>CADASTRA-SE</Button>
+            <Item white href="/login">Entrar</Item>
+            <Button second onclick="location.href='/cadastro' ">CADASTRA-SE</Button>
         </Nav>
     );
 }
