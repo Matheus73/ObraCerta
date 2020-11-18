@@ -113,7 +113,6 @@ class Cadastro extends Component {
         }
         console.log(this.userData)
         if (valid){
-            console.log("Entrou")
             axios.post(this.url,this.userData, headers)
                 .then( response => {
                     console.log(response)
