@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import axios from 'axios';
 import Footer from '../../components/Footer';
 import GlobalStyle from './styles';
 import Space from '../../components/Space';
@@ -10,6 +11,14 @@ class Login extends Component {
         super(props)
 
         this.state = {
+            email:'',
+            password:'',
+            err:''
+        }
+        
+        this.url = '' //Colocar aqui a rota do back
+
+        this.userData = {
             email:'',
             password:'',
         }
@@ -28,11 +37,26 @@ class Login extends Component {
 	}
 	handleSubmit = event => {
 		event.preventDefault()
-        console.log(this.state)
+        this.userData.email = this.state.email;
+        this.userData.password = this.state.password;
+
+        console.log(this.UserData)
+
+        axios.post(this.url,this.userData)
+            .then( response => {
+                console.log(response)
+                this.props.history.push('/');
+            } )
+            .catch( error => {
+                console.log(error)
+                this.setState({
+                    err: "O usuário não existe ou a senha está incorreta"
+                })
+            } )
 	}
 
 	render() {
-        const {email,password} = this.state
+        const {email,password,err} = this.state
 		return (
             <>
             <GlobalStyle/>
@@ -40,6 +64,9 @@ class Login extends Component {
             <h1>Login</h1>
             <p>Entre para encontrar os melhores profissionais para sua obra ou para divulgar o seu trabalho!</p>
 			<form onSubmit={this.handleSubmit}>
+                <div id="warning">
+                    <p>{err}</p>
+                </div>
                 <Space/>
 					<label>Email:
                         <Input

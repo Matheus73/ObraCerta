@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import axios from 'axios';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Footer from '../../components/Footer';
@@ -6,8 +7,15 @@ import GlobalStyle from './styles';
 import Space from '../../components/Space';
 
 class Cadastro extends Component {
+// Essa classe Cadastro funciona como página de cadastro, possui 3 atributos state,url e UserData.
+// state consiste no conjunto de estados da tela, desde os inputs do usuario até os erros possiveis
+// url é a rota que será usada para requisições ao back
+// UserData são os dados do novo usuário já validados, separados para o envio da requisição
+
     constructor(props){
         super(props)
+
+        
 
         this.state = {
             name: '',
@@ -21,10 +29,13 @@ class Cadastro extends Component {
 
         }
 
+        this.url = 'http://localhost:3001/registrar'// Colocar a Url do back aqui
+
         this.userData = {
-            name : '',
+            nomeCompleto : '',
             email : '',
-            password : ''
+            senha : '',
+            telefone: '40018922'
         }
     }
 
@@ -56,11 +67,12 @@ class Cadastro extends Component {
             this.setState({
                 errPassword : ''
             })
-            this.userData.name = this.state.name;
+            this.userData.nomeCompleto = this.state.name;
             this.userData.email = this.state.email;
-            this.userData.password = this.state.password;
+            this.userData.senha = this.state.password;
 
         }
+        return isCorrect
     }
 
     handleTermsClicked = () => {
@@ -92,12 +104,27 @@ class Cadastro extends Component {
 			confirm_password: event.target.value
 		})
 	}
-
+    
 	handleSubmit = event => {
 		event.preventDefault()
-        this.validate()
-        this.render()
+        var valid = this.validate()
+        const headers = {
+            'content-type': 'application/json',      
+        }
         console.log(this.userData)
+        if (valid){
+            axios.post(this.url,this.userData, headers)
+                .then( response => {
+                    console.log(response)
+                    this.props.history.push('/');
+                } )
+                .catch( error => {
+                    console.log(error)
+                } )
+
+        }
+        this.render()
+
 	}
 
 	render() {

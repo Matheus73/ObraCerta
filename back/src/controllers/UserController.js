@@ -39,14 +39,16 @@ class UserController {
     delete newUser.senha;
     //Criar um usuário
     await knex('usuario').insert(newUser);
-    
-    return res.json(req.body);
+
+    delete newUser.hashSenha;
+
+    return res.json(newUser);
 
   }
 
   async list(req, res) {
 
-    userList = await User.findAll()
+    const userList = await knex.select('*').from('usuario');
 
     return res.json({ userList });
 
