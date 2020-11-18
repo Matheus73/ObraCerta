@@ -2,3 +2,5 @@
 back/knexfile.js
 
 static/uploads/
+
+back/static/uploads/
