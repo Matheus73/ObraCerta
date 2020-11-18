@@ -1,18 +1,18 @@
 import React from 'react';
-import Container, { Card } from './styles';
+import Container, { Box } from './styles';
 
 function Presentation(props) {
     return(
-        <Container rotation={props.rotation}>
+        <Container noBorder={props.noBorder} rotation={props.rotation}>
             <img
                 width={props.width}
                 height={props.height || "auto"}
                 src={props.src}
                 alt={props.alt}
             />
-            <Card>
+            <Box>
                 {props.children}
-            </Card>
+            </Box>
         </Container>
     );
 }
