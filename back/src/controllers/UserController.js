@@ -48,7 +48,7 @@ class UserController {
 
   async list(req, res) {
 
-    userList = await User.findAll()
+    const userList = await knex.select('*').from('usuario');
 
     return res.json({ userList });
 
