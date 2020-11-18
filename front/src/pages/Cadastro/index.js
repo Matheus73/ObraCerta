@@ -15,6 +15,8 @@ class Cadastro extends Component {
     constructor(props){
         super(props)
 
+        
+
         this.state = {
             name: '',
             email:'',
@@ -27,12 +29,13 @@ class Cadastro extends Component {
 
         }
 
-        this.url = '' // Colocar a Url do back aqui
+        this.url = 'http://localhost:3001/registrar'// Colocar a Url do back aqui
 
         this.userData = {
-            name : '',
+            nomeCompleto : '',
             email : '',
-            password : ''
+            senha : '',
+            telefone: '40018922'
         }
     }
 
@@ -64,9 +67,9 @@ class Cadastro extends Component {
             this.setState({
                 errPassword : ''
             })
-            this.userData.name = this.state.name;
+            this.userData.nomeCompleto = this.state.name;
             this.userData.email = this.state.email;
-            this.userData.password = this.state.password;
+            this.userData.senha = this.state.password;
 
         }
         return isCorrect
@@ -101,14 +104,17 @@ class Cadastro extends Component {
 			confirm_password: event.target.value
 		})
 	}
-
+    
 	handleSubmit = event => {
 		event.preventDefault()
         var valid = this.validate()
+        const headers = {
+            'content-type': 'application/json',      
+        }
         console.log(this.userData)
         if (valid){
             console.log("Entrou")
-            axios.post(this.url,this.userData)
+            axios.post(this.url,this.userData, headers)
                 .then( response => {
                     console.log(response)
                     this.props.history.push('/');

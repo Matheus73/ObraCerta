@@ -6,7 +6,7 @@ exports.up = function(knex) {
     table.string('email', 50).unique().notNullable();
     table.string('nomeCompleto', 100).notNullable();
     table.string('hashSenha').notNullable();
-    table.string('telefone', 15).unique().notNullable(); 
+    table.string('telefone', 15).notNullable(); 
     table.timestamp('criadoEm').defaultTo(knex.fn.now());  
   })
   
