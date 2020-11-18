@@ -1,4 +1,6 @@
+
 const express = require('express')
+const path = require('path');
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3001;
 
@@ -19,8 +21,12 @@ app.use((req, res, next) => {
 });
 
 
+
 // ROTAS
+app.use(bodyParser.json());
+app.use(express.json());
 app.use('', require('./routes'));
+app.use(express.static(path.join(__dirname, 'static')));
 
 
 app.listen(PORT, () => {
