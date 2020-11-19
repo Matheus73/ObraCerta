@@ -37,7 +37,7 @@ router.post('/registrar', UserController.store);
 router.get('/login', (req, res) => res.send('Logar'));
 router.post('/login', loginController.login);
 
-router.post('/nova_publicacao', [authServices.middlewares, upload.single("publicacao")], publicationController.store);
+router.post('/nova_publicacao', [authServices.middlewares, upload.any()], publicationController.store);
 router.get('/publicacoes', authServices.middlewares, publicationController.list);
 router.delete('/usuario/:idUsuario/publicacao/:idPublicacao', publicationController.delete)
 
