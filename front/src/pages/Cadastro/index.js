@@ -15,12 +15,11 @@ class Cadastro extends Component {
     constructor(props){
         super(props)
 
-
-
         this.state = {
             name: '',
             email:'',
             password:'',
+            phone: '',
             confirm_password:'',
             terms: false,
             errEmail: '',
@@ -36,7 +35,7 @@ class Cadastro extends Component {
             nomeCompleto : '',
             email : '',
             senha : '',
-            telefone: '40018922'
+            telefone: ''
         }
     }
 
@@ -98,6 +97,7 @@ class Cadastro extends Component {
             this.userData.nomeCompleto = this.state.name;
             this.userData.email = this.state.email;
             this.userData.senha = this.state.password;
+            this.userData.telefone = this.state.phone;
 
         }
         return isCorrect
@@ -124,6 +124,12 @@ class Cadastro extends Component {
 	handlePasswordChange = event => {
 		this.setState({
 			password: event.target.value
+		})
+	}
+    
+	handlePhoneChange = event => {
+		this.setState({
+			phone: event.target.value
 		})
 	}
 
@@ -156,7 +162,7 @@ class Cadastro extends Component {
 	}
 
 	render() {
-        const {name,email,password,confirm_password,terms,errEmail,errPassword,errConfirmPassword,errTerms} = this.state
+        const {name,email,password,phone,confirm_password,terms,errEmail,errPassword,errConfirmPassword,errTerms} = this.state
 		return (
             <>
             <GlobalStyle/>
@@ -189,6 +195,17 @@ class Cadastro extends Component {
                     <div>
                         {errEmail}
                     </div>
+                <Space/>
+					<label>Telefone:
+                        <Input
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            placeholder = "xx xxxxxxxxx"
+                            value={phone}
+                            onChange={this.handlePhoneChange}
+                        />
+                    </label>
                 <Space/>
 					<label>Senha:
                         <Input
