@@ -16,11 +16,11 @@ class Login extends Component {
             err:''
         }
         
-        this.url = '' //Colocar aqui a rota do back
+        this.url = 'http://localhost:3001/login'
 
         this.userData = {
-            email:'',
             password:'',
+            email:''
         }
     }
 
@@ -40,10 +40,11 @@ class Login extends Component {
         this.userData.email = this.state.email;
         this.userData.password = this.state.password;
 
-        console.log(this.UserData)
+        console.log(this.userData)
 
         axios.post(this.url,this.userData)
             .then( response => {
+                console.log("Voce logou")
                 console.log(response)
                 this.props.history.push('/');
             } )
