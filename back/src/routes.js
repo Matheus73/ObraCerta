@@ -40,4 +40,6 @@ router.post('/login', loginController.login);
 router.post('/nova_publicacao', [authServices.middlewares, upload.single("publicacao")], publicationController.store);
 router.get('/publicacoes', authServices.middlewares, publicationController.list);
 
+router.delete('/usuario/:idUsuario', UserController.delete)
+
 module.exports = router
