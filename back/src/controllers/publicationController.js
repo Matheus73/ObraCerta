@@ -1,6 +1,8 @@
 const fs = require('fs');
 const {promisify} = require('util');
 
+const authServices = require('../services/authServices');
+
 const yup = require('yup');
 const { where } = require('../database/index.js');
 const knex = require('../database/index.js');
@@ -10,6 +12,9 @@ const unlinkAsync = promisify(fs.unlink);
 
 class publicationController {
   async store(req, res){
+
+    const userData =  await authServices.decodeToken(req.headers.authorization);
+    req.body['idUsuario'] = userData.data.idUsuario;
 
     // se nenhum arquivo for enviado retorna um erro
     if (req.files.length == 0) return res.status(400).send({ error: "Nenhuma foto foi enviada" }) 
