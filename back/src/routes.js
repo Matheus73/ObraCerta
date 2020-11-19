@@ -41,6 +41,8 @@ router.post('/nova_publicacao', [authServices.middlewares, upload.single("public
 router.get('/publicacoes', authServices.middlewares, publicationController.list);
 router.delete('/usuario/:idUsuario/publicacao/:idPublicacao', publicationController.delete)
 
+//alterar e deletar usuarios
 router.delete('/usuario/:idUsuario', UserController.delete)
+router.put('/usuario/:idUsuario', UserController.update)
 
 module.exports = router
