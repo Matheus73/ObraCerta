@@ -24,6 +24,18 @@ class publicationController {
     return res.json(user_publications);
   }
 
+  async delete(req, res, next){
+    
+    const { idUsuario, idPublicacao} = req.params;
+
+    await knex('publicacao').where({ 
+      idUsuario: idUsuario, 
+      idPublicacao: idPublicacao
+    }).del();
+
+    return res.send({message:'Publicacao deletada !'})
+  }
+
 }
 
 
