@@ -22,9 +22,10 @@ class Cadastro extends Component {
             email:'',
             password:'',
             confirm_password:'',
+            terms: false,
+            errEmail: '',
             errPassword:'',
             errConfirmPassword: '',
-            terms: false,
             errTerms: ''
 
         }
@@ -155,7 +156,7 @@ class Cadastro extends Component {
 	}
 
 	render() {
-        const {name,email, errEmail,password,confirm_password,errPassword,errConfirmPassword,terms,errTerms} = this.state
+        const {name,email,password,confirm_password,terms,errEmail,errPassword,errConfirmPassword,errTerms} = this.state
 		return (
             <>
             <GlobalStyle/>
