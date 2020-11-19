@@ -19,7 +19,7 @@ class Login extends Component {
         this.url = 'http://localhost:3001/login'
 
         this.userData = {
-            password:'',
+            senha:'',
             email:''
         }
     }
@@ -38,7 +38,7 @@ class Login extends Component {
 	handleSubmit = event => {
 		event.preventDefault()
         this.userData.email = this.state.email;
-        this.userData.password = this.state.password;
+        this.userData.senha = this.state.password;
 
         console.log(this.userData)
 
