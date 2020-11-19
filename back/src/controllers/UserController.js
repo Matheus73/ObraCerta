@@ -20,8 +20,8 @@ class UserController {
         .required(),
       senha: yup.string()
         .required(),
-      criadoEm: yup.date()
-        .default(() => { return new Date(); }),
+      // criadoEm: yup.date()
+      //   .default(() => { return new Date(); }),
       telefone: yup.string()
         .required(),
     })
@@ -74,6 +74,49 @@ class UserController {
 
       return res.send({message:'Usuario Deletado Com Sucesso'});
 
+    } catch (error) {
+
+      next(error);
+
+    }
+
+  }
+
+  async update(req, res, next) {
+
+    try {
+      const {idUsuario} = req.params;
+      const senha = req.body.senha;
+
+      const hash = await knex.select('hashSenha')
+        .from('usuario')
+        .where({ idUsuario: idUsuario })
+        .first();
+      
+      if (!await bcrypt.compareSync(senha, hash.hashSenha)){
+        return res.status(400).send({ error : 'Senha inválida' });
+      }
+
+      const newUserInfo = {
+        nomeCompleto : req.body.novoNomeCompleto, 
+        email : req.body.novoEmail, 
+        telefone : req.body.novoTelefone, 
+        descricao : req.body.novaDescricao, 
+        categoria : req.body.novaCategoria
+      }
+      //retirando informações que não serão atualizadas
+      let info;
+      for (info in newUserInfo){
+        if (newUserInfo[info] === ''){
+          delete newUserInfo[info]
+        }
+      }
+
+     await knex('usuario').update(newUserInfo).where({idUsuario});
+      
+      return res.send(newUserInfo)
+
+      
     } catch (error) {
 
       next(error);
