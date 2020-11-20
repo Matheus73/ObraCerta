@@ -13,7 +13,7 @@ export default createGlobalStyle`
         margin: 0 auto;
         padding: 0px 15px;
     }
-    #content{
+    main {
         min-height: 100vh;
         margin: auto;
         max-width: 970px;
