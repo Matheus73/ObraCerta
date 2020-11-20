@@ -3,13 +3,14 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
 class PageDefault extends Component {
+
     render() {
         return (
             <>
-                <Navbar />
-                <main>
-                    {children}
-                </main>
+                <Navbar logged={this.props.logged}/>
+                    <main>
+                        {this.props.children}
+                    </main>
                 <Footer white />
             </>
         );
