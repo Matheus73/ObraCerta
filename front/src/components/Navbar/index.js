@@ -15,7 +15,7 @@ function Navbar(props){
                     <Button second type="submit">CADASTRA-SE</Button>
                 </form>
                 :
-                <form action="/#">
+                <form action="/PerfilUsuario">
                     <Button second type="submit">Meu perfil</Button>
                 </form>
             }
