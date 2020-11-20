@@ -13,13 +13,12 @@ export default createGlobalStyle`
         margin: 0 auto;
         padding: 0px 15px;
     }
-    #content{
-        min-height: 100vh;
+    main {
+        min-height: calc(100vh - 150px); //Altura total - Footer
         margin: auto;
         max-width: 970px;
     }
     body {
-        height: 100%;
         overflow-x: hidden;
         background:#FFFFFF url(${trianguloBackground2}) no-repeat center;
         background-size: cover;

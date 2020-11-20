@@ -177,7 +177,7 @@ class Cadastro extends Component {
 		return (
             <>
             <GlobalStyle/>
-            <div id="content">
+            <main>
             <h1>CADASTRE-SE</h1>
             <p>Cadastre-se para ter acesso a melhor plataforma do mercado!</p>
 			<form onSubmit={this.handleSubmit}>
@@ -257,7 +257,7 @@ class Cadastro extends Component {
                 <Button>Enviar</Button>
                 </div>
 			</form>
-            </div>
+            </main>
             <Footer orange />
             </>
 		)
