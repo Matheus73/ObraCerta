@@ -5,6 +5,7 @@ import Input from '../../components/Input';
 import Footer from '../../components/Footer';
 import GlobalStyle from './styles';
 import Space from '../../components/Space';
+import Input2Mask from '../../components/InputMask';
 
 class Cadastro extends Component {
 // Essa classe Cadastro funciona como página de cadastro, possui 3 atributos state,url e UserData.
@@ -25,7 +26,8 @@ class Cadastro extends Component {
             errEmail: '',
             errPassword:'',
             errConfirmPassword: '',
-            errTerms: ''
+            errTerms: '',
+            errPhone: ''
 
         }
 
@@ -64,7 +66,16 @@ class Cadastro extends Component {
                     errEmail: "Email inválido"
                 })
             }
-
+        if (this.state.phone.replace(/\D/gim, '').length < 10){
+            isCorrect = false
+            this.setState({
+                errPhone: "Telefone Inválido"
+            })
+        }else{
+            this.setState({
+                errPhone: ""
+            })
+        }
         if (this.state.password.length < 6){
             isCorrect = false
             this.setState({
@@ -97,7 +108,7 @@ class Cadastro extends Component {
             this.userData.nomeCompleto = this.state.name;
             this.userData.email = this.state.email;
             this.userData.senha = this.state.password;
-            this.userData.telefone = this.state.phone;
+            this.userData.telefone = this.state.phone.replace(/\D/gim, '');
 
         }
         return isCorrect
@@ -126,7 +137,7 @@ class Cadastro extends Component {
 			password: event.target.value
 		})
 	}
-    
+
 	handlePhoneChange = event => {
 		this.setState({
 			phone: event.target.value
@@ -162,7 +173,7 @@ class Cadastro extends Component {
 	}
 
 	render() {
-        const {name,email,password,phone,confirm_password,terms,errEmail,errPassword,errConfirmPassword,errTerms} = this.state
+        const {name,email,password,phone,confirm_password,terms,errEmail,errPassword,errConfirmPassword,errTerms, errPhone} = this.state
 		return (
             <>
             <GlobalStyle/>
@@ -197,15 +208,18 @@ class Cadastro extends Component {
                     </div>
                 <Space/>
 					<label>Telefone:
-                        <Input
+                        <Input2Mask
                             type="text"
                             id="phone"
                             name="phone"
-                            placeholder = "xx xxxxxxxxx"
+                            alwaysShowMask = "true"
+                            mask = "(99) 99999-9999"
+
                             value={phone}
                             onChange={this.handlePhoneChange}
                         />
                     </label>
+                    <div>{errPhone}</div>
                 <Space/>
 					<label>Senha:
                         <Input
