@@ -5,6 +5,7 @@ import GlobalStyle from './styles/global';
 import Home from './pages/Home';
 import Cadastro from './pages/Cadastro';
 import Login from './pages/Login';
+import PerfilUsuario from './pages/PerfilUsuario';
 
 class App extends Component {
 
@@ -12,7 +13,7 @@ class App extends Component {
     super();
 
     this.state = {
-      logged: "NOT_LOGGED",
+      logged: "LOGGED",
       user: {}
     }
   }
@@ -27,6 +28,12 @@ class App extends Component {
               exact path="/"
               render={props => (
                 <Home {...props} logged={this.state.logged}/>
+              )}
+            />
+            <Route 
+              exact path="/PerfilUsuario"
+              render={props => (
+                <PerfilUsuario {...props} logged={this.state.logged}/>
               )}
             />
             <Route path="/cadastro" component={Cadastro} />
