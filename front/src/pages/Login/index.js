@@ -35,17 +35,15 @@ class Login extends Component {
             password: event.target.value
         })
     }
+
     handleSubmit = event => {
         event.preventDefault()
         this.userData.email = this.state.email;
         this.userData.senha = this.state.password;
 
-        console.log(this.userData)
-
         axios.post(this.url, this.userData)
             .then(response => {
-                console.log("Voce logou")
-                console.log(response)
+                this.props.handleLogin(response.data.dados);
                 this.props.history.push('/');
             })
             .catch(error => {

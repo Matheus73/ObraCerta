@@ -12,9 +12,16 @@ class App extends Component {
     super();
 
     this.state = {
-      logged: "NOT_LOGGED",
+      loggedIn: "NOT_LOGGED",
       user: {}
-    }
+    };
+  }
+
+  handleLogin = user => {
+    this.setState({
+      loggedIn: "LOGGED",
+      user: user
+    })
   }
 
   render() {
@@ -25,12 +32,17 @@ class App extends Component {
           <Switch>
             <Route 
               exact path="/"
-              render={props => (
-                <Home {...props} logged={this.state.logged}/>
+              render={() => (
+                <Home loggedIn={this.state.loggedIn}/>
               )}
             />
             <Route path="/cadastro" component={Cadastro} />
-            <Route path="/login" component={Login} />
+            <Route 
+              path="/login"
+              render={() => (
+                <Login handleLogin={this.handleLogin}/>
+              )}
+            />
           </Switch>
         </BrowserRouter>
       </>

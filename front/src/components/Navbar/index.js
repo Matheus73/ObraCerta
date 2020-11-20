@@ -10,7 +10,7 @@ function Navbar(props){
         <Nav>
             <Item white href="#" mobileOff>Sobre</Item>
             <Item white href="/login">Entrar</Item>
-            {props.logged == "NOT_LOGGED" ? 
+            {props.loggedIn === "NOT_LOGGED" ? 
                 <form action="/cadastro">
                     <Button second type="submit">CADASTRA-SE</Button>
                 </form>

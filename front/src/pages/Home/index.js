@@ -16,7 +16,7 @@ class Home extends Component {
 
     render() {
         return (
-            <PageDefault logged={this.props.logged}>
+            <PageDefault loggedIn={this.props.loggedIn}>
                 <Input type="search" placeholder="Pesquise..." />
 
                 <Space size="85px" sizeMobile="55px" />

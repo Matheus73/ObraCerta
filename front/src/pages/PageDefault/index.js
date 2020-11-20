@@ -7,7 +7,7 @@ class PageDefault extends Component {
     render() {
         return (
             <>
-                <Navbar logged={this.props.logged}/>
+                <Navbar loggedIn={this.props.loggedIn}/>
                     <main>
                         {this.props.children}
                     </main>
