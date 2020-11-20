@@ -14,12 +14,11 @@ export default createGlobalStyle`
         padding: 0px 15px;
     }
     main {
-        min-height: 100vh;
+        min-height: calc(100vh - 150px); //Altura total - Footer
         margin: auto;
         max-width: 970px;
     }
     body {
-        height: 100%;
         overflow-x: hidden;
         background:#FFFFFF url(${trianguloBackground2}) no-repeat center;
         background-size: cover;
