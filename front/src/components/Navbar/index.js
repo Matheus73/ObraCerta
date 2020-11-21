@@ -7,7 +7,7 @@ import Item from '../Item';
 function Navbar(props){
     return (
         <Nav>
-            <Item white href="/termosdeuso">Sobre</Item>
+            <Item white href="#">Sobre</Item>
             {props.loggedIn === "NOT_LOGGED_IN" ? 
                 <>
                     <Item white href="/login">Entrar</Item>
