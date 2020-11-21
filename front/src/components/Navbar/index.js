@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Nav from './styles';
-
 import Button from '../Button';
 import Item from '../Item';
 

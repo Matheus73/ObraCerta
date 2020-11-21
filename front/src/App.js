@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import GlobalStyle from './styles/global';
 import Routes from './routes';
-import { BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
 
@@ -9,9 +8,7 @@ class App extends Component {
     return (
       <>
         <GlobalStyle />
-        <BrowserRouter>
         <Routes/>
-        </BrowserRouter>
       </>
     );
   }
