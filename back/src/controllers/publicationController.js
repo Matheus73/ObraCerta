@@ -56,6 +56,8 @@ class publicationController {
     
     const { idUsuario, idPublicacao} = req.params;
 
+    if(idUsuario != req.body.idUsuario) return res.status(400).send({error: "Você nao pode apagar publicações que não são suas"});
+
     const photos = await knex.select('imagem.nomeImagem')
     .from('publicacao')
     .join('imagem', 'publicacao.idPublicacao', 'imagem.idPublicacao')
