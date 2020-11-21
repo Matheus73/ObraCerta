@@ -12,14 +12,10 @@ function Navbar(props){
             {props.loggedIn === "NOT_LOGGED_IN" ? 
                 <>
                     <Item white href="/login">Entrar</Item>
-                    <form action="/cadastro">
-                        <Button second type="submit">CADASTRA-SE</Button>
-                    </form>
+                    <Button second href="/cadastro">CADASTRA-SE</Button>
                 </>
                 :
-                <form action="#">
-                    <Button second type="submit">Meu perfil</Button>
-                </form>
+                <Button second href="#">Meu perfil</Button>
             }
         </Nav>
     );

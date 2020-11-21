@@ -7,7 +7,9 @@ const otherButtons = {
     padding: "8px 12px 8px 12px" 
 };
 
-const Button = styled(Item).attrs({as:"button"})`
+const Button = styled(Item).attrs(props => ({
+    as: props.primary || props.second ? "a" : "button",
+}))`
     min-width: 150px;
     text-align: center;
     
