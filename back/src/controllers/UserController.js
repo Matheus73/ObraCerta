@@ -1,6 +1,7 @@
 const yup = require('yup');
 const bcrypt = require('bcryptjs');
 const knex = require('../database/index.js');
+const authServices = require('../services/authServices');
 
 
 // Usar o yup para validar a entrada de dados. olhar a documentação do modulo para saber como utiliza-lo
@@ -42,7 +43,9 @@ class UserController {
 
     delete newUser.hashSenha;
 
-    return res.json(newUser);
+    const token = await authServices.generateToken(newUser);
+
+    return res.json({newUser,token});
 
   }
 
