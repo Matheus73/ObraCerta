@@ -1,10 +1,14 @@
 
 const express = require('express')
 const path = require('path');
+const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3001;
+
 const cors = require('cors');
 
 const app = express();
+
+app.use(bodyParser.json())
 
 app.use((req, res, next) => {
 	//Qual site tem permissão de realizar a conexão, no exemplo abaixo está o "*" indicando que qualquer site pode fazer a conexão
@@ -16,10 +20,14 @@ app.use((req, res, next) => {
     next();
 });
 
+
+
 // ROTAS
+app.use(bodyParser.json());
 app.use(express.json());
 app.use('', require('./routes'));
 app.use(express.static(path.join(__dirname, 'static')));
+
 
 app.listen(PORT, () => {
   console.log(`Listening to http://localhost:${PORT}`)
