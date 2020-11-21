@@ -5,6 +5,7 @@ import GlobalStyle from './styles/global';
 import Home from './pages/Home';
 import Cadastro from './pages/Cadastro';
 import Login from './pages/Login';
+import axios from 'axios';
 
 class App extends Component {
 
@@ -12,14 +13,14 @@ class App extends Component {
     super();
 
     this.state = {
-      loggedIn: "NOT_LOGGED",
+      loggedIn: "NOT_LOGGED_IN",
       user: {}
     };
   }
 
   handleLogin = user => {
     this.setState({
-      loggedIn: "LOGGED",
+      loggedIn: "LOGGED_IN",
       user: user
     })
   }
@@ -30,17 +31,22 @@ class App extends Component {
         <GlobalStyle />
         <BrowserRouter>
           <Switch>
-            <Route 
+            <Route
               exact path="/"
-              render={() => (
-                <Home loggedIn={this.state.loggedIn}/>
+              render={props => (
+                <Home {...props} loggedIn={this.state.loggedIn} />
               )}
             />
-            <Route path="/cadastro" component={Cadastro} />
-            <Route 
+            <Route
+              path="/cadastro"
+              render={props => (
+                <Cadastro {...props} handleLogin={this.handleLogin} />
+              )}
+            />
+            <Route
               path="/login"
-              render={() => (
-                <Login handleLogin={this.handleLogin}/>
+              render={props => (
+                <Login {...props} handleLogin={this.handleLogin} />
               )}
             />
           </Switch>
