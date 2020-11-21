@@ -46,7 +46,12 @@ class Routes extends Component {
                             <Login {...props} handleLogin={this.handleLogin} />
                         )}
                     />
-                    <Route path='/termosdeuso' component = {UseTherms}/>
+                    <Route
+                        path='/termosdeuso'
+                        render={props => (
+                            <UseTherms {...props} loggedIn={this.state.loggedIn} />
+                        )}
+                    />
                 </Switch>
             </BrowserRouter>
         );
