@@ -1,25 +1,21 @@
 import React from 'react';
 
 import Nav from './styles';
-
 import Button from '../Button';
 import Item from '../Item';
 
 function Navbar(props){
     return (
         <Nav>
-            <Item white href="#" mobileOff>Sobre</Item>
-            <Item white href="/login">Entrar</Item>
-            {props.logged === "NOT_LOGGED" ? 
-                <form action="/cadastro">
-                    <Button second type="submit">CADASTRA-SE</Button>
-                </form>
+            <Item white href="#">Sobre</Item>
+            {props.loggedIn === "NOT_LOGGED_IN" ? 
+                <>
+                    <Item white href="/login">Entrar</Item>
+                    <Button second href="/cadastro">CADASTRA-SE</Button>
+                </>
                 :
-                <form action="/PerfilUsuario">
-                    <Button second type="submit">Meu perfil</Button>
-                </form>
+                <Button second href="#">Meu perfil</Button>
             }
-            
         </Nav>
     );
 }

@@ -156,11 +156,10 @@ class Cadastro extends Component {
         const headers = {
             'content-type': 'application/json',
         }
-        console.log(this.userData)
         if (valid){
             axios.post(this.url,this.userData, headers)
                 .then( response => {
-                    console.log(response)
+                    this.props.handleLogin(response.data.dados);
                     this.props.history.push('/');
                 } )
                 .catch( error => {
