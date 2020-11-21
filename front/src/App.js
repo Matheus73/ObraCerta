@@ -1,15 +1,17 @@
-import React from 'react';
-import {BrowserRouter} from 'react-router-dom';
+import React, { Component } from 'react';
 import GlobalStyle from './styles/global';
-import Routes from './routes'
+import Routes from './routes';
 
-function App() {
-    return <>
-      <GlobalStyle/>
-      <BrowserRouter>
-      <Routes />
-      </BrowserRouter>
-    </>
+class App extends Component {
+
+  render() {
+    return (
+      <>
+        <GlobalStyle />
+        <Routes/>
+      </>
+    );
+  }
 }
 
 export default App;

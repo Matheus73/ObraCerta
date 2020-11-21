@@ -5,6 +5,7 @@ import Input from '../../components/Input';
 import Footer from '../../components/Footer';
 import GlobalStyle from './styles';
 import Space from '../../components/Space';
+import Input2Mask from '../../components/InputMask';
 
 class Cadastro extends Component {
 // Essa classe Cadastro funciona como página de cadastro, possui 3 atributos state,url e UserData.
@@ -15,17 +16,18 @@ class Cadastro extends Component {
     constructor(props){
         super(props)
 
-        
-
         this.state = {
             name: '',
             email:'',
             password:'',
+            phone: '',
             confirm_password:'',
+            terms: false,
+            errEmail: '',
             errPassword:'',
             errConfirmPassword: '',
-            terms: false,
-            errTerms: ''
+            errTerms: '',
+            errPhone: ''
 
         }
 
@@ -35,18 +37,51 @@ class Cadastro extends Component {
             nomeCompleto : '',
             email : '',
             senha : '',
-            telefone: '40018922'
+            telefone: ''
         }
     }
 
     validate(){
         var isCorrect = true
+        let initial = this.state.email.substring(0,this.state.email.indexOf("@"));
+        let domain = this.state.email.substring(this.state.email.indexOf("@")+1, this.state.email.length);
+        if ((initial.length >=1) &&
+            (domain.length >=3) &&
+            (initial.search("@")===-1) &&
+            (domain.search("@")===-1) &&
+            (initial.search(" ")===-1) &&
+            (domain.search(" ")===-1) &&
+            (domain.search(".")!==-1) &&
+            (domain.indexOf(".") >=1)&&
+            (domain.lastIndexOf(".") < domain.length - 1)){
+                // isCorrect = true;
+                this.setState({
+                    errEmail: ''
+                })
+
+            }
+            else{
+                isCorrect = false;
+                this.setState({
+                    errEmail: "Email inválido"
+                })
+            }
+        if (this.state.phone.replace(/\D/gim, '').length < 10){
+            isCorrect = false
+            this.setState({
+                errPhone: "Telefone Inválido"
+            })
+        }else{
+            this.setState({
+                errPhone: ""
+            })
+        }
         if (this.state.password.length < 6){
             isCorrect = false
             this.setState({
                 errPassword: "Sua senha deve possuir no minimo 6 digitos!"
             })
-            
+
         }
         if (this.state.password !== this.state.confirm_password) {
             isCorrect = false
@@ -62,6 +97,9 @@ class Cadastro extends Component {
         }
         if(isCorrect){
             this.setState({
+                errEmail: ''
+            })
+            this.setState({
                 errConfirmPassword : ''
             })
             this.setState({
@@ -70,6 +108,7 @@ class Cadastro extends Component {
             this.userData.nomeCompleto = this.state.name;
             this.userData.email = this.state.email;
             this.userData.senha = this.state.password;
+            this.userData.telefone = this.state.phone.replace(/\D/gim, '');
 
         }
         return isCorrect
@@ -99,23 +138,28 @@ class Cadastro extends Component {
 		})
 	}
 
+	handlePhoneChange = event => {
+		this.setState({
+			phone: event.target.value
+		})
+	}
+
 	handleConfirmPasswordChange = event => {
 		this.setState({
 			confirm_password: event.target.value
 		})
 	}
-    
+
 	handleSubmit = event => {
 		event.preventDefault()
         var valid = this.validate()
         const headers = {
-            'content-type': 'application/json',      
+            'content-type': 'application/json',
         }
-        console.log(this.userData)
         if (valid){
             axios.post(this.url,this.userData, headers)
                 .then( response => {
-                    console.log(response)
+                    this.props.handleLogin(response.data.dados);
                     this.props.history.push('/');
                 } )
                 .catch( error => {
@@ -128,11 +172,11 @@ class Cadastro extends Component {
 	}
 
 	render() {
-        const {name,email,password,confirm_password,errPassword,errConfirmPassword,terms,errTerms} = this.state
+        const {name,email,password,phone,confirm_password,terms,errEmail,errPassword,errConfirmPassword,errTerms, errPhone} = this.state
 		return (
             <>
             <GlobalStyle/>
-            <div id="content">
+            <main>
             <h1>CADASTRE-SE</h1>
             <p>Cadastre-se para ter acesso a melhor plataforma do mercado!</p>
 			<form onSubmit={this.handleSubmit}>
@@ -142,7 +186,7 @@ class Cadastro extends Component {
                             type="text"
                             id="name"
                             name="name"
-                            placeholder = "Digite seu nome" 
+                            placeholder = "Digite seu nome"
                             value={name}
                             onChange={this.handleNameChange}
                         />
@@ -153,18 +197,35 @@ class Cadastro extends Component {
                             type="email"
                             id="email"
                             name="email"
-                            placeholder = "Digite seu email" 
+                            placeholder = "Digite seu email"
                             value={email}
                             onChange={this.handleEmailChange}
                         />
                     </label>
+                    <div>
+                        {errEmail}
+                    </div>
+                <Space/>
+					<label>Telefone:
+                        <Input2Mask
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            alwaysShowMask = "true"
+                            mask = "(99) 99999-9999"
+
+                            value={phone}
+                            onChange={this.handlePhoneChange}
+                        />
+                    </label>
+                    <div>{errPhone}</div>
                 <Space/>
 					<label>Senha:
                         <Input
                             type="password"
                             id="password"
                             name="password"
-                            placeholder = "Digite sua senha" 
+                            placeholder = "Digite sua senha"
                             value={password}
                             onChange={this.handlePasswordChange}
                         />
@@ -176,7 +237,7 @@ class Cadastro extends Component {
                             type="password"
                             id="confirm_password"
                             name="confirm_password"
-                            placeholder = "Confirme sua senha" 
+                            placeholder = "Confirme sua senha"
                             value={confirm_password}
                             onChange={this.handleConfirmPasswordChange}
                         />
@@ -184,9 +245,9 @@ class Cadastro extends Component {
                     <div>{errConfirmPassword}</div>
 
                 <Space/>
-                <label> 
+                <label>
                 <input id = "user-terms" type = "checkbox" name = "terms" onClick = {this.handleTermsClicked} value={terms}/>
-                Li e aceito os <b>termos de uso</b>
+                Li e aceito os <a href="/termosdeuso" target="_blank">termos de uso</a>
                 </label>
                 <div>{errTerms}</div>
 
@@ -195,7 +256,7 @@ class Cadastro extends Component {
                 <Button>Enviar</Button>
                 </div>
 			</form>
-            </div>
+            </main>
             <Footer orange />
             </>
 		)
