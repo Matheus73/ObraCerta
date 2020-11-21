@@ -31,7 +31,7 @@ class publicationController {
     .returning('idPublicacao').then(async function (idPublicacao){
 
       for (const img of req.files) {
-        const file_path = __dirname + img.path;
+        const file_path = img.path;
         await knex('imagem')
         .insert({ nomeImagem: file_path, idPublicacao: idPublicacao[0]});
       }
@@ -55,6 +55,13 @@ class publicationController {
   async delete(req, res, next){
     
     const { idUsuario, idPublicacao} = req.params;
+
+    const photos = await knex.select('imagem.nomeImagem')
+    .from('publicacao')
+    .join('imagem', 'publicacao.idPublicacao', 'imagem.idPublicacao')
+    .where({ idUsuario: idUsuario });
+
+    for (const photo of photos) await unlinkAsync(photo.nomeImagem);
 
     await knex('publicacao').where({ 
       idUsuario: idUsuario, 
