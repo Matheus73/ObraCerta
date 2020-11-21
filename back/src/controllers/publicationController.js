@@ -42,10 +42,12 @@ class publicationController {
 
   async list(req, res){
     
+    const { idUsuario } = req.params;
+
     const user_publications = await knex.select('*')
     .from('publicacao')
     .join('imagem', 'publicacao.idPublicacao', 'imagem.idPublicacao')
-    .where({ idUsuario: req.body.idUsuario });
+    .where({ idUsuario: idUsuario });
 
     return res.json(user_publications);
   }
