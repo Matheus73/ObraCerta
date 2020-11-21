@@ -1,16 +1,41 @@
+const fs = require('fs');
+const {promisify} = require('util');
+
+const authServices = require('../services/authServices');
+
 const yup = require('yup');
 const { where } = require('../database/index.js');
 const knex = require('../database/index.js');
 const auth = require('../services/authServices');
 
+const unlinkAsync = promisify(fs.unlink);
+
 class publicationController {
   async store(req, res){
 
-    // necessita de confirmar se o usuário está autenticado
+    const userData =  await authServices.decodeToken(req.headers.authorization);
+    req.body['idUsuario'] = userData.data.idUsuario;
 
-    const dados = auth.decodeToken(req.headers.authorization);
-    
-    await knex('publicacao').insert(req.body);
+    // se nenhum arquivo for enviado retorna um erro
+    if (req.files.length == 0) return res.status(400).send({ error: "Nenhuma foto foi enviada" }) 
+
+    // se alguma das imagens possuir mais de 5mb ele retorna um erro
+    for (const img of req.files) {
+      if(img.size >= 5000000){ 
+        await unlinkAsync(img.path);
+        return res.status(400).send({ error: "a imagem deve possuir menos de 5Mb" });
+      }
+    }
+
+    await knex('publicacao').insert(req.body)
+    .returning('idPublicacao').then(async function (idPublicacao){
+
+      for (const img of req.files) {
+        const file_path = __dirname + img.path;
+        await knex('imagem')
+        .insert({ nomeImagem: file_path, idPublicacao: idPublicacao[0]});
+      }
+    });
 
     return res.send({ res: 'publicação criada' });
   }
@@ -19,9 +44,22 @@ class publicationController {
     
     const user_publications = await knex.select('*')
     .from('publicacao')
+    .join('imagem', 'publicacao.idPublicacao', 'imagem.idPublicacao')
     .where({ idUsuario: req.body.idUsuario });
 
     return res.json(user_publications);
+  }
+
+  async delete(req, res, next){
+    
+    const { idUsuario, idPublicacao} = req.params;
+
+    await knex('publicacao').where({ 
+      idUsuario: idUsuario, 
+      idPublicacao: idPublicacao
+    }).del();
+
+    return res.send({message:'Publicacao deletada !'})
   }
 
 }
