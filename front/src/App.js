@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import Cadastro from './pages/Cadastro';
 import Login from './pages/Login';
 import PerfilUsuario from './pages/PerfilUsuario';
+import UseTherms from './pages/UseTherms';
+
 
 class App extends Component {
 
@@ -24,13 +26,13 @@ class App extends Component {
         <GlobalStyle />
         <BrowserRouter>
           <Switch>
-            <Route 
+            <Route
               exact path="/"
               render={props => (
                 <Home {...props} logged={this.state.logged}/>
               )}
             />
-            <Route 
+            <Route
               exact path="/PerfilUsuario"
               render={props => (
                 <PerfilUsuario {...props} logged={this.state.logged}/>
@@ -38,6 +40,8 @@ class App extends Component {
             />
             <Route path="/cadastro" component={Cadastro} />
             <Route path="/login" component={Login} />
+            <Route path='/termosdeuso' component = {UseTherms}/>
+
           </Switch>
         </BrowserRouter>
       </>

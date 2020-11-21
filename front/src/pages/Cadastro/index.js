@@ -248,7 +248,7 @@ class Cadastro extends Component {
                 <Space/>
                 <label>
                 <input id = "user-terms" type = "checkbox" name = "terms" onClick = {this.handleTermsClicked} value={terms}/>
-                Li e aceito os <b>termos de uso</b>
+                Li e aceito os <a href="/termosdeuso" target="_blank">termos de uso</a>
                 </label>
                 <div>{errTerms}</div>
 
