@@ -16,6 +16,7 @@ function Navbar(props){
                 :
                 <Button second href="#">Meu perfil</Button>
             }
+
         </Nav>
     );
 }

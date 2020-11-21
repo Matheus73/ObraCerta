@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
-
 import PageDefault from '../../pages/PageDefault';
 import Input from '../../components/Input';
 import Presentation from '../../components/Presentation';
+import imgPresetation from '../../assets/imgPresetation.png'
 import Space from '../../components/Space';
-import Card from '../../components/Card';
-import CardGroup from '../../components/CardGroup';
-
-import imgPresetation from '../../assets/imgPresetation.png';
-import imgCard1 from '../../assets/VerticalCards/HomeCards/Card1.svg';
-import imgCard2 from '../../assets/VerticalCards/HomeCards/Card2.svg';
-import imgCard3 from '../../assets/VerticalCards/HomeCards/Card3.svg';
 
 class Home extends Component {
 
@@ -50,6 +43,7 @@ class Home extends Component {
             </PageDefault>
         );
     }
+
 }
 
 export default Home;
