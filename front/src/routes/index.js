@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
 import Login from '../pages/Login';
+import UseTherms from '../pages/UseTherms';
 
 class Routes extends Component {
 
@@ -45,6 +46,7 @@ class Routes extends Component {
                             <Login {...props} handleLogin={this.handleLogin} />
                         )}
                     />
+                    <Route path='/termosdeuso' component = {UseTherms}/>
                 </Switch>
             </BrowserRouter>
         );
