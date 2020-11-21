@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import Cadastro from './pages/Cadastro';
 import Login from './pages/Login';
 import PerfilUsuario from './pages/PerfilUsuario';
-import UseTherms from '../pages/UseTherms';
+import UseTherms from './pages/UseTherms';
 
 
 class App extends Component {

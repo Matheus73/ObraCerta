@@ -1,5 +1,5 @@
 import React from 'react';
-import PageDefault from '../../components/PageDefault';
+import PageDefault from '../PageDefault';
 import Container from './styles';
 
 
