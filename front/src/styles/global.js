@@ -41,6 +41,11 @@ export default createGlobalStyle`
         text-decoration: none;
     }
 
+    form {
+        margin: auto;
+        max-width: 500px;
+    }
+
     table {
         border-collapse: collapse;
         border-spacing: 0;
