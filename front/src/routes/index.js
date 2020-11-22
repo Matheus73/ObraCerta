@@ -5,6 +5,7 @@ import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
 import Login from '../pages/Login';
 import UseTherms from '../pages/UseTherms';
+import PerfilUsuario from '../pages/PerfilUsuario';
 
 class Routes extends Component {
 
@@ -38,6 +39,12 @@ class Routes extends Component {
                         path="/cadastro"
                         render={props => (
                             <Cadastro {...props} handleLogin={this.handleLogin} />
+                        )}
+                    />
+                    <Route
+                        path="/PerfilUsuario"
+                        render={props => (
+                            <PerfilUsuario {...props} handleLogin={this.handleLogin} />
                         )}
                     />
                     <Route
