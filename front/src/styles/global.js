@@ -27,10 +27,6 @@ export default createGlobalStyle`
     }
     body, a, button, input {
         font: 22px Roboto, sans-serif;
-        
-        @media screen and (max-width: 370px){
-            font-size: 16px;
-        }
     }
 
     a, button {
