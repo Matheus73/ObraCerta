@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
 import Login from '../pages/Login';
-import UseTherms from '../pages/UseTherms';
+import TermosDeUsuario from '../pages/TermosDeUsuario';
 
 class Routes extends Component {
 
@@ -49,7 +49,7 @@ class Routes extends Component {
                     <Route
                         path='/termosdeuso'
                         render={props => (
-                            <UseTherms {...props} loggedIn={this.state.loggedIn} />
+                            <TermosDeUsuario {...props} loggedIn={this.state.loggedIn} />
                         )}
                     />
                 </Switch>
