@@ -44,5 +44,6 @@ router.delete('/usuario/:idUsuario/publicacao/:idPublicacao', publicationControl
 //alterar e deletar usuarios
 router.delete('/usuario/:idUsuario', UserController.delete)
 router.put('/usuario/:idUsuario', UserController.update)
+router.post('/alteraSenha', UserController.updatePassword);
 
 module.exports = router

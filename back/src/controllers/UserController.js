@@ -45,7 +45,7 @@ class UserController {
 
     const token = await authServices.generateToken(newUser);
 
-    return res.json({newUser,token});
+    return res.json({ newUser, token });
 
   }
 
@@ -69,13 +69,13 @@ class UserController {
         .where({ idUsuario: idUsuario })
         .first();
 
-      if (!await bcrypt.compare(senha, hash.hashSenha)){
-        return res.status(400).send({ error : 'Senha inválida' });
+      if (!await bcrypt.compare(senha, hash.hashSenha)) {
+        return res.status(400).send({ error: 'Senha inválida' });
       }
 
       await knex('usuario').where({ idUsuario: idUsuario }).del();
 
-      return res.send({message:'Usuario Deletado Com Sucesso'});
+      return res.send({ message: 'Usuario Deletado Com Sucesso' });
 
     } catch (error) {
 
@@ -88,44 +88,65 @@ class UserController {
   async update(req, res, next) {
 
     try {
-      const {idUsuario} = req.params;
+      const { idUsuario } = req.params;
       const senha = req.body.senha;
 
       const hash = await knex.select('hashSenha')
         .from('usuario')
         .where({ idUsuario: idUsuario })
         .first();
-      
-      if (!await bcrypt.compareSync(senha, hash.hashSenha)){
-        return res.status(400).send({ error : 'Senha inválida' });
+
+      if (!await bcrypt.compareSync(senha, hash.hashSenha)) {
+        return res.status(400).send({ error: 'Senha inválida' });
       }
 
       const newUserInfo = {
-        nomeCompleto : req.body.novoNomeCompleto, 
-        email : req.body.novoEmail, 
-        telefone : req.body.novoTelefone, 
-        descricao : req.body.novaDescricao, 
-        categoria : req.body.novaCategoria
+        nomeCompleto: req.body.novoNomeCompleto,
+        email: req.body.novoEmail,
+        telefone: req.body.novoTelefone,
+        descricao: req.body.novaDescricao,
+        categoria: req.body.novaCategoria
       }
       //retirando informações que não serão atualizadas
       let info;
-      for (info in newUserInfo){
-        if (newUserInfo[info] === ''){
+      for (info in newUserInfo) {
+        if (newUserInfo[info] === '') {
           delete newUserInfo[info]
         }
       }
 
-     await knex('usuario').update(newUserInfo).where({idUsuario});
-      
+      await knex('usuario').update(newUserInfo).where({ idUsuario });
+
       return res.send(newUserInfo)
 
-      
+
     } catch (error) {
 
       next(error);
 
     }
 
+  }
+
+  async updatePassword(request, response) {
+    const { id, senha, novaSenha } = request.body;
+
+    const hash = await knex.select('hashSenha')
+      .from('usuario')
+      .where({ idUsuario: id })
+      .first();
+
+    if (!await bcrypt.compare(senha, hash.hashSenha))
+      return response.status(401).send({ error: 'Senha inválida' });
+
+    if (await bcrypt.compare(novaSenha, hash.hashSenha))
+      return response.json({ message: 'Nova Senha não pode ser igual a anterior' });
+
+    await knex.update({ hashSenha: await bcrypt.hash(novaSenha, 8) })
+      .from('usuario')
+      .where({ idUsuario: id });
+
+    return response.json({ message: 'Senha Alterada' });
   }
 
 }
