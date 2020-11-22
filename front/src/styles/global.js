@@ -1,5 +1,5 @@
 import {createGlobalStyle} from 'styled-components';
-import trianguloBackground2 from '../assets/triangulobackground2.svg';
+import trianguloBackground from '../assets/triangulobackground.svg';
 
 export default createGlobalStyle`
     *{
@@ -19,8 +19,9 @@ export default createGlobalStyle`
         max-width: 970px;
     }
     body {
+        height: 100%;
         overflow-x: hidden;
-        background:#FFFFFF url(${trianguloBackground2}) no-repeat center;
+        background:#FFFFFF url(${trianguloBackground}) no-repeat center;
         background-size: cover;
         -webkit-font-smoothing: antialiased;
     }
