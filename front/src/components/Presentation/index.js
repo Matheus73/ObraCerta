@@ -3,7 +3,7 @@ import Container, { Box } from './styles';
 
 function Presentation(props) {
     return(
-        <Container noBorder={props.noBorder} rotation={props.rotation}>
+        <Container rotation={props.rotation}>
             <img
                 width={props.width}
                 height={props.height || "auto"}
