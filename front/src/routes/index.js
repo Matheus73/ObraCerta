@@ -6,6 +6,7 @@ import Cadastro from '../pages/Cadastro';
 import Login from '../pages/Login';
 import TermosDeUsuario from '../pages/TermosDeUsuario';
 import PerfilUsuario from '../pages/PerfilUsuario';
+import RecuperarSenha from '../pages/RecuperarSenha';
 
 class Routes extends Component {
 
@@ -57,6 +58,12 @@ class Routes extends Component {
                         path='/termosdeuso'
                         render={props => (
                             <TermosDeUsuario {...props} loggedIn={this.state.loggedIn} />
+                        )}
+                    />
+                    <Route
+                        path='/recuperarsenha'
+                        render={props => (
+                            <RecuperarSenha {...props} loggedIn={this.state.loggedIn} />
                         )}
                     />
                 </Switch>
