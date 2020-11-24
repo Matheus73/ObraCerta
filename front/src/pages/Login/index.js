@@ -44,13 +44,11 @@ class Login extends Component {
         axios.post(this.url, this.userData)
             .then(response => {
                 this.props.handleLogin(response.data.dados);
-                console.log(response)
-                console.log(response.data.dados.nomeCompleto)
-                localStorage.setItem("token",response.data.token)
-                localStorage.setItem("LOGGED_IN",true)
-                localStorage.setItem("name",response.data.dados.nomeCompleto)
-                localStorage.setItem("email",response.data.dados.email)
-                localStorage.setItem("telefone",response.data.dados.telefone)
+                sessionStorage.setItem("token",response.data.token)
+                sessionStorage.setItem("loggedIn","LOGGED_IN")
+                sessionStorage.setItem("name",response.data.dados.nomeCompleto)
+                sessionStorage.setItem("email",response.data.dados.email)
+                sessionStorage.setItem("telefone",response.data.dados.telefone)
                 this.props.history.push('/');
             })
             .catch(error => {

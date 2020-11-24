@@ -162,10 +162,10 @@ class Cadastro extends Component {
                     console.log(response)
                     this.props.handleLogin(response.data.dados);
                     // localStorage.setItem("token",response.data.token)
-                    localStorage.setItem("LOGGED_IN",true)
-                    localStorage.setItem("name",response.data.nomeCompleto)
-                    localStorage.setItem("email",response.data.email)
-                    localStorage.setItem("telefone",response.data.telefone)
+                    sessionStorage.setItem("loggedIn","LOGGED_IN")
+                    sessionStorage.setItem("name",response.data.nomeCompleto)
+                    sessionStorage.setItem("email",response.data.email)
+                    sessionStorage.setItem("telefone",response.data.telefone)
                     this.props.history.push('/');
                 } )
                 .catch( error => {
