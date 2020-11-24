@@ -92,6 +92,10 @@ class Login extends Component {
                             <Button>Enviar</Button>
                         </div>
                         <Alert>{err}</Alert>
+                        <div>
+                    <a href="/recuperarsenha">Esqueci minha senha</a>
+
+                        </div>
                     </form>
                 </main>
                 <Footer orange />
