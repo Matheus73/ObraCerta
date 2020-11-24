@@ -11,6 +11,7 @@ import imgPresetation from '../../assets/imgPresetation.png';
 import imgCard1 from '../../assets/VerticalCards/HomeCards/Card1.svg';
 import imgCard2 from '../../assets/VerticalCards/HomeCards/Card2.svg';
 import imgCard3 from '../../assets/VerticalCards/HomeCards/Card3.svg';
+import Button from '../../components/Button';
 
 class Home extends Component {
 
@@ -18,6 +19,16 @@ class Home extends Component {
         return (
             <PageDefault loggedIn={this.props.loggedIn}>
                 <Input type="search" placeholder="Pesquise..." />
+
+                <Space/>
+                <CardGroup>
+                    <Button>Pedreiro</Button>
+                    <Button>Serralheiro</Button>
+                    <Button>Pintor</Button>
+                    <Button>Eletricista</Button>
+                    <Button>Macerneiro</Button>
+                    <Button>Encanador</Button>
+                </CardGroup>
 
                 <Space size="85px" sizeMobile="55px" />
                 <Presentation

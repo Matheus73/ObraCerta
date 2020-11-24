@@ -14,8 +14,9 @@ function Navbar(props){
                     <Button second href="/cadastro">CADASTRA-SE</Button>
                 </>
                 :
-                <Button second href="PerfilUsuario">Meu perfil</Button>
+                    <Button second href="/PerfilUsuario">Meu perfil</Button>
             }
+
         </Nav>
     );
 }

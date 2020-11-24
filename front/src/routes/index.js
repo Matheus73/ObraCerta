@@ -4,8 +4,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
 import Login from '../pages/Login';
-import UseTherms from '../pages/UseTherms';
+
+import TermosDeUsuario from '../pages/TermosDeUsuario';
 import PerfilUsuario from '../pages/PerfilUsuario';
+import RecuperarSenha from '../pages/RecuperarSenha';
+
 
 class Routes extends Component {
 
@@ -65,9 +68,21 @@ class Routes extends Component {
                         )}
                     />
                     <Route
+                        path='/PerfilUsuario'
+                        render={props => (
+                            <PerfilUsuario {...props} loggedIn={this.state.loggedIn} />
+                        )}
+                    />
+                    <Route
                         path='/termosdeuso'
                         render={props => (
-                            <UseTherms {...props} loggedIn={this.state.loggedIn} />
+                            <TermosDeUsuario {...props} loggedIn={this.state.loggedIn} />
+                        )}
+                    />
+                    <Route
+                        path='/recuperarsenha'
+                        render={props => (
+                            <RecuperarSenha {...props} loggedIn={this.state.loggedIn} />
                         )}
                     />
                 </Switch>

@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Item from '../Item';
 
 const Nav = styled.nav`
+    max-width: 1240px;
+    margin: auto;
     margin-top: 10px;
     display: flex;
     flex-direction: row;

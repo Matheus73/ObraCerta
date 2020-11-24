@@ -5,6 +5,7 @@ import axios from 'axios';
 import Footer from '../../components/Footer';
 import GlobalStyle from './styles';
 import Space from '../../components/Space';
+import Alert from '../../components/Alert';
 
 class Login extends Component {
     constructor(props) {
@@ -66,11 +67,8 @@ class Login extends Component {
                 <GlobalStyle />
                 <main>
                     <h1>Login</h1>
-                    <p>Entre para encontrar os melhores profissionais para sua obra ou para divulgar o seu trabalho!</p>
                     <form onSubmit={this.handleSubmit}>
-                        <div id="warning">
-                            <p>{err}</p>
-                        </div>
+                        <p>Entre para encontrar os melhores profissionais para sua obra ou para divulgar o seu trabalho!</p>
                         <Space />
                         <label>Email:
                         <Input
@@ -97,6 +95,11 @@ class Login extends Component {
                         <div>
                             <Space />
                             <Button>Enviar</Button>
+                        </div>
+                        <Alert>{err}</Alert>
+                        <div>
+                    <a href="/recuperarsenha">Esqueci minha senha</a>
+
                         </div>
                     </form>
                 </main>
