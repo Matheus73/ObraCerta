@@ -5,15 +5,17 @@ export const Container = styled.div`
     padding: 10px 10px;
     margin-top: 15px;
     align-items: center;
-    width: 100%;
+    max-width: 100%;
     border-radius: 30px;
+    position: relative;
 
 
-h1, h2, h3{
+
+h1{
     text-align: center;
     padding: 15px 0;
 }
-img{
+/* img{
     position: relative;
     max-width: 480px;
     border-radius: 20px;
@@ -36,7 +38,7 @@ div{
     border: 1px solid #000000;
     box-sizing: border-box;
     border-radius: 50px;
-}
+} */
 
 
 
