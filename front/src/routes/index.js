@@ -13,7 +13,7 @@ class Routes extends Component {
         super(props);
 
         this.state = {
-            loggedIn: "NOT_LOGGED_IN",
+            loggedIn: "",
             user: {}
         };
     }
@@ -23,6 +23,17 @@ class Routes extends Component {
             loggedIn: "LOGGED_IN",
             user: user
         });
+    }
+
+    componentDidMount = () => {
+        this.setState({
+            loggedIn: sessionStorage.getItem("loggedIn") || "NOT_LOGGED_IN", 
+            user: {
+                name: sessionStorage.getItem("name"),
+                telefone: sessionStorage.getItem("telefone"),
+                email: sessionStorage.getItem("email")
+            }
+        })
     }
 
     render() {
