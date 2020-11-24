@@ -45,6 +45,11 @@ class Login extends Component {
         axios.post(this.url, this.userData)
             .then(response => {
                 this.props.handleLogin(response.data.dados);
+                sessionStorage.setItem("token",response.data.token)
+                sessionStorage.setItem("loggedIn","LOGGED_IN")
+                sessionStorage.setItem("name",response.data.dados.nomeCompleto)
+                sessionStorage.setItem("email",response.data.dados.email)
+                sessionStorage.setItem("telefone",response.data.dados.telefone)
                 this.props.history.push('/');
             })
             .catch(error => {

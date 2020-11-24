@@ -9,6 +9,11 @@ class PerfilUsuario extends Component {
             <>
                 <main>
                     <h1>PerfilUsuario</h1>
+                    <br/>
+                    <h1>Olá {sessionStorage.getItem("name")}</h1>
+                    <br/>
+                    <h2>Email: {sessionStorage.getItem("email")}</h2>
+                    <h2>Telefone: {sessionStorage.getItem("telefone")}</h2>
                 </main>
                 <Footer/>
             </>

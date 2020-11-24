@@ -4,9 +4,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
 import Login from '../pages/Login';
+
 import TermosDeUsuario from '../pages/TermosDeUsuario';
 import PerfilUsuario from '../pages/PerfilUsuario';
 import RecuperarSenha from '../pages/RecuperarSenha';
+
 
 class Routes extends Component {
 
@@ -14,7 +16,7 @@ class Routes extends Component {
         super(props);
 
         this.state = {
-            loggedIn: "NOT_LOGGED_IN",
+            loggedIn: "",
             user: {}
         };
     }
@@ -24,6 +26,17 @@ class Routes extends Component {
             loggedIn: "LOGGED_IN",
             user: user
         });
+    }
+
+    componentDidMount = () => {
+        this.setState({
+            loggedIn: sessionStorage.getItem("loggedIn") || "NOT_LOGGED_IN", 
+            user: {
+                name: sessionStorage.getItem("name"),
+                telefone: sessionStorage.getItem("telefone"),
+                email: sessionStorage.getItem("email")
+            }
+        })
     }
 
     render() {
@@ -40,6 +53,12 @@ class Routes extends Component {
                         path="/cadastro"
                         render={props => (
                             <Cadastro {...props} handleLogin={this.handleLogin} />
+                        )}
+                    />
+                    <Route
+                        path="/PerfilUsuario"
+                        render={props => (
+                            <PerfilUsuario {...props} handleLogin={this.handleLogin} />
                         )}
                     />
                     <Route

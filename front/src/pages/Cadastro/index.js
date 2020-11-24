@@ -159,10 +159,16 @@ class Cadastro extends Component {
         const headers = {
             'content-type': 'application/json',
         }
+
         if (valid) {
             axios.post(this.url, this.userData, headers)
                 .then(response => {
                     this.props.handleLogin(response.data.dados);
+                    // localStorage.setItem("token",response.data.token)
+                    sessionStorage.setItem("loggedIn","LOGGED_IN")
+                    sessionStorage.setItem("name",response.data.nomeCompleto)
+                    sessionStorage.setItem("email",response.data.email)
+                    sessionStorage.setItem("telefone",response.data.telefone)
                     this.props.history.push('/');
                 })
                 .catch(error => {
