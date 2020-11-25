@@ -1,6 +1,7 @@
 import {createGlobalStyle} from 'styled-components';
+// import trianguloBackground from '../assets/triangulobackground.svg';
 import trianguloBackground2 from '../assets/triangulobackground2.svg';
-
+import Background from '../components/Background';
 export default createGlobalStyle`
     *{
         margin:0;
@@ -10,52 +11,28 @@ export default createGlobalStyle`
         box-sizing: border-box;
     }
     #root {
+        max-width: 970px;
         margin: 0 auto;
         padding: 0px 15px;
     }
-    #content{
-        min-height: 100vh;
-        margin: auto;
-        max-width: 970px;
-    }
     body {
-        height: 100%;
         overflow-x: hidden;
-        background:#FFFFFF url(${trianguloBackground2}) no-repeat center;
-        background-size: cover;
+        background: #E5E5E5 url(${trianguloBackground2}) no-repeat top;
+        background-size: 100%;
         -webkit-font-smoothing: antialiased;
     }
     body, a, button, input {
         font: 22px Roboto, sans-serif;
-        
-        @media screen and (max-width: 370px){
-            font-size: 16px;
-        }
     }
-
     a, button {
         cursor: pointer;
         font-weight: bold;
     }
-
-    a{
-        text-decoration: none;
-    }
-
     table {
         border-collapse: collapse;
         border-spacing: 0;
     }
-
-    h1{
-        text-align: center;
-        font-size: 72px;
-
-        @media screen and (max-width: 650px){
-            font-size: 30px;
-        }
-    }
-    p{
-        text-align: center;
+    bottom {
+        overflow-x: hidden;
     }
 `;

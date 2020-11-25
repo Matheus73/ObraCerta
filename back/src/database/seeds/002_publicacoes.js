@@ -6,19 +6,24 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex('publicacao').insert([
         {
-          idUsuario:'1'
+          idUsuario:'1',
+          descricao:'fiz isso isso e aquilo.'
         },
         {
-          idUsuario:'1'
+          idUsuario:'1',
+          descricao:'fiz isso isso e aquilo.'
         },
         {
-          idUsuario:'1'
+          idUsuario:'1',
+          descricao:'fiz isso isso e aquilo.'
         },
         {
-          idUsuario:'4'
+          idUsuario:'4',
+          descricao:'fiz isso isso e aquilo.'
         },
         {
-          idUsuario:'4'
+          idUsuario:'4',
+          descricao:'fiz isso isso e aquilo.'
         },
       ]);
     });

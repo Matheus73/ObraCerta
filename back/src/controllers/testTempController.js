@@ -6,5 +6,5 @@ module.exports = {
     const results = await Knex('usuario')
 
     return response.json(results);
-  }
+  },
 }
