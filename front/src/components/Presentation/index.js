@@ -1,5 +1,5 @@
 import React from 'react';
-import Container, { Card } from './styles';
+import Container, { Box } from './styles';
 
 function Presentation(props) {
     return(
@@ -10,9 +10,9 @@ function Presentation(props) {
                 src={props.src}
                 alt={props.alt}
             />
-            <Card>
+            <Box>
                 {props.children}
-            </Card>
+            </Box>
         </Container>
     );
 }

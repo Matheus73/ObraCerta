@@ -1,20 +1,34 @@
 import React, { Component } from 'react';
+
 import PageDefault from '../../pages/PageDefault';
 import Input from '../../components/Input';
 import Presentation from '../../components/Presentation';
 import Space from '../../components/Space';
+import Card from '../../components/Card';
+import CardGroup from '../../components/CardGroup';
+
 import imgPresetation from '../../assets/imgPresetation.png';
 import imgCard1 from '../../assets/VerticalCards/HomeCards/Card1.svg';
 import imgCard2 from '../../assets/VerticalCards/HomeCards/Card2.svg';
 import imgCard3 from '../../assets/VerticalCards/HomeCards/Card3.svg';
-import Card from '../../components/Card';
-import CardGroup from '../../components/CardGroup';
+import Button from '../../components/Button';
+
 class Home extends Component {
 
     render() {
         return (
             <PageDefault loggedIn={this.props.loggedIn}>
                 <Input type="search" placeholder="Pesquise..." />
+
+                <Space/>
+                <CardGroup>
+                    <Button>Pedreiro</Button>
+                    <Button>Serralheiro</Button>
+                    <Button>Pintor</Button>
+                    <Button>Eletricista</Button>
+                    <Button>Macerneiro</Button>
+                    <Button>Encanador</Button>
+                </CardGroup>
 
                 <Space size="85px" sizeMobile="55px" />
                 <Presentation
@@ -47,7 +61,6 @@ class Home extends Component {
             </PageDefault>
         );
     }
-
 }
 
 export default Home;
