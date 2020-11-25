@@ -3,7 +3,7 @@ import PageDefault from '../PageDefault';
 import Container from './styles';
 
 
-function TermosDeUsuario(props) {
+function UseTherms(props) {
     return (
         <PageDefault loggedIn={props.loggedIn}>
             <Container>
@@ -126,4 +126,4 @@ function TermosDeUsuario(props) {
     )
 }
 
-export default TermosDeUsuario;
+export default UseTherms

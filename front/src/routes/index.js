@@ -4,11 +4,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
 import Login from '../pages/Login';
-
-import TermosDeUsuario from '../pages/TermosDeUsuario';
+import UseTherms from '../pages/UseTherms';
 import PerfilUsuario from '../pages/PerfilUsuario';
-import RecuperarSenha from '../pages/RecuperarSenha';
-
 
 class Routes extends Component {
 
@@ -16,7 +13,7 @@ class Routes extends Component {
         super(props);
 
         this.state = {
-            loggedIn: "",
+            loggedIn: "NOT_LOGGED_IN",
             user: {}
         };
     }
@@ -26,17 +23,6 @@ class Routes extends Component {
             loggedIn: "LOGGED_IN",
             user: user
         });
-    }
-
-    componentDidMount = () => {
-        this.setState({
-            loggedIn: sessionStorage.getItem("loggedIn") || "NOT_LOGGED_IN", 
-            user: {
-                name: sessionStorage.getItem("name"),
-                telefone: sessionStorage.getItem("telefone"),
-                email: sessionStorage.getItem("email")
-            }
-        })
     }
 
     render() {
@@ -56,12 +42,6 @@ class Routes extends Component {
                         )}
                     />
                     <Route
-                        path="/PerfilUsuario"
-                        render={props => (
-                            <PerfilUsuario {...props} handleLogin={this.handleLogin} />
-                        )}
-                    />
-                    <Route
                         path="/login"
                         render={props => (
                             <Login {...props} handleLogin={this.handleLogin} />
@@ -76,13 +56,7 @@ class Routes extends Component {
                     <Route
                         path='/termosdeuso'
                         render={props => (
-                            <TermosDeUsuario {...props} loggedIn={this.state.loggedIn} />
-                        )}
-                    />
-                    <Route
-                        path='/recuperarsenha'
-                        render={props => (
-                            <RecuperarSenha {...props} loggedIn={this.state.loggedIn} />
+                            <UseTherms {...props} loggedIn={this.state.loggedIn} />
                         )}
                     />
                 </Switch>
