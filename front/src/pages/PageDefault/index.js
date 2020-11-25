@@ -8,9 +8,9 @@ class PageDefault extends Component {
         return (
             <>
                 <Navbar loggedIn={this.props.loggedIn}/>
-                <main>
-                    {this.props.children}
-                </main>
+                    <main>
+                        {this.props.children}
+                    </main>
                 <Footer white />
             </>
         );
