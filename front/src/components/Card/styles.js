@@ -18,11 +18,13 @@ const Box = styled.div`
             margin: 20px 0px;
         }
     `}
+
     ${props => props.horizontal && css`
         max-width: ${props => props.width};
         flex-direction: row;
         flex-wrap: row nowrap;
     `}
+
     @media screen and (max-width: 900px) {
         width: 450px;
         flex-direction: row;
@@ -33,9 +35,11 @@ const Box = styled.div`
             margin: 20px 20px;
         }
     }
+
     @media screen and (max-width: 520px) {
         flex-direction: column;
     }
+
     padding: 25px 50px;
     background: #ECF0F1;
     border-radius: 25px;

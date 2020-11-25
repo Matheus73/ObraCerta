@@ -5,6 +5,7 @@ import axios from 'axios';
 import Footer from '../../components/Footer';
 import GlobalStyle from './styles';
 import Space from '../../components/Space';
+import Alert from '../../components/Alert';
 
 class Login extends Component {
     constructor(props) {
@@ -44,6 +45,11 @@ class Login extends Component {
         axios.post(this.url, this.userData)
             .then(response => {
                 this.props.handleLogin(response.data.dados);
+                sessionStorage.setItem("token",response.data.token)
+                sessionStorage.setItem("loggedIn","LOGGED_IN")
+                sessionStorage.setItem("name",response.data.dados.nomeCompleto)
+                sessionStorage.setItem("email",response.data.dados.email)
+                sessionStorage.setItem("telefone",response.data.dados.telefone)
                 this.props.history.push('/');
             })
             .catch(error => {
@@ -61,11 +67,8 @@ class Login extends Component {
                 <GlobalStyle />
                 <main>
                     <h1>Login</h1>
-                    <p>Entre para encontrar os melhores profissionais para sua obra ou para divulgar o seu trabalho!</p>
                     <form onSubmit={this.handleSubmit}>
-                        <div id="warning">
-                            <p>{err}</p>
-                        </div>
+                        <p>Entre para encontrar os melhores profissionais para sua obra ou para divulgar o seu trabalho!</p>
                         <Space />
                         <label>Email:
                         <Input
@@ -92,6 +95,11 @@ class Login extends Component {
                         <div>
                             <Space />
                             <Button>Enviar</Button>
+                        </div>
+                        <Alert>{err}</Alert>
+                        <div>
+                    <a href="/recuperarsenha">Esqueci minha senha</a>
+
                         </div>
                     </form>
                 </main>
