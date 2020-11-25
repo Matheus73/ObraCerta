@@ -37,7 +37,18 @@ router.post('/registrar', UserController.store);
 router.get('/login', (req, res) => res.send('Logar'));
 router.post('/login', loginController.login);
 
+<<<<<<< HEAD
 router.post('/nova_publicacao', [authServices.middlewares, upload.single("publicacao")], publicationController.store);
 router.get('/publicacoes', authServices.middlewares, publicationController.list);
+=======
+router.post('/nova_publicacao', [authServices.middlewares, upload.any()], publicationController.store);
+router.get('/:idUsuario/publicacoes', authServices.middlewares, publicationController.list);
+router.delete('/usuario/:idUsuario/publicacao/:idPublicacao', authServices.middlewares, publicationController.delete)
+
+//alterar e deletar usuarios
+router.delete('/usuario/:idUsuario', UserController.delete)
+router.put('/usuario/:idUsuario', UserController.update)
+router.post('/alteraSenha', UserController.updatePassword);
+>>>>>>> back
 
 module.exports = router
