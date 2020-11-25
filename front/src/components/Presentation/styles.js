@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Card = styled.div``;
+export const Box = styled.div``;
 
 const Container = styled.div`
     display: flex;
@@ -11,15 +11,15 @@ const Container = styled.div`
 
     img {
         border-radius: 25px;
-        box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+        filter: drop-shadow(10px 10px 4px rgba(0, 0, 0, 0.5));
         transform: rotate(${props => props.rotation || "0deg"});
     }
 
-    ${Card} div {
+    ${Box} div {
         text-align: center;
         max-width: 400px;
         padding: 42px 20px;
-        margin: 10px 10px;
+        margin: 15px 10px;
         border: 1px solid #000000;
         box-sizing: border-box;
         border-radius: 25px;
@@ -30,7 +30,7 @@ const Container = styled.div`
             max-width: 90%;
         }
 
-        ${Card} div {
+        ${Box} div {
             max-width: 100%;
             border: 0px;
             background: #F0CA45;
