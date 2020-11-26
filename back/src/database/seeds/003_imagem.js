@@ -4,24 +4,15 @@ exports.seed = function(knex) {
   return knex('imagem').del()
     .then(function () {
       // Inserts seed entries
-      return knex('imagem').insert([
-        {
-          nomeImagem:'image-fake.jpg',
-          idPublicacao : '1'
-        },
-        {
-          nomeImagem:'image-fake.jpg',
-          idPublicacao : '1'
-        },
-        {
-          nomeImagem:'image-fake.jpg',
-          idPublicacao : '2'
-        },
-        {
-          nomeImagem:'image-fake.jpg',
-          idPublicacao : '3'
-        },
-       
-      ]);
+      const numberOfPubs = 300
+      const imgs = []
+      for (let index = 1; index <= numberOfPubs; index++) {
+        imgs.push({
+          nomeImagem:'fakePubImage'+index+'.jpg',
+          idPublicacao : index
+        });
+
+      }
+      return knex('imagem').insert(imgs);
     });
 };

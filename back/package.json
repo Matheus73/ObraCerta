@@ -5,6 +5,9 @@
   "main": "src/sserver.js",
   "scripts": {
     "start": "node src/server.js",
+    "dbfeed":"npx knex seed:run",
+    "dbrestart": "npx knex migrate:rollback & npx knex migrate:latest",
+    "dbprepare": "npx knex migrate:rollback & npx knex migrate:latest & npx knex seed:run"
     "dev": "nodemon src/server.js --ignore __tests__",
     "pretest": "SET NODE_ENV=test & knex migrate:latest --env test",
     "test": "jest --detectOpenHandles --forceExit",
