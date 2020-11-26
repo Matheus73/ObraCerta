@@ -18,7 +18,7 @@ verificar se é realizado o cadastro do cliente informando nome, email, senha e 
 ### 1. validar a entrada de uma avaliação
 verificar se é realizado uma avaliação sobre um usuário. Um usuário logado deve ser capaz de avaliar outro usuário.
 
-### 2. Validar a entrada de uma avaliação já feita
+### 2. Retornar erro na entrada de uma avaliação já feita
 Verificar se é realizado uma segunda avaliação de um usuário logado sobre um mesmo usuário.
 
 ### 3. Retornar a média de avaliações em um usuário.
