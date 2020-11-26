@@ -6,8 +6,7 @@ function Alert(props) {
     return props.children ? (
         <>
             <Box>
-                <div></div>
-                <span>{props.children}</span>
+                {props.children}
             </Box>
         </>
     ):(
