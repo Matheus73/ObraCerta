@@ -1,7 +1,28 @@
 // Update with your config settings.
-require('dotenv').config(); //comentar se não tiver utilizando dotenv e alterar dados abaixo
+const process = require('process');
+
+require('dotenv').config({
+  path: process.env.NODE_ENV ==  'test '|| 'test' ? '.env.test' : '.env'
+}); //comentar se não tiver utilizando dotenv e alterar dados abaixo
 
 module.exports = {
+
+  test: {
+    client: process.env.DB_CLIENT,
+    connection: {
+      host : process.env.DB_HOST,
+      user : process.env.DB_USER,
+      password : process.env.DB_PASSWORD,
+      database : process.env.DB_DATABASE
+    }, 
+    migrations : {
+      tableName :'knex_migrations',
+      directory : `${__dirname}/src/database/migrations`
+    },
+    seeds : {
+      directory : `${__dirname}/src/database/seeds` 
+    }
+  },
 
   development: {
     client: process.env.DB_CLIENT,
@@ -19,7 +40,7 @@ module.exports = {
       directory : `${__dirname}/src/database/seeds` 
     }
   }
-
+  
   // staging: {
   //   client: 'postgresql',
   //   connection: {

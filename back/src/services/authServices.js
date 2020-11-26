@@ -1,5 +1,8 @@
+require('dotenv').config({
+    path: process.env.NODE_ENV ==  'test' || 'test ' ? '.env.test' : '.env'
+});
+
 const express = require("express");
-require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 exports.generateToken = async (data) => {
