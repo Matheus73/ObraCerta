@@ -12,7 +12,6 @@ exports.seed = function(knex) {
           idPublicacao: (Math.floor(Math.random() * 300) + 1),
           idUsuario: (Math.floor(Math.random() * 500) + 1)
         });
-
       }
       return knex('comentario').insert(comments);
     });
