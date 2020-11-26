@@ -30,11 +30,11 @@ class Routes extends Component {
 
     componentDidMount = () => {
         this.setState({
-            loggedIn: sessionStorage.getItem("loggedIn") || "NOT_LOGGED_IN", 
+            loggedIn: localStorage.getItem("loggedIn") || "NOT_LOGGED_IN", 
             user: {
-                name: sessionStorage.getItem("name"),
-                telefone: sessionStorage.getItem("telefone"),
-                email: sessionStorage.getItem("email")
+                name: localStorage.getItem("name"),
+                telefone: localStorage.getItem("telefone"),
+                email: localStorage.getItem("email")
             }
         })
     }
