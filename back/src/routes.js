@@ -28,7 +28,7 @@ const upload = multer({
 
 // Rotas para a pagina inicial da aplicação
 router.get('/', (req, res) => res.send("hello"));
-router.get('/list', authServices.middlewares, testController.listUsers);//temp
+router.get('/list', testController.listUsers);//temp
 
 // Rotas de cadastro e login de usuário
 router.get('/registrar', UserController.list);
@@ -37,7 +37,13 @@ router.post('/registrar', UserController.store);
 router.get('/login', (req, res) => res.send('Logar'));
 router.post('/login', loginController.login);
 
-router.post('/nova_publicacao', [authServices.middlewares, upload.single("publicacao")], publicationController.store);
-router.get('/publicacoes', authServices.middlewares, publicationController.list);
+router.post('/nova_publicacao', [authServices.middlewares, upload.any()], publicationController.store);
+router.get('/:idUsuario/publicacoes', authServices.middlewares, publicationController.list);
+router.delete('/usuario/:idUsuario/publicacao/:idPublicacao', authServices.middlewares, publicationController.delete)
+
+//alterar e deletar usuarios
+router.delete('/usuario/:idUsuario', UserController.delete)
+router.put('/usuario/:idUsuario', UserController.update)
+router.post('/alteraSenha', UserController.updatePassword);
 
 module.exports = router

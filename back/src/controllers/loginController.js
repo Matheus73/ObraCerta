@@ -20,11 +20,13 @@ class loginController{
         if (!await bcrypt.compare(senha, hash.hashSenha))
             return response.status(400).send({ error: 'Senha inválida' });
 
-        const dados = await knex.select('nomeCompleto', 'email', 'telefone','idUsuario')
+        const dados = await knex.select('*')
             .from('usuario')
             .where({ email: email })
             .first();
         
+        delete dados.hashSenha;
+
         const token = await authServices.generateToken(dados);
 
         return response.send({dados,token});
