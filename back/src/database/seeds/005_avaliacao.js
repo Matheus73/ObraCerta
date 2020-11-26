@@ -19,7 +19,6 @@ exports.seed = function(knex) {
           validpairs.push(pair)
         }
       }
-      console.log(validpairs)
       
       return knex('avaliacao').insert(validpairs);
     });
