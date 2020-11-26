@@ -10,7 +10,7 @@ const Box = styled.div`
 
     img {
         width: 250px;
-        height: 187px;//REMOVER apenas um test
+        height: 187px;
         border-radius: 25px 0px 0px 25px;
     }
 
@@ -20,6 +20,7 @@ const Box = styled.div`
         align-items: baseline;
         justify-content: space-between;
         width: 100%;
+        padding-right: 30px;
         margin-top: 10px;
         margin-left: 25px;
         word-wrap: break-word;
@@ -32,6 +33,22 @@ const Box = styled.div`
     ${Button} {
         margin-right: 25px;
         align-self: flex-end;
+    }
+
+    @media screen and (max-width: 720px) {
+        flex-direction: column;
+
+        img {
+            width: 50%;
+            height: auto;
+            margin: 5px auto;
+            border-radius: 15px;
+        }   
+
+        ${Button} {
+            margin-top: 25px;
+            align-self: center;
+        }
     }
 `;
 
