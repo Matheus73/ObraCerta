@@ -9,8 +9,7 @@ const Box = styled.div`
     box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
 
     img {
-        width: 250px;
-        height: 187px;
+        width: 35%;
         border-radius: 25px 0px 0px 25px;
     }
 
@@ -30,6 +29,10 @@ const Box = styled.div`
         text-align: left;
     }
 
+    p {
+        margin: auto 0px;
+    }
+
     ${Button} {
         margin-right: 25px;
         align-self: flex-end;
@@ -39,11 +42,14 @@ const Box = styled.div`
         flex-direction: column;
 
         img {
-            width: 50%;
-            height: auto;
+            width: 55%;
             margin: 5px auto;
             border-radius: 15px;
         }   
+
+        p, strong {
+            text-align: center;
+        }
 
         ${Button} {
             margin-top: 25px;
