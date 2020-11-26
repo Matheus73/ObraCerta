@@ -41,11 +41,16 @@ class UserController {
     //Criar um usuário
     await knex('usuario').insert(newUser);
 
-    delete newUser.hashSenha;
+    const dados = await knex.select('*')
+            .from('usuario')
+            .where({ email: newUser.email })
+            .first();
 
-    const token = await authServices.generateToken(newUser);
+    delete dados.hashSenha;
 
-    return res.json({ newUser, token });
+    const token = await authServices.generateToken(dados);
+
+    return res.json({ dados, token });
 
   }
 
