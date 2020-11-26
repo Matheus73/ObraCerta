@@ -7,10 +7,9 @@ exports.seed = function (knex) {
       const users = []
       const categorias = ['Serralheiro', 'Pintor', 'Eletricista', 'Marceneiro', 'Encanador', 'Pedreiro', null, null];
       const resps = ['Bolacha', 'Biscoito', null];
-      let user;
 
       for (let index = 1; index <= 500; index++) {
-        user = {
+        users.push({
           email: 'user' + index + '@mail.com',
           nomeCompleto: 'Test User',
           hashSenha: bcrypt.hashSync('123456', 8),
@@ -19,9 +18,7 @@ exports.seed = function (knex) {
           imagemPerfil: 'fakePerfilImage.jpg',
           descricao: 'trabalho desde 17 anos na area',
           respDeSeguranca: resps[Math.floor(Math.random() * resps.length)]
-        }
-
-        users.push(user)
+        });
 
       }
       return knex('usuario').insert(users);

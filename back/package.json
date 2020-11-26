@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "dbrb": "npx knex migrate:rollback",
-    "dbmig":"npx knex migrate:latest",
-    "dbfeed":"npx knex seed:run"
+    "dbfeed":"npx knex seed:run",
+    "dbrestart": "npx knex migrate:rollback & npx knex migrate:latest",
+    "dbprepare": "npx knex migrate:rollback & npx knex migrate:latest & npx knex seed:run"
   },
   "keywords": [],
   "author": "",
