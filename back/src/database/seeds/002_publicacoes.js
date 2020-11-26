@@ -4,27 +4,14 @@ exports.seed = function(knex) {
   return knex('publicacao').del()
     .then(function () {
       // Inserts seed entries
-      return knex('publicacao').insert([
-        {
-          idUsuario:'1',
-          descricao:'fiz isso isso e aquilo.'
-        },
-        {
-          idUsuario:'1',
-          descricao:'fiz isso isso e aquilo.'
-        },
-        {
-          idUsuario:'1',
-          descricao:'fiz isso isso e aquilo.'
-        },
-        {
-          idUsuario:'4',
-          descricao:'fiz isso isso e aquilo.'
-        },
-        {
-          idUsuario:'4',
-          descricao:'fiz isso isso e aquilo.'
-        },
-      ]);
+      const pubs = []
+      for (let index = 0; index < 150; index++) {
+        pubs.push({
+          idUsuario: (Math.floor(Math.random() * 499) + 1),
+          descricao:'Fiz isso, isso e aquilo em 2 dias.'
+        });
+
+      }
+      return knex('publicacao').insert(pubs);
     });
 };

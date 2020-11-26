@@ -5,7 +5,10 @@
   "main": "src/sserver.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "dbrb": "npx knex migrate:rollback",
+    "dbmig":"npx knex migrate:latest",
+    "dbfeed":"npx knex seed:run"
   },
   "keywords": [],
   "author": "",
