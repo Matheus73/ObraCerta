@@ -1,6 +1,5 @@
 const request = require('supertest');
-const knex = require('knex');
-
+const knex = require('../../src/database/index.js');
 const app = require('../../src/app.js')
 
 
@@ -61,7 +60,7 @@ describe("Usuario", () =>{
       email: user.email,
       senha: user.senha
     }).then(res => {
-      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty("token");
       done();
     })
 
