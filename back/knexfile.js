@@ -2,7 +2,7 @@
 const process = require('process');
 
 require('dotenv').config({
-  path: process.env.NODE_ENV ==  'test '|| 'test' ? '.env.test' : '.env'
+  path: process.env.NODE_ENV ==  'test' || process.env.NODE_ENV == 'test ' ? '.env.test' : '.env'
 }); //comentar se não tiver utilizando dotenv e alterar dados abaixo
 
 module.exports = {
