@@ -12,14 +12,17 @@ class PerfilUsuario extends Component {
         super(props);
 
         this.state = {
-            posts: '',
-            profileImage: '',
+            posts: {},
             userData: {
                 nomeCompleto: localStorage.getItem('nomeCompleto'),
                 telefone: localStorage.getItem('telefone'),
                 email: localStorage.getItem('email'),
                 idUsuario: localStorage.getItem('idUsuario'),
-                // descricao: localStorage.getItem('descricao')
+                descricao: localStorage.getItem('descricao'),
+                localidade: localStorage.getItem('localidade'),
+                descricao: localStorage.getItem('descricao'),
+                imagemPerfil: localStorage.getItem('imagemPerfil'),
+                categoria: localStorage.getItem('categoria')
             }
         }
     }
@@ -33,10 +36,19 @@ class PerfilUsuario extends Component {
             }
         })
             .then(response => {
-                console.log(response)
+
+                let imagem = {};                
+                for( var i in response.data){
+                    let idPublicacao = response.data[i].idPublicacao;
+                    let nomeImagem = response.data[i].nomeImagem;
+                    imagem[i] = {idPublicacao,nomeImagem};
+                }
+                this.setState({
+                    posts: imagem,
+                })
             })
             .catch(error => {
-                console.log(error)
+                console.log(error);
             })
     }
 
@@ -63,7 +75,7 @@ class PerfilUsuario extends Component {
                         </Card>
                         <Card>
                             <p><strong>Região:</strong><br/>
-                            {localStorage.getItem("regiao") || "Não definido"}</p>
+                            {localStorage.getItem("localidade") || "Não definido"}</p>
                         </Card>
                     </CardGroup>
                 </main>
