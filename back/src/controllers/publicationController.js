@@ -20,12 +20,6 @@ class publicationController {
     if (req.files.length == 0) return res.status(400).send({ error: "Nenhuma foto foi enviada" }) 
 
     // se alguma das imagens possuir mais de 5mb ele retorna um erro
-    for (const img of req.files) {
-      if(img.size >= 5000000){ 
-        await unlinkAsync(img.path);
-        return res.status(400).send({ error: "a imagem deve possuir menos de 5Mb" });
-      }
-    }
 
     await knex('publicacao').insert(req.body)
     .returning('idPublicacao').then(async function (idPublicacao){
