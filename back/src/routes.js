@@ -5,7 +5,6 @@ const { v4:uuidv4 } = require('uuid');
 
 //CONTROLLERS
 const UserController = require('./controllers/UserController');
-const testController = require('./controllers/testTempController.js');//temp
 const loginController = require('./controllers/loginController');
 const publicationController = require('./controllers/publicationController');
 const rateController = require('./controllers/rateController')
@@ -29,10 +28,9 @@ const upload = multer({
 
 // Rotas para a pagina inicial da aplicação
 router.get('/', (req, res) => res.send("hello"));
-router.get('/list', testController.listUsers);//temp
 
 // Rotas para o UserController
-router.get('/registrar', UserController.list);
+router.get('/search', UserController.list);
 router.post('/registrar', UserController.store);
 router.delete('/usuario/:idUsuario', UserController.delete)
 router.put('/usuario/:idUsuario', UserController.update)
