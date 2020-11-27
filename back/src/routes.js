@@ -1,7 +1,6 @@
 //PACKAGES
-const express = require('express')
-const multer = require('multer');
-const { v4:uuidv4 } = require('uuid');
+const express = require('express');
+
 
 //CONTROLLERS
 const UserController = require('./controllers/UserController');
@@ -12,20 +11,10 @@ const rateController = require('./controllers/rateController')
 
 //MIDDLEWARES
 const authServices = require('./services/authServices');
+const upload = require('./config/multer');
 
 const router = express.Router();
 
-//upload define o destino da imagem e com qual nome ela deve ser armazenada
-const upload = multer({ 
-  storage: multer.diskStorage({
-    destination: './static/uploads/',
-    filename(req, file, callback) {
-      const fileName = `${uuidv4()}-${file.originalname}`;
-
-      return callback(null, fileName);
-    },
-  }),
-})
 
 // Rotas para a pagina inicial da aplicação
 router.get('/', (req, res) => res.send("hello"));
