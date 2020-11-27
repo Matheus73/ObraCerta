@@ -5,8 +5,40 @@ import Space from '../../components/Space';
 import ProfileCard from '../../components/ProfileCard';
 import CardGroup from '../../components/CardGroup';
 import imgProfileDefault from '../../assets/profileDefault.png';
+import axios from 'axios';
 
 class PerfilUsuario extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            posts: '',
+            profileImage: '',
+            userData: {
+                nomeCompleto: localStorage.getItem('nomeCompleto'),
+                telefone: localStorage.getItem('telefone'),
+                email: localStorage.getItem('email'),
+                idUsuario: localStorage.getItem('idUsuario'),
+                // descricao: localStorage.getItem('descricao')
+            }
+        }
+    }
+
+    componentDidMount = () => {
+        const url = 'http://localhost:3001/' + localStorage.getItem('idUsuario') + '/publicacoes'
+        console.log(url)
+        axios.get(url,{
+            headers:{
+                'authorization': localStorage.getItem('token')
+            }
+        })
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
 
     render() {
         return (

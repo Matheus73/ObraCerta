@@ -4,17 +4,15 @@ exports.seed = function(knex) {
   return knex('comentario').del()
     .then(function () {
       // Inserts seed entries
-      return knex('comentario').insert([
-        {
-          conteudo: 'conteudo do comentario...',
-          idPublicacao: '1',
-          idUsuario: '3'
-        },
-        {
-          conteudo: 'conteudo do comentario...',
-          idPublicacao: '1',
-          idUsuario: '2'
-        },
-      ]);
+      const numberOfComments = 400
+      const comments = []
+      for (let index = 1; index <= numberOfComments; index++) {
+        comments.push({
+          conteudo: 'Conteudo do comentario...',
+          idPublicacao: (Math.floor(Math.random() * 300) + 1),
+          idUsuario: (Math.floor(Math.random() * 500) + 1)
+        });
+      }
+      return knex('comentario').insert(comments);
     });
 };
