@@ -24,6 +24,6 @@ app.use((req, res, next) => {
 // ROTAS
 app.use(express.json());
 app.use('', require('./routes'));
-app.use(express.static(path.join(__dirname, 'static')));
+app.use('/files', express.static(path.resolve(__dirname, '..',  'static', 'uploads')));
 
 module.exports = app;
