@@ -7,8 +7,8 @@ import Item from '../Item';
 function Navbar(props){
     return (
         <Nav>
-            <Item white href="#">Sobre</Item>
-            {props.loggedIn === "NOT_LOGGED_IN" ? 
+            <Item white href="/sobre">Sobre</Item>
+            {props.loggedIn === "NOT_LOGGED_IN" ?
                 <>
                     <Item white href="/login">Entrar</Item>
                     <Button second href="/cadastro">CADASTRA-SE</Button>
