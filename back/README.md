@@ -31,3 +31,26 @@ Para testar deve-se seguir os seguintes passos:
 
 4. Por fim execute npm test. Isso fará com seja executado a suite de testes contidos em `./__tests__`
 
+## configurando o .env
+
+Colocar as seguintes variáveis de ambiente para o .env
+
+Configurações do banco de dados
+`DB_DATABASE = obra_certa_test`
+`DB_USER= postgres`
+`DB_CLIENT= postgresql`
+`DB_PASSWORD = Samuel09`
+`DB_HOST = 127.0.0.1`
+
+`AU_HASH_KEY = 2f4a5a718458028592d658b14ccab5fd`
+
+MULTER_CONFIG deve ser colocado como `local` para desenvolvimento ou `s3` para produção
+`MULTER_CONFIG=local`
+
+`APP_URL=http://localhost:3001`
+
+Configurações para o AWS
+`AWS_ACCESS_KEY_ID=AKIA2ELC2GHAG5WW7JEK`
+`AWS_SECRET_ACCESS_KEY=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`
+`AWS_DEFAULT_REGION=us-east-1`
+
