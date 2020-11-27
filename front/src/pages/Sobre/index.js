@@ -73,7 +73,7 @@ function Sobre(props){
 
                         <Card vertical>
                         <img alt="" src={Kess} />
-                        <a href="https://github.com/kessJhones" target="_blank" rel="noopener noreferrer">Kess Jhones</a>
+                        <a href="https://github.com/kessJhones" target="_blank" rel="noopener noreferrer">Kess Jhones G. Tavares</a>
                         <p>Desenvolvedor Back-end</p>
                         </Card>
 
