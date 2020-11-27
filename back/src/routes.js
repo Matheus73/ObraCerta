@@ -1,8 +1,6 @@
 //PACKAGES
-const express = require('express')
-const multer = require('multer');
-const path = require('path')
-const { v4:uuidv4 } = require('uuid');
+const express = require('express');
+
 
 //CONTROLLERS
 const UserController = require('./controllers/UserController');
@@ -13,40 +11,10 @@ const rateController = require('./controllers/rateController')
 
 //MIDDLEWARES
 const authServices = require('./services/authServices');
+const upload = require('./config/multer');
 
 const router = express.Router();
 
-//upload define o destino da imagem e com qual nome ela deve ser armazenada
-const upload = multer({ 
-  storage: multer.diskStorage({
-    dest: path.resolve(__dirname, '..', 'static', 'uploads'),
-    destination: (req, file, callback) => {
-      callback(null, path.resolve(__dirname, '..', 'static', 'uploads'));
-    },
-    filename(req, file, callback) {
-      const fileName = `${uuidv4()}-${file.originalname}`;
-      return callback(null, fileName);
-    },
-  }),
-  limits: {
-    fileSize: 5 * 1024 * 1024,
-  },
-  fileFilter: (req, file, callback) => {
-    const allowedMimes = [
-      'image/jpeg',
-      'image/pjpeg',
-      'image/png',
-      'image/gif'
-    ];
-
-    if (allowedMimes.includes(file.mimetype)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Tipo de arquivo inválido\nEnvie arquivos do tipo: png, pjpeg, jpeg ou gif"));
-    }
-
-  },
-})
 
 // Rotas para a pagina inicial da aplicação
 router.get('/', (req, res) => res.send("hello"));

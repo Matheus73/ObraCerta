@@ -14,7 +14,7 @@ const storageTypes = {
       return callback(null, file.key);
     },
   }),
-  
+
   s3: multerS3({
     s3: new aws.S3(),
     bucket: 'obracertaupload',
@@ -29,7 +29,7 @@ const storageTypes = {
 
 const upload = multer({ 
   dest: path.resolve(__dirname, '..', '..' ,  'static', 'uploads'),
-  storage: storageTypes['s3'],
+  storage: storageTypes[process.env.MULTER_CONFIG],
   limits: {
     fileSize: 5 * 1024 * 1024,
   },

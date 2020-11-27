@@ -10,17 +10,16 @@ exports.generateToken = async (data) => {
 }
 
 exports.decodeToken = async (authToken) => {
-    const [, token] = authToken.split(" ");
+    const token = authToken.split(" ").length > 1 ? authToken.split(' ')[1] : authToken
 
     const data = await jwt.verify(token, process.env.AU_HASH_KEY);
     return data;
 }
 
 exports.middlewares = async function(req, res, next) {
-    const token = req.headers.authorization;
-
-    //! const [, token] = authToken.split(" ");
-    console.log(token)
+    const authToken = req.headers.authorization;
+    
+    const token = authToken.split(" ").length > 1 ? authToken.split(' ')[1] : authToken;
 
     if(!token){
         return res.status(401).json({
