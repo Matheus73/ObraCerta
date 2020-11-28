@@ -1,5 +1,8 @@
+require('dotenv').config({
+    path: process.env.NODE_ENV ==  'test' || process.env.NODE_ENV == 'test ' ? '.env.test' : '.env'
+});
+
 const express = require("express");
-require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 exports.generateToken = async (data) => {
@@ -14,9 +17,10 @@ exports.decodeToken = async (authToken) => {
 }
 
 exports.middlewares = async function(req, res, next) {
-    const authToken = req.headers.authorization;
+    const token = req.headers.authorization;
 
-    const [, token] = authToken.split(" ");
+    //! const [, token] = authToken.split(" ");
+    console.log(token)
 
     if(!token){
         return res.status(401).json({

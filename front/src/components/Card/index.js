@@ -17,7 +17,7 @@ import Box from './styles';
  */
 function Card(props) {
     return(
-        <Box width={props.width} >
+        <Box width={props.width} height={props.height} >
             {props.children}
         </Box>
     );

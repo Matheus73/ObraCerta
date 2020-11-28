@@ -46,12 +46,17 @@ class Login extends Component {
             .then(response => {
                 this.props.handleLogin(response.data.dados);
                 // console.log(response)
-                localStorage.setItem("token",response.data.token)
-                localStorage.setItem("loggedIn","LOGGED_IN")
-                localStorage.setItem("idUsuario",response.data.dados.idUsuario)
-                localStorage.setItem("name",response.data.dados.nomeCompleto)
-                localStorage.setItem("email",response.data.dados.email)
-                localStorage.setItem("telefone",response.data.dados.telefone)
+                localStorage.setItem("token",response.data.token);
+                localStorage.setItem("loggedIn","LOGGED_IN");
+
+                localStorage.setItem("idUsuario",response.data.dados.idUsuario);
+                localStorage.setItem("name",response.data.dados.nomeCompleto);
+                localStorage.setItem("email",response.data.dados.email);
+                localStorage.setItem("telefone",response.data.dados.telefone);
+                localStorage.setItem("localidade",response.data.dados.localidade);
+                localStorage.setItem("descricao",response.data.dados.descricao);
+                localStorage.setItem("categoria",response.data.dados.categoria);
+                localStorage.setItem("imagemPerfil",response.data.dados.imagemPerfil);
                 this.props.history.push('/');
             })
             .catch(error => {

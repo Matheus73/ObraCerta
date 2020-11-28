@@ -1,70 +1,26 @@
-
-exports.seed = function(knex) {
+const bcrypt = require('bcryptjs');
+exports.seed = function (knex) {
   // Deletes ALL existing entries
   return knex('usuario').del()
     .then(function () {
-      // Inserts seed entries
-      return knex('usuario').insert([
-        {
-          email:'Pedroca@mail.com',
-          nomeCompleto:'Pedro Henrique',
-          hashSenha:'1a2b3c4d5e',
-          telefone:'6199999999',
-          categoria:'Marceneiro',
-          imagemPerfil:'fakeimage.jpg',
-          descricao:'trabalho desde 17 anos na area',
-          respDeSeguranca:'batata'
-        },
-        {
-          email:'Bigode@mail.com',
-          nomeCompleto:'Matheus Gabriel',
-          hashSenha:'1a2b3c4d5e',
-          telefone:'6199999998',
-          categoria:'Marceneiro',
-          imagemPerfil:'fakeimage.jpg',
-          descricao:'trabalho desde 17 anos na area',
-          respDeSeguranca:'batata'
-        },
-        {
-          email:'Samuca@mail.com',
-          nomeCompleto:'Samuel Nogueira',
-          hashSenha:'1a2b3c4d5e',
-          telefone:'6199999997',
-          categoria:'Marceneiro',
-          imagemPerfil:'fakeimage.jpg',
-          descricao:'trabalho desde 17 anos na area',
-          respDeSeguranca:'batata'
-        },
-        {
-          email:'Sayuk@mail.com',
-          nomeCompleto:'Rodolpho Reginaldo',
-          hashSenha:'1a2b3c4d5e',
-          telefone:'6199999996',
-          categoria:'Marceneiro',
-          imagemPerfil:'fakeimage.jpg',
-          descricao:'trabalho desde 17 anos na area',
-          respDeSeguranca:'batata'
-        },
-        {
-          email:'jhoneskess@mail.com',
-          nomeCompleto:'Kess Jhones',
-          hashSenha:'1a2b3c4d5e',
-          telefone:'6199999995',
-          categoria:'Marceneiro',
-          imagemPerfil:'fakeimage.jpg',
-          descricao:'trabalho desde 17 anos na area',
-          respDeSeguranca:'batata'
-        },
-        {
-          email:'gorgor@mail.com',
-          nomeCompleto:'Igor Queiroz',
-          hashSenha:'1a2b3c4d5e',
-          telefone:'6199999994',
-          categoria:'Marceneiro',
-          imagemPerfil:'fakeimage.jpg',
-          descricao:'trabalho desde 17 anos na area',
-          respDeSeguranca:'batata'
-        },
-      ]);
+      // Inserts seed entries    
+      const users = []
+      const categorias = ['Serralheiro', 'Pintor', 'Eletricista', 'Marceneiro', 'Encanador', 'Pedreiro', null, null];
+      const resps = ['Bolacha', 'Biscoito', null];
+
+      for (let index = 1; index <= 500; index++) {
+        users.push({
+          email: 'user' + index + '@mail.com',
+          nomeCompleto: 'Test User',
+          hashSenha: bcrypt.hashSync('123456', 8),
+          telefone: '9999999999',
+          categoria: categorias[Math.floor(Math.random() * categorias.length)],
+          imagemPerfil: 'fakePerfilImage.jpg',
+          descricao: 'trabalho desde 17 anos na area',
+          respDeSeguranca: resps[Math.floor(Math.random() * resps.length)]
+        });
+
+      }
+      return knex('usuario').insert(users);
     });
 };
