@@ -16,16 +16,6 @@ class PerfilUsuario extends Component {
 
         this.state = {
             posts: {},
-            userData: {
-                nomeCompleto: localStorage.getItem('nomeCompleto'),
-                telefone: localStorage.getItem('telefone'),
-                email: localStorage.getItem('email'),
-                idUsuario: localStorage.getItem('idUsuario'),
-                descricao: localStorage.getItem('descricao'),
-                localidade: localStorage.getItem('localidade'),
-                imagemPerfil: localStorage.getItem('imagemPerfil'),
-                categoria: localStorage.getItem('categoria')
-            },
             //! Imagens de teste
             //imgs: [] maneira oficial
             imgs: [<img src="https://mapa-da-obra-producao.s3.amazonaws.com/wp-content/uploads/2018/09/assessoria-de-obras.jpg" width={1000} height={500} alt="Publicação"/>,
@@ -95,7 +85,7 @@ class PerfilUsuario extends Component {
                         </Card>
                         <Card>
                             <p><strong>Região:</strong><br/>
-                            {localStorage.getItem("localidade") || "Não definido"}</p>
+                            {localStorage.getItem("localidade") == null|| "Não definido"}</p>
                         </Card>
                     </CardGroup>
                     <div id="carrossel">
