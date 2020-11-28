@@ -63,7 +63,7 @@ class UserController {
       let locality = req.query.locality != '' ? { localidade: req.query.locality } : {};
 
       try {
-        userList = await knex.select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade', 'descricao', knex.raw('ARRAY_AGG(nota) as notas'))
+        userList = await knex.select('idUsuario', 'nomeCompleto', 'email', 'categoria' ,'descricao', 'imagemPerfil', 'localidade', knex.raw('ARRAY_AGG(nota) as notas'))
           .from('usuario').where(locality)
           .innerJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
           .groupBy('idUsuario');
@@ -92,7 +92,7 @@ class UserController {
       // let userList = []
       try {
         userList = await knex
-          .select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade', knex.raw('ARRAY_AGG(nota) as notas'))
+          .select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade','descricao',  knex.raw('ARRAY_AGG(nota) as notas'))
           .from('usuario')
           .innerJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
           .where(filters).groupBy('idUsuario');
