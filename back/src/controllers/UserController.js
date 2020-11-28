@@ -56,39 +56,62 @@ class UserController {
 
   async list(req, res) {
 
+    let userList = [];
 
-    const filters = {
-      categoria: req.body.categoryFilter,
-      localidade: req.body.locality
-    }
-    //retirando filtros vazios 
-    for (const filter in filters) {
-      if (filters[filter] == '') {
-        delete filters[filter];
+    if (req.body.searchBar != '') {
+      let searchStr = req.body.searchBar;
+      let locality = req.body.locality != '' ? { localidade: req.body.locality } : {};
+
+      try {
+        userList = await knex.select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade', 'descricao', knex.raw('ARRAY_AGG(nota) as notas'))
+          .from('usuario').where(locality)
+          .innerJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
+          .groupBy('idUsuario');
+      } catch (error) {
+        return res.json({ message: "Algo deu errado na busca com a searchBar :( ." + error })
+      }
+      for (const user in userList) {
+        if (userList[user].descricao.toLowerCase().indexOf(searchStr.toLowerCase()) == -1) { //se a str pesquisada existir em alguma descrição skipa esse if
+          userList.splice(user) 
+        }
+      }
+
+    } else {
+
+      const filters = {
+        categoria: req.body.categoryFilter,
+        localidade: req.body.locality
+      }
+      //retirando filtros vazios 
+      for (const filter in filters) {
+        if (filters[filter] == '') {
+          delete filters[filter];
+        }
+      }
+      //pegando usuarios de acordo com filtros existentes
+      // let userList = []
+      try {
+        userList = await knex
+          .select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade', knex.raw('ARRAY_AGG(nota) as notas'))
+          .from('usuario')
+          .innerJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
+          .where(filters).groupBy('idUsuario');
+      } catch (error) {
+        return res.json({ message: "Algo deu errado na busca com filtros :( ." + error })
       }
     }
-    //pegando usuarios de acordo com filtros existentes
-    let userList = []
-    try {
-      userList = await knex
-        .select('idUsuario','nomeCompleto', 'email', 'categoria','imagemPerfil', 'localidade',  knex.raw('ARRAY_AGG(nota) as notas'))
-        .from('usuario')
-        .innerJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
-        .where(filters).groupBy('idUsuario');
-    } catch (error){
-      return res.json({ message: "Algo deu errado na busca com filtros :( ." + error })
-    }
+
     let media = 0
     for (const user in userList) {
-      media = userList[user].notas.reduce((soma, n) => parseInt(n)+soma, 0)/userList[user].notas.length;
+      media = userList[user].notas.reduce((soma, n) => parseInt(n) + soma, 0) / userList[user].notas.length;
       userList[user].numeroDeAvaliacoes = userList[user].notas.length;// salvando n de avals
       userList[user].notaMedia = media.toFixed(2); //arredondando
       delete userList[user].notas;
-      userList = userList.sort((a, b)=>{
+      userList = userList.sort((a, b) => {
         return a.notaMedia < b.notaMedia ? 1 : a.notaMedia > b.notaMedia ? -1 : 0;
       })//ordenando do mais bem avaliado do pior avaliado
     }
-    
+
     return res.json(userList);
 
   }
