@@ -89,7 +89,7 @@ class PerfilUsuario extends Component {
                         </Card>
                     </CardGroup>
                     <div id="carrossel">
-                        <h1>Publicações</h1>
+                        <h2>Publicações</h2>
                         <AliceCarousel mouseTracking items={this.state.imgs}  infinite={true}/>
                     </div>
                 </main>
