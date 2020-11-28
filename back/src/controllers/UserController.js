@@ -57,10 +57,10 @@ class UserController {
   async list(req, res) {
 
     let userList = [];
-
-    if (req.body.searchBar != '') {
-      let searchStr = req.body.searchBar;
-      let locality = req.body.locality != '' ? { localidade: req.body.locality } : {};
+    console.log(req.query)
+    if (req.query.searchBar != '') {
+      let searchStr = req.query.searchBar;
+      let locality = req.query.locality != '' ? { localidade: req.query.locality } : {};
 
       try {
         userList = await knex.select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade', 'descricao', knex.raw('ARRAY_AGG(nota) as notas'))
@@ -79,8 +79,8 @@ class UserController {
     } else {
 
       const filters = {
-        categoria: req.body.categoryFilter,
-        localidade: req.body.locality
+        categoria: req.query.categoryFilter,
+        localidade: req.query.locality
       }
       //retirando filtros vazios 
       for (const filter in filters) {
