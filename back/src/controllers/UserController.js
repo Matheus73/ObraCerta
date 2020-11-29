@@ -170,13 +170,14 @@ class UserController {
         imagemPerfil: req.body.novaImagem
       }
       if (newUserInfo.imagemPerfil != '') {
-        const fs = require('fs');
-        const path = require('path');
-        const targetPath = path.resolve(__dirname, '..', '..', 'static', 'uploads', 'tempImage.jpg')
-        fs.writeFile(targetPath, newUserInfo.imagemPerfil, { encoding: 'base64' }, function (err) {
-          console.log('File created at' + targetPath);
-        });
-
+        // const fs = require('fs');
+        // const path = require('path');
+        // const filePath = path.resolve(__dirname, '..', '..', 'static', 'uploads', 'tempImage.jpg')
+        // fs.writeFile(filePath, newUserInfo.imagemPerfil, { encoding: 'base64' }, function (err) {
+        //   console.log('File created at' + filePath);
+        // });
+        const uploadS3 = require('../services/s3Services.js')
+        console.log(await uploadS3(newUserInfo.imagemPerfil))
       } else {
         delete newUserInfo[imagemPerfil]
       }
