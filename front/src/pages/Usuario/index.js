@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Footer from '../../components/Footer';
 import Card from '../../components/Card';
 import Space from '../../components/Space';
 import ProfileCard from '../../components/ProfileCard';

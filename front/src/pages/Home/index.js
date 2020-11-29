@@ -86,6 +86,7 @@ class Home extends Component {
             <>
             <GlobalStyle />
             <PageDefault loggedIn={this.props.loggedIn}>
+                <Space/>
                 <form onSubmit={this.handleSubmit}>
                     <Input
                         type="search"
