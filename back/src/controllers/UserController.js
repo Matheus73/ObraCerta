@@ -170,14 +170,8 @@ class UserController {
         imagemPerfil: req.body.novaImagem
       }
       if (newUserInfo.imagemPerfil != '') {
-        // const fs = require('fs');
-        // const path = require('path');
-        // const filePath = path.resolve(__dirname, '..', '..', 'static', 'uploads', 'tempImage.jpg')
-        // fs.writeFile(filePath, newUserInfo.imagemPerfil, { encoding: 'base64' }, function (err) {
-        //   console.log('File created at' + filePath);
-        // });
         const uploadS3 = require('../services/s3Services.js')
-        console.log(await uploadS3(newUserInfo.imagemPerfil))
+        newUserInfo.imagemPerfil = await uploadS3(newUserInfo.imagemPerfil, 'imagens-perfil', idUsuario)
       } else {
         delete newUserInfo[imagemPerfil]
       }
@@ -189,10 +183,9 @@ class UserController {
         }
       }
 
-      //await knex('usuario').update(newUserInfo).where({ idUsuario });
+      await knex('usuario').update(newUserInfo).where({ idUsuario });
 
-      return res.send({ message: 'deu bom' })
-
+      return res.send(newUserInfo)
 
     } catch (error) {
 

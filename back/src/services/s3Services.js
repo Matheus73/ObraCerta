@@ -1,7 +1,7 @@
 const {Buffer} = require('buffer')
 const aws = require('aws-sdk')
 
-function upload(base64img){
+function upload(base64img, s3Folder,imgName){
   const bufferedImg = Buffer.from(base64img, 'base64');
 
   aws.config.update({
@@ -16,7 +16,7 @@ function upload(base64img){
     })
   
     const data = {
-      Key: 'imagens-perfil/teste3.jpg',
+      Key: s3Folder+'/'+imgName+'.jpg',
       Body: bufferedImg,
       ContentEncoding: 'base64',
       ContentType: 'image/jpeg',
