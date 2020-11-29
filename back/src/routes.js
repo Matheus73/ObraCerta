@@ -23,7 +23,7 @@ router.get('/perfil/:idUsuario', UserController.one)
 router.get('/search', UserController.list);
 router.post('/registrar', UserController.store);
 router.delete('/usuario/:idUsuario', UserController.delete)
-router.put('/usuario', UserController.update)
+router.put('/usuario', authServices.middlewares, UserController.update)
 router.post('/alteraSenha', UserController.updatePassword);
 
 //Rotas para o login
