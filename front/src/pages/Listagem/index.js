@@ -10,32 +10,40 @@ class Listagem extends Component {
         super(props);
 
         this.data = [];
-    }
-    
-    componentDidMount = () =>{
         let history = createHistory();
         let data = history.location.state;
         for(let i in history.location.state){
             this.data.push(data[i]);
         }
-
     }
 
     handleClick = (idUser) =>{
-        console.log(idUser);
         axios.get('http://localhost:3001/perfil/' + idUser)
         .then((response) => {
-            console.log(response)
+            let userData = response.data;
+            console.log(userData);
+            axios.get('http://localhost:3001/' + idUser + '/publicacoes')
+            .then((response) => {
+                let posts = response.data;
+                console.log(posts);
+                let data = [];
+                data.push(userData);
+                data.push(posts);
+                this.props.history.push('/Usuario',data)
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+            
         })
         .catch((error) => {
             console.log(error)
         });
-        
 
     }
 
     render() {
-        this.componentDidMount();
+        // this.componentDidMount();
         return (
             <>
             <PageDefault>

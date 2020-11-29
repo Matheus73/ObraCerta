@@ -11,6 +11,7 @@ import PerfilUsuario from '../pages/PerfilUsuario';
 import RecuperarSenha from '../pages/RecuperarSenha';
 import Sobre from '../pages/Sobre';
 import LinkQuebrado from '../assets/link-quebrado.svg';
+import Usuario from '../pages/Usuario';
 
 
 const Pagina404 = () => (<div>
@@ -97,6 +98,12 @@ class Routes extends Component {
                         path='/recuperarsenha'
                         render={props => (
                             <RecuperarSenha {...props} loggedIn={this.state.loggedIn} />
+                        )}
+                    />
+                    <Route
+                        path='/Usuario'
+                        render={props => (
+                            <Usuario {...props} loggedIn={this.state.loggedIn} />
                         )}
                     />
                      <Route
