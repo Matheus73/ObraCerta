@@ -15,7 +15,7 @@ describe('Avaliação', () => {
             .where({ email: email })
             .first();
 
-  var token = await auth.generateToken(dados);
+  token = await auth.generateToken(dados);
   });
 
   it('Deveria criar uma avaliação', async done =>{
