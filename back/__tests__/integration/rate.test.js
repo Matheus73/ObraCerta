@@ -18,7 +18,7 @@ describe('Avaliação', () => {
   token = await auth.generateToken(dados);
   });
 
-  it('Deveria criar uma avaliação', async done =>{
+  it('CTB01_US04\nDeveria criar uma avaliação', async done =>{
 
     var cont = 0;
     while (cont < 16) {
@@ -36,7 +36,7 @@ describe('Avaliação', () => {
 
   });
 
-  it('Deveria ser incapaz de criar uma avaliação no mesmo usuário', async done => {
+  it('CTB02_US04\nDeveria ser incapaz de criar uma avaliação no mesmo usuário', async done => {
 
     request(app)
       .post('/2/avaliar')
@@ -49,7 +49,7 @@ describe('Avaliação', () => {
 
   });
 
-  it('Deveria retornar a média das avaliações', async done => {
+  it('CTB03_US04\nDeveria retornar a média das avaliações', async done => {
 
     request(app)
     .get('/2/avaliar/list')
