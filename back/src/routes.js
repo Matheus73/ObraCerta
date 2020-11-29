@@ -19,19 +19,23 @@ const router = express.Router();
 router.get('/', (req, res) => res.send("hello"));
 
 // Rotas para o UserController
+router.get('/perfil/:idUsuario', UserController.one)
 router.get('/search', UserController.list);
 router.post('/registrar', UserController.store);
 router.delete('/usuario/:idUsuario', UserController.delete)
 router.put('/usuario/:idUsuario', UserController.update)
 router.post('/alteraSenha', UserController.updatePassword);
 
+//Rotas para o login
 router.get('/login', (req, res) => res.send('Logar'));
 router.post('/login', loginController.login);
 
+//rotas para o publicationController
 router.post('/nova_publicacao', [authServices.middlewares, upload.any()], publicationController.store);
 router.get('/:idUsuario/publicacoes', authServices.middlewares, publicationController.list);
 router.delete('/usuario/:idUsuario/publicacao/:idPublicacao', authServices.middlewares, publicationController.delete)
 
+//Rotas para avaliação
 router.post('/:idUsuario/avaliar', authServices.middlewares, rateController.store);
 
 module.exports = router
