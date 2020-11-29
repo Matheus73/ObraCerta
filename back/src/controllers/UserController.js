@@ -57,18 +57,18 @@ class UserController {
   async list(req, res) {
 
     let userList = [];
-
-    if (req.body.searchBar != '') {
-      let searchStr = req.body.searchBar;
-      let locality = req.body.locality != '' ? { localidade: req.body.locality } : {};
+    console.log(req.query)
+    if (req.query.searchBar != '') {
+      let searchStr = req.query.searchBar;
+      let locality = req.query.locality != '' ? { localidade: req.query.locality } : {};
 
       try {
-        userList = await knex.select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade', 'descricao', knex.raw('ARRAY_AGG(nota) as notas'))
+        userList = await knex.select('idUsuario', 'nomeCompleto', 'email', 'categoria' ,'descricao', 'imagemPerfil', 'localidade', knex.raw('ARRAY_AGG(nota) as notas'))
           .from('usuario').where(locality)
           .innerJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
           .groupBy('idUsuario');
       } catch (error) {
-        return res.json({ message: "Algo deu errado na busca com a searchBar :( ." + error })
+        return res.json({ message: "Algo deu errado na busca com a searchBar :( ." + error }).status(400);
       }
       for (const user in userList) {
         if (userList[user].descricao.toLowerCase().indexOf(searchStr.toLowerCase()) == -1) { //se a str pesquisada existir em alguma descrição skipa esse if
@@ -79,8 +79,8 @@ class UserController {
     } else {
 
       const filters = {
-        categoria: req.body.categoryFilter,
-        localidade: req.body.locality
+        categoria: req.query.categoryFilter,
+        localidade: req.query.locality
       }
       //retirando filtros vazios 
       for (const filter in filters) {
@@ -92,12 +92,12 @@ class UserController {
       // let userList = []
       try {
         userList = await knex
-          .select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade', knex.raw('ARRAY_AGG(nota) as notas'))
+          .select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade','descricao',  knex.raw('ARRAY_AGG(nota) as notas'))
           .from('usuario')
           .innerJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
           .where(filters).groupBy('idUsuario');
       } catch (error) {
-        return res.json({ message: "Algo deu errado na busca com filtros :( ." + error })
+        return res.json({ message: "Algo deu errado na busca com filtros :( ." + error }).status(400);
       }
     }
 
@@ -114,6 +114,17 @@ class UserController {
 
     return res.json(userList);
 
+  }
+
+  async one(req , res) {
+    const { idUsuario } = req.params;
+    
+    const user = await knex.select('idUsuario', 'nomeCompleto', 'categoria', 'imagemPerfil', 'localidade','descricao')
+    .from('usuario').where({ idUsuario: idUsuario }).first()
+
+    if (!user) return res.status(404).json({ error: 'usuário não existe'});
+
+    return res.json(user);
   }
 
   async delete(req, res, next) {

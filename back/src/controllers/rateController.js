@@ -8,10 +8,10 @@ class rateController {
     const idAvaliador = req.body.idUsuario;
 
     const avaliacao = await knex.from('avaliacao')
-    .where({ idAvaliado: idAvaliado, idAvaliador: idAvaliador })
-    .first();
+      .where({ idAvaliado: idAvaliado, idAvaliador: idAvaliador })
+      .first();
 
-    if (avaliacao) return res.status(400).json( { message: 'ja foi criada uma avaliação' })
+    if (avaliacao) return res.status(400).json({ message: 'ja foi criada uma avaliação' })
 
     const payload = {
       nota: req.body.nota,
@@ -22,6 +22,41 @@ class rateController {
     await knex('avaliacao').insert(payload);
 
     return res.json({ message: 'avaliação adicionada' });
+  }
+
+  async update(req, res) {
+    let {idAvaliador, nota } = req.body;
+    let idAvaliado = req.params.idUsuario;
+
+    if (!await knex.update({ nota: nota })
+      .from('avaliacao')
+      .where({
+        idAvaliado: idAvaliado,
+        idAvaliador: idAvaliador
+      }))
+      return res.status(400).json({ message: "Avaliação não encontrada" });
+    else
+      return res.json({ message: "Nota Atualizada" });
+  }
+
+  async list(req, res) {
+    let idAvaliado = req.params.idUsuario;
+
+    let avaliacao = await knex.select('nota')
+      .from('avaliacao')
+      .where({ idAvaliado: idAvaliado });
+
+    if (avaliacao.length === 0)
+      return res.json('0');
+
+    let notas = avaliacao.map(avaliacao => avaliacao.nota);
+    let notasInt = notas.map(function (x) {
+      return parseInt(x, 10);
+    });
+
+    let media = notasInt.reduce((t, n) => n + t, 0) / notasInt.length;
+
+    return res.json({ media });
   }
 }
 
