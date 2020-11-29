@@ -57,10 +57,10 @@ class UserController {
   async list(req, res) {
 
     let userList = [];
-    console.log(req.query)
-    if (req.query.searchBar != '') {
-      let searchStr = req.query.searchBar;
-      let locality = req.query.locality != '' ? { localidade: req.query.locality } : {};
+
+    if (req.body.searchBar != '') {
+      let searchStr = req.body.searchBar;
+      let locality = req.body.locality != '' ? { localidade: req.body.locality } : {};
 
       try {
         userList = await knex.select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade', 'descricao', knex.raw('ARRAY_AGG(nota) as notas'))
@@ -79,8 +79,8 @@ class UserController {
     } else {
 
       const filters = {
-        categoria: req.query.categoryFilter,
-        localidade: req.query.locality
+        categoria: req.body.categoryFilter,
+        localidade: req.body.locality
       }
       //retirando filtros vazios 
       for (const filter in filters) {
@@ -92,7 +92,7 @@ class UserController {
       // let userList = []
       try {
         userList = await knex
-          .select('idUsuario', 'nomeCompleto', 'email', 'categoria' ,'descricao', 'imagemPerfil', 'localidade', knex.raw('ARRAY_AGG(nota) as notas'))
+          .select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade', knex.raw('ARRAY_AGG(nota) as notas'))
           .from('usuario')
           .innerJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
           .where(filters).groupBy('idUsuario');
