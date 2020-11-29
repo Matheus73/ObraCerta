@@ -32,12 +32,12 @@ router.post('/login', loginController.login);
 
 //rotas para o publicationController
 router.post('/nova_publicacao', [authServices.middlewares, upload.any()], publicationController.store);
-router.get('/:idUsuario/publicacoes', authServices.middlewares, publicationController.list);
+router.get('/:idUsuario/publicacoes', publicationController.list);
 router.delete('/usuario/:idUsuario/publicacao/:idPublicacao', authServices.middlewares, publicationController.delete)
 
 //Rotas para avaliação
 router.post('/:idUsuario/avaliar', authServices.middlewares, rateController.store);
 router.put('/:idUsuario/avaliar/update', authServices.middlewares, rateController.update);
-router.get('/:idUsuario/avaliar/list', authServices.middlewares, rateController.list);
+router.get('/:idUsuario/avaliar/list', rateController.list);
 
 module.exports = router
