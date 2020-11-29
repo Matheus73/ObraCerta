@@ -4,96 +4,67 @@ import Card from '../../components/Card';
 import Space from '../../components/Space';
 import ProfileCard from '../../components/ProfileCard';
 import CardGroup from '../../components/CardGroup';
-import imgProfileDefault from '../../assets/profileDefault.png';
-import axios from 'axios';
 import createHistory from 'history/createBrowserHistory';
-
 import AliceCarousel from 'react-alice-carousel';
+import PageDefault from '../PageDefault';
 import 'react-alice-carousel/lib/alice-carousel.css';
 
 class PerfilUsuario extends Component {
     constructor(props){
         super(props);
 
-        this.state = {
-            posts: {},
-            //! Imagens de teste
-            //imgs: [] maneira oficial
-            imgs: [<img src="https://mapa-da-obra-producao.s3.amazonaws.com/wp-content/uploads/2018/09/assessoria-de-obras.jpg" width={1000} height={500} alt="Publicação"/>,
-            <img src="https://respostas.sebrae.com.br/wp-content/uploads/2019/09/386a2dfe736952d86d6f4f07387bc1d8.jpg"width={1000} height={500} alt="Publicação"/>,
-            <img src="https://www.institutodaconstrucao.com.br/blog/wp-content/uploads/2017/01/IMG-20151017-WA0016-2-810x425.jpg" width={1000} height={500} alt="Publicação"/>]
+        this.userData = '';
+        this.posts = '';
 
+        let history = createHistory();
+        let data = history.location.state;
+        this.userData = data[0];
+        this.posts = data[1];
+        console.log(this.userData)
+        console.log(this.posts)
+
+        let imgs = []
+        for(let i in this.posts){
+            let nomeImagem = this.posts[i].url
+            imgs.push(<img src={nomeImagem} width={1000} height={500} alt="Publicação"/>)
         }
-    }
 
-    componentDidMount = () => {
-        const url = 'http://localhost:3001/' + localStorage.getItem('idUsuario') + '/publicacoes'
-        console.log(url)
-        axios.get(url,{
-            headers:{
-                'authorization': localStorage.getItem('token')
-            }
-        })
-            .then(response => {
-                let imagem = {};                
-                for( var i in response.data){
-                    let idPublicacao = response.data[i].idPublicacao;
-                    let nomeImagem = response.data[i].nomeImagem;
-                    imagem[i] = {idPublicacao,nomeImagem};
-                }
-                this.setState({
-                    posts: imagem,
-                })
-                
-                let imgs = []
-                for(i in response.data){
-                    let nomeImagem = response.data[i].nomeImagem;
-                    imgs.push(<img src={nomeImagem} width={1000} height={500} alt="Publicação"/>)
-                }
-                //! Para teste manter comentada
-                // this.setState({
-                //     imgs: imgs
-                // })
-
-                //? console.log(this.state.imgs)
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        this.posts = imgs;
     }
 
     render() {
         return (
             <>
+            <PageDefault>
                 <main>
                     <Space/>
-                    <h2>{localStorage.getItem("name")}</h2>
+                    <h2>{this.userData.nomeCompleto}</h2>
                     <ProfileCard
-                        src={imgProfileDefault}
+                        src={this.userData.imagemPerfil}
                         title="Descrição:"
-                        description={localStorage.getItem("descricao") || "Sem descrição"}
+                        description={this.userData.descricao || "Sem descrição"}
                     />
                     <Space size="10px"/>
                     <CardGroup>
                         <Card>
                             <p><strong>Categoria:</strong><br/>
-                            {localStorage.getItem("categoria") || "Não definido"}</p>
+                            {this.userData.categoria || "Não definido"}</p>
                         </Card>
                         <Card>
                             <p><strong>Telefone:</strong><br/>
-                            {localStorage.getItem("telefone") || "Não definido"}</p>
+                            {this.userData.telefone || "Não definido"}</p>
                         </Card>
                         <Card>
                             <p><strong>Região:</strong><br/>
-                            {localStorage.getItem("localidade") == null|| "Não definido"}</p>
+                            {this.userData.localidade || "Não definido"}</p>
                         </Card>
                     </CardGroup>
                     <div id="carrossel">
                         <h2>Publicações</h2>
-                        <AliceCarousel mouseTracking items={this.state.imgs}  infinite={true}/>
+                        <AliceCarousel mouseTracking items={this.posts}  infinite={true}/>
                     </div>
                 </main>
-                <Footer/>
+                </PageDefault>
             </>
         )
     }

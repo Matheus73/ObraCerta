@@ -43,7 +43,6 @@ class Listagem extends Component {
     }
 
     render() {
-        // this.componentDidMount();
         return (
             <>
             <PageDefault>
@@ -54,7 +53,6 @@ class Listagem extends Component {
                         src="https://obracertaupload.s3.amazonaws.com/f9f02e7a-142f-4223-ac63-3987dd1c16db-photo%20perfil.jpg"
                         title={data.nomeCompleto}
                         description={data.descricao}
-                        href="/putaria"
                         onClick={() => {this.handleClick(data.idUsuario)}}
                     />
                     <Space/>
