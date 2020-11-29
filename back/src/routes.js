@@ -37,5 +37,7 @@ router.delete('/usuario/:idUsuario/publicacao/:idPublicacao', authServices.middl
 
 //Rotas para avaliação
 router.post('/:idUsuario/avaliar', authServices.middlewares, rateController.store);
+router.put('/:idUsuario/avaliar/update', authServices.middlewares, rateController.update);
+router.get('/:idUsuario/avaliar/list', authServices.middlewares, rateController.list);
 
 module.exports = router
