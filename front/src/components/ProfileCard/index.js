@@ -29,8 +29,8 @@ function ProfileCard(props) {
                     </p>
                     :<></>
                 }
-                {props.href ? 
-                    <Button href={props.href} primary>Acessar perfil</Button>
+                {props.onClick ? 
+                    <Button primary onClick={props.onClick}>Acessar perfil</Button>
                     :<></>
                 }
             </div>

@@ -59,7 +59,7 @@ class Home extends Component {
         let loc = '&locality';
 
         if(localStorage.getItem("localidade") != null){
-            loc += localStorage.getItem('localidade');
+            loc += '=' + localStorage.getItem('localidade');
         }
 
         let url_search = this.url + loc  + '&categoryFilter=' + categoria;
