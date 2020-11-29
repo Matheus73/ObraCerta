@@ -2,6 +2,7 @@ const yup = require('yup');
 const bcrypt = require('bcryptjs');
 const knex = require('../database/index.js');
 const authServices = require('../services/authServices');
+const upload = require('../config/multer.js');
 
 
 // Usar o yup para validar a entrada de dados. olhar a documentação do modulo para saber como utiliza-lo
@@ -63,7 +64,7 @@ class UserController {
       let locality = req.query.locality != '' ? { localidade: req.query.locality } : {};
 
       try {
-        userList = await knex.select('idUsuario', 'nomeCompleto', 'email', 'categoria' ,'descricao', 'imagemPerfil', 'localidade', knex.raw('ARRAY_AGG(nota) as notas'))
+        userList = await knex.select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'descricao', 'imagemPerfil', 'localidade', knex.raw('ARRAY_AGG(nota) as notas'))
           .from('usuario').where(locality)
           .innerJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
           .groupBy('idUsuario');
@@ -72,7 +73,7 @@ class UserController {
       }
       for (const user in userList) {
         if (userList[user].descricao.toLowerCase().indexOf(searchStr.toLowerCase()) == -1) { //se a str pesquisada existir em alguma descrição skipa esse if
-          userList.splice(user) 
+          userList.splice(user)
         }
       }
 
@@ -92,7 +93,7 @@ class UserController {
       // let userList = []
       try {
         userList = await knex
-          .select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade','descricao',  knex.raw('ARRAY_AGG(nota) as notas'))
+          .select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade', 'descricao', knex.raw('ARRAY_AGG(nota) as notas'))
           .from('usuario')
           .innerJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
           .where(filters).groupBy('idUsuario');
@@ -116,13 +117,13 @@ class UserController {
 
   }
 
-  async one(req , res) {
+  async one(req, res) {
     const { idUsuario } = req.params;
-    
-    const user = await knex.select('idUsuario', 'nomeCompleto', 'categoria', 'imagemPerfil', 'localidade','descricao')
-    .from('usuario').where({ idUsuario: idUsuario }).first()
 
-    if (!user) return res.status(404).json({ error: 'usuário não existe'});
+    const user = await knex.select('idUsuario', 'nomeCompleto', 'categoria', 'imagemPerfil', 'localidade', 'descricao')
+      .from('usuario').where({ idUsuario: idUsuario }).first()
+
+    if (!user) return res.status(404).json({ error: 'usuário não existe' });
 
     return res.json(user);
   }
@@ -158,25 +159,26 @@ class UserController {
   async update(req, res, next) {
 
     try {
-      const { idUsuario } = req.params;
-      const senha = req.body.senha;
-
-      // requisição da senha para update:
-      // const hash = await knex.select('hashSenha')
-      //   .from('usuario')
-      //   .where({ idUsuario: idUsuario })
-      //   .first();
-
-      // if (!await bcrypt.compareSync(senha, hash.hashSenha)) {
-      //   return res.status(400).send({ error: 'Senha inválida' });
-      // }
+      const idUsuario = req.body.idUsuario;
 
       const newUserInfo = {
         nomeCompleto: req.body.novoNomeCompleto,
         email: req.body.novoEmail,
         telefone: req.body.novoTelefone,
         descricao: req.body.novaDescricao,
-        categoria: req.body.novaCategoria
+        categoria: req.body.novaCategoria,
+        imagemPerfil: req.body.novaImagem
+      }
+      if (newUserInfo.imagemPerfil != '') {
+        const fs = require('fs');
+        const path = require('path');
+        const targetPath = path.resolve(__dirname, '..', '..', 'static', 'uploads', 'tempImage.jpg')
+        fs.writeFile(targetPath, newUserInfo.imagemPerfil, { encoding: 'base64' }, function (err) {
+          console.log('File created at' + targetPath);
+        });
+
+      } else {
+        delete newUserInfo[imagemPerfil]
       }
       //retirando informações que não serão atualizadas
       let info;
@@ -186,9 +188,9 @@ class UserController {
         }
       }
 
-      await knex('usuario').update(newUserInfo).where({ idUsuario });
+      //await knex('usuario').update(newUserInfo).where({ idUsuario });
 
-      return res.send(newUserInfo)
+      return res.send({ message: 'deu bom' })
 
 
     } catch (error) {
