@@ -4,12 +4,20 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
 import Login from '../pages/Login';
+import Listagem from '../pages/Listagem';
 
 import TermosDeUsuario from '../pages/TermosDeUsuario';
 import PerfilUsuario from '../pages/PerfilUsuario';
 import RecuperarSenha from '../pages/RecuperarSenha';
 import Sobre from '../pages/Sobre';
+import LinkQuebrado from '../assets/link-quebrado.svg';
+import Usuario from '../pages/Usuario';
 
+
+const Pagina404 = () => (<div>
+    <img src={LinkQuebrado} alt="Link-Quebrado"/>
+    <h1>404 Página não encontrada</h1>
+    </div>);
 
 class Routes extends Component {
 
@@ -31,7 +39,7 @@ class Routes extends Component {
 
     componentDidMount = () => {
         this.setState({
-            loggedIn: localStorage.getItem("loggedIn") || "NOT_LOGGED_IN", 
+            loggedIn: localStorage.getItem("loggedIn") || "NOT_LOGGED_IN",
             user: {
                 name: localStorage.getItem("name"),
                 telefone: localStorage.getItem("telefone"),
@@ -48,6 +56,12 @@ class Routes extends Component {
                         exact path="/"
                         render={props => (
                             <Home {...props} loggedIn={this.state.loggedIn} />
+                        )}
+                    />
+                    <Route
+                        exact path="/Listagem"
+                        render={props => (
+                            <Listagem {...props} loggedIn={this.state.loggedIn} />
                         )}
                     />
                     <Route
@@ -86,12 +100,22 @@ class Routes extends Component {
                             <RecuperarSenha {...props} loggedIn={this.state.loggedIn} />
                         )}
                     />
+                    <Route
+                        path='/Usuario'
+                        render={props => (
+                            <Usuario {...props} loggedIn={this.state.loggedIn} />
+                        )}
+                    />
                      <Route
                         path='/sobre'
                         render={props => (
                             <Sobre {...props} loggedIn={this.state.loggedIn} />
                         )}
                     />
+
+                     <Route component={Pagina404}/>
+
+
                 </Switch>
             </BrowserRouter>
         );

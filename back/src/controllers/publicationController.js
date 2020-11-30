@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const {promisify} = require('util');
 
 const authServices = require('../services/authServices');
@@ -7,7 +8,9 @@ const yup = require('yup');
 const { where } = require('../database/index.js');
 const knex = require('../database/index.js');
 const auth = require('../services/authServices');
+const aws = require('aws-sdk');
 
+const s3 = new aws.S3();
 const unlinkAsync = promisify(fs.unlink);
 
 class publicationController {
@@ -20,20 +23,20 @@ class publicationController {
     if (req.files.length == 0) return res.status(400).send({ error: "Nenhuma foto foi enviada" }) 
 
     // se alguma das imagens possuir mais de 5mb ele retorna um erro
-    for (const img of req.files) {
-      if(img.size >= 5000000){ 
-        await unlinkAsync(img.path);
-        return res.status(400).send({ error: "a imagem deve possuir menos de 5Mb" });
-      }
-    }
 
     await knex('publicacao').insert(req.body)
     .returning('idPublicacao').then(async function (idPublicacao){
 
       for (const img of req.files) {
-        const file_path = img.path;
+
+        if (img.location == undefined){
+          var file_url = `${process.env.APP_URL}/files/${img.filename}`;
+        } else {
+          var file_url = img.location;
+        }
+
         await knex('imagem')
-        .insert({ nomeImagem: file_path, idPublicacao: idPublicacao[0]});
+        .insert({ nomeImagem: img.key, url: file_url , idPublicacao: idPublicacao[0]});
       }
     });
 
@@ -58,12 +61,23 @@ class publicationController {
 
     if(idUsuario != req.body.idUsuario) return res.status(400).send({error: "Você nao pode apagar publicações que não são suas"});
 
-    const photos = await knex.select('imagem.nomeImagem')
+    const photos = await knex.select('imagem.nomeImagem', 'imagem.url')
     .from('publicacao')
     .join('imagem', 'publicacao.idPublicacao', 'imagem.idPublicacao')
     .where({ idUsuario: idUsuario });
 
-    for (const photo of photos) await unlinkAsync(photo.nomeImagem);
+    for (const photo of photos) {
+      if (process.env.MULTER_CONFIG == 'local'){
+        await unlinkAsync(path.resolve(__dirname, '..', '..', 'static', 'uploads', photo.nomeImagem));
+      }
+      else {
+        s3.deleteObject({
+          Bucket: 'obracertaupload',
+          Key: photo.nomeImagem
+        }).promise()
+      }
+      
+    }
 
     await knex('publicacao').where({ 
       idUsuario: idUsuario, 

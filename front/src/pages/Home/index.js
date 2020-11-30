@@ -6,6 +6,9 @@ import Presentation from '../../components/Presentation';
 import Space from '../../components/Space';
 import Card from '../../components/Card';
 import CardGroup from '../../components/CardGroup';
+import GlobalStyle from './styles';
+
+import axios from 'axios';
 
 import imgPresetation from '../../assets/imgPresetation.png';
 import imgCard1 from '../../assets/VerticalCards/HomeCards/Card1.svg';
@@ -14,8 +17,6 @@ import imgCard3 from '../../assets/VerticalCards/HomeCards/Card3.svg';
 import Button from '../../components/Button';
 
 class Home extends Component {
-<<<<<<< Updated upstream
-=======
     constructor(props) {
         super(props);
 
@@ -78,22 +79,31 @@ class Home extends Component {
     handleChangeSearch = (e) => {
         this.data.searchBar = e.target.value
     };
->>>>>>> Stashed changes
 
     render() {
         return (
+            <>
+            <GlobalStyle />
             <PageDefault loggedIn={this.props.loggedIn}>
-                <Input type="search" placeholder="Pesquise..." />
-
                 <Space/>
-                <CardGroup>
-                    <Button>Pedreiro</Button>
-                    <Button>Serralheiro</Button>
-                    <Button>Pintor</Button>
-                    <Button>Eletricista</Button>
-                    <Button>Macerneiro</Button>
-                    <Button>Encanador</Button>
-                </CardGroup>
+                <form onSubmit={this.handleSubmit}>
+                    <Input
+                        type="search"
+                        placeholder="Pesquise..."
+                        onChange={this.handleChangeSearch}
+                    />
+                </form>
+                    <Space />
+                    <CardGroup>
+                        <Button onClick={() => this.handleCategory("Pedreiro")}>Pedreiro</Button>
+                        <Button onClick={() => this.handleCategory("Serralheiro")}>Serralheiro</Button>
+                        <Button onClick={() => this.handleCategory("Pintor")}>Pintor</Button>
+                        <Button onClick={() => this.handleCategory("Eletricista")}>Eletricista</Button>
+                        <Button onClick={() => this.handleCategory("Marceneiro")}>Macerneiro</Button>
+                        <Button onClick={() => this.handleCategory("Encanador")}>Encanador</Button>
+                    </CardGroup>
+
+
 
                 <Space size="85px" sizeMobile="55px" />
                 <Presentation
@@ -103,16 +113,19 @@ class Home extends Component {
                     alt=""
                 >
                     <div>
-                        <b>Aqui você encontra o que procura!</b><br />
-                    Os melhores profissionais para a sua obra!
-                </div>
+                        <b>Aqui você encontra o que procura!</b>
+                        <br />
+                        Os melhores profissionais para a sua obra!
+                    </div>
                 </Presentation>
 
                 <Space size="85px" sizeMobile="10px" />
                 <CardGroup>
                     <Card vertical>
                         <img alt="" src={imgCard1} />
-                        <p>Encontre a pessoa certa de maneira rápida e fácil!</p>
+                        <p>
+                            Encontre a pessoa certa de maneira rápida e fácil!
+                        </p>
                     </Card>
                     <Card>
                         <img alt="" src={imgCard2} />
@@ -120,10 +133,14 @@ class Home extends Component {
                     </Card>
                     <Card>
                         <img alt="" src={imgCard3} />
-                        <p>Publique seu projeto para que profissionais te encontrem!</p>
+                        <p>
+                            Publique seu projeto para que profissionais te
+                            encontrem!
+                        </p>
                     </Card>
                 </CardGroup>
             </PageDefault>
+            </>
         );
     }
 }

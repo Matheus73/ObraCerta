@@ -1,50 +1,43 @@
 //PACKAGES
-const express = require('express')
-const multer = require('multer');
-const { v4:uuidv4 } = require('uuid');
+const express = require('express');
+
 
 //CONTROLLERS
 const UserController = require('./controllers/UserController');
-const testController = require('./controllers/testTempController.js');//temp
 const loginController = require('./controllers/loginController');
 const publicationController = require('./controllers/publicationController');
 const rateController = require('./controllers/rateController')
 
 //MIDDLEWARES
 const authServices = require('./services/authServices');
+const upload = require('./config/multer');
 
 const router = express.Router();
 
-//upload define o destino da imagem e com qual nome ela deve ser armazenada
-const upload = multer({ 
-  storage: multer.diskStorage({
-    destination: './static/uploads/',
-    filename(req, file, callback) {
-      const fileName = `${uuidv4()}-${file.originalname}`;
-
-      return callback(null, fileName);
-    },
-  }),
-})
 
 // Rotas para a pagina inicial da aplicação
 router.get('/', (req, res) => res.send("hello"));
-router.get('/list', testController.listUsers);//temp
 
 // Rotas para o UserController
-router.get('/registrar', UserController.list);
+router.get('/perfil/:idUsuario', UserController.one)
+router.get('/search', UserController.list);
 router.post('/registrar', UserController.store);
 router.delete('/usuario/:idUsuario', UserController.delete)
-router.put('/usuario/:idUsuario', UserController.update)
+router.put('/usuario', authServices.middlewares, UserController.update)
 router.post('/alteraSenha', UserController.updatePassword);
 
+//Rotas para o login
 router.get('/login', (req, res) => res.send('Logar'));
 router.post('/login', loginController.login);
 
+//rotas para o publicationController
 router.post('/nova_publicacao', [authServices.middlewares, upload.any()], publicationController.store);
-router.get('/:idUsuario/publicacoes', authServices.middlewares, publicationController.list);
+router.get('/:idUsuario/publicacoes', publicationController.list);
 router.delete('/usuario/:idUsuario/publicacao/:idPublicacao', authServices.middlewares, publicationController.delete)
 
+//Rotas para avaliação
 router.post('/:idUsuario/avaliar', authServices.middlewares, rateController.store);
+router.put('/:idUsuario/avaliar/update', authServices.middlewares, rateController.update);
+router.get('/:idUsuario/avaliar/list', rateController.list);
 
 module.exports = router
