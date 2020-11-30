@@ -178,20 +178,21 @@ class UserController {
       if (idUsuario != Number(req.params.idUsuario)) return res.status(400).json({ error: "o usuário não pode editar as informações de outro usuário" });
 
       var file_url = ''
-      if (req.file.location == undefined) {
-        file_url = `${process.env.APP_URL}/files/${req.file.filename}`;
-      } else {
-        const url = await knex.select('imagemPerfil').from('usuario').where({ idUsuario }).first();
-
-        if (url.imagemPerfil) {
-          const pathSplit = url.imagemPerfil.split('/');
-          const name = pathSplit.slice(-1);
-          s3.deleteObject({
-            Bucket: 'obracertaupload',
-            Key: name[0]
-          }).promise();
+      if (req.file != undefined){
+        if (process.env.MULTER_CONFIG == 'local') {
+          file_url = `${process.env.APP_URL}/files/${req.file.filename}`;
+        } else {
+          const url = await knex.select('imagemPerfil').from('usuario').where({ idUsuario }).first();
+          if (url.imagemPerfil) {
+            const pathSplit = url.imagemPerfil.split('/');
+            const name = pathSplit.slice(-1);
+            s3.deleteObject({
+              Bucket: 'obracertaupload',
+              Key: name[0]
+            }).promise();
+          }
+          file_url = req.file.location;
         }
-        file_url = req.file.location;
       }
 
       const newUserInfo = {
@@ -210,6 +211,7 @@ class UserController {
           delete newUserInfo[info]
         }
       }
+      if (Object.keys(newUserInfo).length === 0) return res.status(200).send({message: 'Nada foi editado'});
 
       await knex('usuario').update(newUserInfo).where({ idUsuario });
       return res.send(newUserInfo)
