@@ -2,7 +2,9 @@ const yup = require('yup');
 const bcrypt = require('bcryptjs');
 const knex = require('../database/index.js');
 const authServices = require('../services/authServices');
-const upload = require('../config/multer.js');
+const aws = require('aws-sdk');
+
+const s3 = new aws.S3();
 
 
 // Usar o yup para validar a entrada de dados. olhar a documentação do modulo para saber como utiliza-lo
@@ -159,7 +161,26 @@ class UserController {
   async update(req, res, next) {
 
     try {
-      const idUsuario = req.body.idUsuario;
+      const loggedUserData = await authServices.decodeToken(req.headers.authorization);
+      const idUsuario = loggedUserData.data.idUsuario
+      if (idUsuario != Number(req.params.idUsuario)) return res.status(400).json({ error: "o usuário não pode editar as informações de outro usuário" });
+
+      var file_url =''
+      if (req.file.location == undefined){
+        file_url = `${process.env.APP_URL}/files/${req.file.filename}`;
+      } else {
+        const url = await knex.select('imagemPerfil').from('usuario').where({ idUsuario }).first();
+
+        if (url.imagemPerfil) {
+          const pathSplit = url.imagemPerfil.split('/');
+          const name = pathSplit.slice(-1);
+          s3.deleteObject({
+            Bucket: 'obracertaupload',
+            Key: name[0]
+          }).promise();
+        }
+        file_url = req.file.location;
+      }
 
       const newUserInfo = {
         nomeCompleto: req.body.novoNomeCompleto,
@@ -167,14 +188,9 @@ class UserController {
         telefone: req.body.novoTelefone,
         descricao: req.body.novaDescricao,
         categoria: req.body.novaCategoria,
-        imagemPerfil: req.body.novaImagem
+        imagemPerfil: file_url
       }
-      if (newUserInfo.imagemPerfil != '') {
-        const uploadS3 = require('../services/s3Services.js')
-        newUserInfo.imagemPerfil = await uploadS3(newUserInfo.imagemPerfil, 'imagens-perfil', idUsuario)
-      } else {
-        delete newUserInfo[imagemPerfil]
-      }
+
       //retirando informações que não serão atualizadas
       let info;
       for (info in newUserInfo) {
@@ -184,15 +200,10 @@ class UserController {
       }
 
       await knex('usuario').update(newUserInfo).where({ idUsuario });
-
       return res.send(newUserInfo)
-
     } catch (error) {
-
       next(error);
-
     }
-
   }
 
   async updatePassword(request, response) {

@@ -35,7 +35,6 @@ exports.middlewares = async function(req, res, next) {
             });
         }
 
-        req.body.idUsuario = decoded.data.idUsuario;
         next();
     })
 
