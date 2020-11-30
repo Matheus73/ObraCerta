@@ -9,7 +9,7 @@ exports.seed = function(knex) {
       for (let index = 1; index <= numberOfComments; index++) {
         comments.push({
           conteudo: 'Conteudo do comentario...',
-          idPublicacao: (Math.floor(Math.random() * 300) + 1),
+          idDono: (Math.floor(Math.random() * 300) + 1),
           idUsuario: (Math.floor(Math.random() * 500) + 1)
         });
       }

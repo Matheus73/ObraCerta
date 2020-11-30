@@ -52,7 +52,7 @@ export default createGlobalStyle`
 
     form {
         margin: auto;
-        max-width: 500px;
+        width: 500px;
     }
 
     table {

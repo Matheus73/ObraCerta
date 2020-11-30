@@ -6,6 +6,7 @@ exports.seed = function (knex) {
       // Inserts seed entries    
       const users = []
       const categorias = ['Serralheiro', 'Pintor', 'Eletricista', 'Marceneiro', 'Encanador', 'Pedreiro', null, null];
+      const localidades = ['AC', 'AL', 'AP', 'AM' ,'BA', 'CE' ,'ES' ,'GO' ,'MA', 'MT' ,'MS', 'MG' ,'PA' ,'PB', 'PR', 'PE', 'PI' ,'RJ', 'RN', 'RS' ,'RO' ,'RR', 'SC','SP','SE','TO','DF', null, null, null, null]
       const resps = ['Bolacha', 'Biscoito', null];
 
       for (let index = 1; index <= 500; index++) {
@@ -15,8 +16,9 @@ exports.seed = function (knex) {
           hashSenha: bcrypt.hashSync('123456', 8),
           telefone: '9999999999',
           categoria: categorias[Math.floor(Math.random() * categorias.length)],
-          imagemPerfil: 'fakePerfilImage.jpg',
+          imagemPerfil: 'https://obracertaupload.s3.amazonaws.com/f9f02e7a-142f-4223-ac63-3987dd1c16db-photo perfil.jpg',
           descricao: 'trabalho desde 17 anos na area',
+          localidade: localidades[Math.floor(Math.random() * localidades.length)],
           respDeSeguranca: resps[Math.floor(Math.random() * resps.length)]
         });
 

@@ -2,6 +2,7 @@ const yup = require('yup');
 const bcrypt = require('bcryptjs');
 const knex = require('../database/index.js');
 const authServices = require('../services/authServices');
+const upload = require('../config/multer.js');
 
 
 // Usar o yup para validar a entrada de dados. olhar a documentação do modulo para saber como utiliza-lo
@@ -42,9 +43,9 @@ class UserController {
     await knex('usuario').insert(newUser);
 
     const dados = await knex.select('*')
-            .from('usuario')
-            .where({ email: newUser.email })
-            .first();
+      .from('usuario')
+      .where({ email: newUser.email })
+      .first();
 
     delete dados.hashSenha;
 
@@ -56,10 +57,75 @@ class UserController {
 
   async list(req, res) {
 
-    const userList = await knex.select('*').from('usuario');
+    let userList = [];
+    console.log(req.query)
+    if (req.query.searchBar != '') {
+      let searchStr = req.query.searchBar;
+      let locality = req.query.locality != '' ? { localidade: req.query.locality } : {};
 
-    return res.json({ userList });
+      try {
+        userList = await knex.select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'descricao', 'imagemPerfil', 'localidade', knex.raw('ARRAY_AGG(nota) as notas'))
+          .from('usuario').where(locality)
+          .innerJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
+          .groupBy('idUsuario');
+      } catch (error) {
+        return res.json({ message: "Algo deu errado na busca com a searchBar :( ." + error }).status(400);
+      }
+      for (const user in userList) {
+        if (userList[user].descricao.toLowerCase().indexOf(searchStr.toLowerCase()) == -1) { //se a str pesquisada existir em alguma descrição skipa esse if
+          userList.splice(user)
+        }
+      }
 
+    } else {
+
+      const filters = {
+        categoria: req.query.categoryFilter,
+        localidade: req.query.locality
+      }
+      //retirando filtros vazios 
+      for (const filter in filters) {
+        if (filters[filter] == '') {
+          delete filters[filter];
+        }
+      }
+      //pegando usuarios de acordo com filtros existentes
+      // let userList = []
+      try {
+        userList = await knex
+          .select('idUsuario', 'nomeCompleto', 'email', 'categoria', 'imagemPerfil', 'localidade', 'descricao', knex.raw('ARRAY_AGG(nota) as notas'))
+          .from('usuario')
+          .innerJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
+          .where(filters).groupBy('idUsuario');
+      } catch (error) {
+        return res.json({ message: "Algo deu errado na busca com filtros :( ." + error }).status(400);
+      }
+    }
+
+    let media = 0
+    for (const user in userList) {
+      media = userList[user].notas.reduce((soma, n) => parseInt(n) + soma, 0) / userList[user].notas.length;
+      userList[user].numeroDeAvaliacoes = userList[user].notas.length;// salvando n de avals
+      userList[user].notaMedia = media.toFixed(2); //arredondando
+      delete userList[user].notas;
+      userList = userList.sort((a, b) => {
+        return a.notaMedia < b.notaMedia ? 1 : a.notaMedia > b.notaMedia ? -1 : 0;
+      })//ordenando do mais bem avaliado do pior avaliado
+    }
+
+    return res.json(userList);
+
+  }
+
+  async one(req, res) {
+    const { idUsuario } = req.params;
+
+    const user = await knex.select('idUsuario', 'nomeCompleto', 'categoria', 'imagemPerfil', 'localidade', 'descricao')
+      .from('usuario').where({ idUsuario: idUsuario }).first()
+
+    if (!user) return res.status(404).json({ error: 'usuário não existe' });
+
+    return res.json(user);
   }
 
   async delete(req, res, next) {
@@ -93,29 +159,26 @@ class UserController {
   async update(req, res, next) {
 
     try {
-      const { idUsuario } = req.params;
-      const senha = req.body.senha;
-
-      const hash = await knex.select('hashSenha')
-        .from('usuario')
-        .where({ idUsuario: idUsuario })
-        .first();
-
-      if (!await bcrypt.compareSync(senha, hash.hashSenha)) {
-        return res.status(400).send({ error: 'Senha inválida' });
-      }
+      const idUsuario = req.body.idUsuario;
 
       const newUserInfo = {
         nomeCompleto: req.body.novoNomeCompleto,
         email: req.body.novoEmail,
         telefone: req.body.novoTelefone,
         descricao: req.body.novaDescricao,
-        categoria: req.body.novaCategoria
+        categoria: req.body.novaCategoria,
+        imagemPerfil: req.body.novaImagem
+      }
+      if (newUserInfo.imagemPerfil != '') {
+        const uploadS3 = require('../services/s3Services.js')
+        newUserInfo.imagemPerfil = await uploadS3(newUserInfo.imagemPerfil, 'imagens-perfil', idUsuario)
+      } else {
+        delete newUserInfo[imagemPerfil]
       }
       //retirando informações que não serão atualizadas
       let info;
       for (info in newUserInfo) {
-        if (newUserInfo[info] === '') {
+        if (newUserInfo[info] == '') {
           delete newUserInfo[info]
         }
       }
@@ -123,7 +186,6 @@ class UserController {
       await knex('usuario').update(newUserInfo).where({ idUsuario });
 
       return res.send(newUserInfo)
-
 
     } catch (error) {
 
@@ -157,3 +219,4 @@ class UserController {
 }
 
 module.exports = new UserController();
+
