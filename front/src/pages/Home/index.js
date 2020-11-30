@@ -40,7 +40,6 @@ class Home extends Component {
             loc += '=' + localStorage.getItem('localidade');
         }
         let url_search = this.url + bar +  loc   + '&categoryFilter';
-
         console.log(url_search)
 
         axios.get(url_search)
@@ -57,7 +56,6 @@ class Home extends Component {
     handleCategory = (categoria) => {
 
         let loc = '&locality';
-
         if(localStorage.getItem("localidade") !== 'null'){
             loc += '=' + localStorage.getItem('localidade');
         }
