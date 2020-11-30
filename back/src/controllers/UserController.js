@@ -115,6 +115,7 @@ class UserController {
 
     return res.json(userList);
 
+    return res.json(user);
   }
 
   async one(req, res) {
