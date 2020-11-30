@@ -14,6 +14,71 @@ import imgCard3 from '../../assets/VerticalCards/HomeCards/Card3.svg';
 import Button from '../../components/Button';
 
 class Home extends Component {
+<<<<<<< Updated upstream
+=======
+    constructor(props) {
+        super(props);
+
+        this.url = "http://localhost:3001/search?searchBar"
+        this.data = {
+            searchBar: '',
+            categoryFilter: '',
+            locality: localStorage.getItem('localidade') == null || '',
+        };
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        let bar = '';
+        let loc = '&locality';
+
+        if( this.data.searchBar !== ''){
+            bar = '=' + this.data.searchBar;
+        }
+        if(localStorage.getItem("localidade") !== 'null'){
+            loc += '=' + localStorage.getItem('localidade');
+        }
+        let url_search = this.url + bar +  loc   + '&categoryFilter';
+
+        console.log(url_search)
+
+        axios.get(url_search)
+        .then((response) => {
+            console.log(response)
+            const data = response.data
+            this.props.history.push('/Listagem',data);
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+    }
+
+    handleCategory = (categoria) => {
+
+        let loc = '&locality';
+
+        if(localStorage.getItem("localidade") !== 'null'){
+            loc += '=' + localStorage.getItem('localidade');
+        }
+
+        let url_search = this.url + loc  + '&categoryFilter=' + categoria;
+        console.log(url_search)
+
+        axios.get(url_search)
+        .then((response) => {
+            console.log(response)
+            const data = response.data
+            this.props.history.push('/Listagem',data);
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+    }
+
+    handleChangeSearch = (e) => {
+        this.data.searchBar = e.target.value
+    };
+>>>>>>> Stashed changes
 
     render() {
         return (
