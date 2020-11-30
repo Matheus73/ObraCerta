@@ -5,9 +5,9 @@ exports.seed = function (knex) {
     .then(function () {
       // Inserts seed entries    
       const users = []
-      const categorias = ['Serralheiro', 'Pintor', 'Eletricista', 'Marceneiro', 'Encanador', 'Pedreiro', null, null];
-      const localidades = ['AC', 'AL', 'AP', 'AM' ,'BA', 'CE' ,'ES' ,'GO' ,'MA', 'MT' ,'MS', 'MG' ,'PA' ,'PB', 'PR', 'PE', 'PI' ,'RJ', 'RN', 'RS' ,'RO' ,'RR', 'SC','SP','SE','TO','DF', null, null, null, null]
-      const resps = ['Bolacha', 'Biscoito', null];
+      const categorias = ['Serralheiro', 'Pintor', 'Eletricista', 'Marceneiro', 'Encanador', 'Pedreiro', 'Não Definida', 'Não Definida'];
+      const localidades = ['AC', 'AL', 'AP', 'AM' ,'BA', 'CE' ,'ES' ,'GO' ,'MA', 'MT' ,'MS', 'MG' ,'PA' ,'PB', 'PR', 'PE', 'PI' ,'RJ', 'RN', 'RS' ,'RO' ,'RR', 'SC','SP','SE','TO','DF', 'Não Definida', 'Não Definida', 'Não Definida']
+      const resps = ['Bolacha', 'Biscoito', 'Não Definida'];
 
       for (let index = 1; index <= 500; index++) {
         users.push({
