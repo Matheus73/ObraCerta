@@ -211,7 +211,6 @@ class UserController {
           delete newUserInfo[info]
         }
       }
-      console.log(Object.keys(newUserInfo).length)
       if (Object.keys(newUserInfo).length === 0) return res.status(200).send({message: 'Nada foi editado'});
 
       await knex('usuario').update(newUserInfo).where({ idUsuario });
