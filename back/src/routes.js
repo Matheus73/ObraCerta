@@ -43,5 +43,6 @@ router.get('/:idUsuario/avaliar/list', rateController.list);
 
 //Rotas para comentarios
 router.put('/comment', commentController.create);
+router.get('/comment/:idUsuario', commentController.list)
 
 module.exports = router
