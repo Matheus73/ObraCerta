@@ -36,7 +36,7 @@ class Home extends Component {
         if( this.data.searchBar !== ''){
             bar = '=' + this.data.searchBar;
         }
-        if(localStorage.getItem("localidade") !== null){
+        if(localStorage.getItem("localidade") !== "Não Definida" && localStorage.getItem("localidade") != null){
             loc += '=' + localStorage.getItem('localidade');
         }
         let url_search = this.url + bar +  loc   + '&categoryFilter';
@@ -56,7 +56,7 @@ class Home extends Component {
     handleCategory = (categoria) => {
 
         let loc = '&locality';
-        if(localStorage.getItem("localidade") !== null){
+        if(localStorage.getItem("localidade") !== "Não Definida" && localStorage.getItem("localidade") != null ){
             loc += '=' + localStorage.getItem('localidade');
         }
 
