@@ -6,6 +6,7 @@ import ProfileCard from '../../components/ProfileCard';
 import CardGroup from '../../components/CardGroup';
 import imgProfileDefault from '../../assets/profileDefault.png';
 import axios from 'axios';
+import Navbar from '../../components/Navbar';
 
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
@@ -65,6 +66,7 @@ class PerfilUsuario extends Component {
     render() {
         return (
             <>
+            <Navbar type="secundary"/>
                 <main>
                     <Space/>
                     <h2>{localStorage.getItem("name")}</h2>

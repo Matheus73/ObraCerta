@@ -10,7 +10,7 @@ const Nav = styled.nav`
     flex-flow: row nowrap;
     align-items: baseline;
     justify-content: space-between;
-
+    flex-wrap: wrap;
     ${Item}{
         margin: 0px 0px 20px 20px;
     }

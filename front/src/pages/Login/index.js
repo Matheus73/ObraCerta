@@ -6,6 +6,7 @@ import Footer from '../../components/Footer';
 import GlobalStyle from './styles';
 import Space from '../../components/Space';
 import Alert from '../../components/Alert';
+import Navbar from '../../components/Navbar';
 
 class Login extends Component {
     constructor(props) {
@@ -72,6 +73,7 @@ class Login extends Component {
         return (
             <>
                 <GlobalStyle />
+            <Navbar type='third'/>
                 <main>
                     <h1>Login</h1>
                     <form onSubmit={this.handleSubmit}>

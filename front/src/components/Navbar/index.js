@@ -5,23 +5,47 @@ import Button from '../Button';
 import Item from '../Item';
 
 function Navbar(props){
-    return (
-        <>
-            <Nav>
-                <Item href="/"><GrTools size={30}/>Obra Certa</Item>
+    function type(type){
+
+        if(type === 'secundary'){
+            return(
+                <>
+                <div>
+                    <Button second href="/editarperfil">Editar Perfil</Button>
+                    <Button second onClick={() => {
+                        localStorage.clear();
+                        props.history.push('/');
+
+                    }}> Sair</Button>
+                </div>
+                </>
+
+            )
+        }if(type === 'third'){
+            return(<></>)
+        } else {
+            return (
                 <span>
                     <Item white href="/sobre">Sobre</Item>
-                    {props.loggedIn === "NOT_LOGGED_IN" ?
-                        <>
+                    {localStorage.getItem('loggedIn') !== "LOGGED_IN" ?
+                            <>
                             <Item white href="/login">Entrar</Item>
                             <Button second href="/cadastro">CADASTRA-SE</Button>
-                        </>
-                        :
+                            </>
+                            :
                             <Button second href="/PerfilUsuario">Meu perfil</Button>
                     }
-                </span>
+                        </span>
+            )
+        }
+    }
 
-            </Nav>
+    return (
+        <>
+        <Nav>
+            <Item href="/"><GrTools size={30}/>Obra Certa</Item>
+            {type(props.type)}
+        </Nav>
         </>
     );
 }

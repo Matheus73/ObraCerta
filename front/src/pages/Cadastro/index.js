@@ -7,6 +7,7 @@ import GlobalStyle from './styles';
 import Space from '../../components/Space';
 import Input2Mask from '../../components/InputMask';
 import Alert from '../../components/Alert';
+import Navbar from '../../components/Navbar';
 
 /**
 * Representauma  página de cadastro, possui 3 atributos state,url e UserData.
@@ -190,6 +191,7 @@ class Cadastro extends Component {
         return (
             <>
                 <GlobalStyle />
+                <Navbar type='third'/>
                 <main>
                     <h1>CADASTRE-SE</h1>
                     <form onSubmit={this.handleSubmit}>
