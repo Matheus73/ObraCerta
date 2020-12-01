@@ -37,8 +37,6 @@ class commentController {
     }
     return res.json(commentlist)
   }
-
-
 }
 
 module.exports = new commentController();
