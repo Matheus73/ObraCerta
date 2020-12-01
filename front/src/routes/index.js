@@ -113,16 +113,16 @@ class Routes extends Component {
                             <Sobre {...props} loggedIn={this.state.loggedIn} />
                         )}
                     />
-
-                     <Route component={Pagina404}/>
-
-
                     <Route
                         path='/editarperfil'
                         render={props => (
                             <EditarPerfil {...props}/>
                         )}
                     />
+
+                     <Route component={Pagina404}/>
+
+
                 </Switch>
             </BrowserRouter>
         );

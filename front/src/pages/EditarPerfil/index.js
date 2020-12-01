@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import imgProfileDefault from '../../assets/profileDefault.jpg';
 import ProfileAvatarEditor from '../../components/ProfileAvatarEditor';
 import Button from '../../components/Button';
 import GlobalStyle from './styles';
@@ -24,7 +23,8 @@ class EditarPerfil extends Component {
             novaDescricao: '',
             novaCategoria: '',
             novaLocalidade: '',
-            uploadedPublicacoes: []
+            uploadedPublicacoes: [],
+            uploadedNovaImagem: ''
         };
 
         this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -51,7 +51,9 @@ class EditarPerfil extends Component {
         userData.append('descricao', '');
         userData.append('categoria', '');
         userData.append('localidade', '');
+        if(this.state.novaImagem !== '')
         userData.append('imagemPerfil', this.state.novaImagem, ".jpeg");
+        userData.append('imagemPerfil', '');
 
         api
             .put(url, userData, config)
@@ -67,8 +69,7 @@ class EditarPerfil extends Component {
                 if(this.state.novaLocalidade !== '')
                 localStorage.setItem('localidade', this.state.novaLocalidade);
                 if(this.state.novaImagem !== '')
-                localStorage.setItem('imagemPerfil', URL.createObjectURL(this.state.novaImagem));
-                //TODO pegar link da nova imagem
+                localStorage.setItem('imagemPerfil', this.state.uploadedNovaImagem);
             })
             .catch((error) => {
                 console.log(error);
@@ -85,6 +86,7 @@ class EditarPerfil extends Component {
         if (canvas === '') {
             this.setState({
                 novaImagem: '',
+                uploadedNovaImagem: '',
             });
         } else {
             canvas.toBlob((blob) =>
@@ -92,6 +94,9 @@ class EditarPerfil extends Component {
                     novaImagem: blob,
                 }),
             );
+            this.setState({
+                uploadedNovaImagem: canvas.toDataURL(),
+            });
         }
     }
 
@@ -101,11 +106,11 @@ class EditarPerfil extends Component {
             id: uniqueId(),
             name: file.name,
             readbleSize: filesize(file.size),
-            // preview: URL.createObjectURL(file),
-            // progress: '0',
-            // uploaded: false,
-            // error: false,
-            // url: null,
+            preview: URL.createObjectURL(file),
+            progress: '0',
+            uploaded: false,
+            error: false,
+            url: null,
         }));
 
         this.setState({
@@ -144,13 +149,12 @@ class EditarPerfil extends Component {
                         <Space />
                         <ProfileAvatarEditor
                             handleNovaImagem={this.handleNovaImagem}
-                            src={imgProfileDefault}
+                            src={localStorage.getItem('imagemPerfil')}
                         />
                         <Space />
                         <InputTextArea
                             defaultValue={
-                                localStorage.getItem('descricao') === 'null' &&
-                                ''
+                                localStorage.getItem('descricao')
                             }
                             placeholder="Descreva você e seu trabalho aqui"
                             onChange={(text) => this.handleNovaDescricao(text)}
