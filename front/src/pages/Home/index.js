@@ -59,12 +59,10 @@ class Home extends Component {
         }
 
         let url_search = this.url + loc  + '&categoryFilter=' + categoria;
-        console.log(url_search)
 
         api.get(url_search)
         .then((response) => {
             const data = response.data
-            console.log('%cMyProject%cline:69%cresponse.data', 'color:#fff;background:#ee6f57;padding:3px;border-radius:2px', 'color:#fff;background:#1f3c88;padding:3px;border-radius:2px', 'color:#fff;background:rgb(248, 214, 110);padding:3px;border-radius:2px', response.data)
             this.props.history.push('/Listagem',data);
         })
         .catch((error) => {
