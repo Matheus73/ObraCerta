@@ -58,10 +58,12 @@ class PerfilUsuario extends Component {
                             {this.userData.localidade || "Não definido"}</p>
                         </Card>
                     </CardGroup>
+                    {this.posts.length != 0 && 
                     <div id="carrossel">
                         <h2>Publicações</h2>
                         <AliceCarousel mouseTracking items={this.posts}  infinite={true}/>
                     </div>
+                    }
                 </main>
                 </PageDefault>
             </>

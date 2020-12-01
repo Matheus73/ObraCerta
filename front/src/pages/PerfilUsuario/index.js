@@ -18,12 +18,43 @@ class PerfilUsuario extends Component {
         this.state = {
             posts: {},
             //! Imagens de teste
-            //imgs: [] maneira oficial
-            imgs: [<img src="https://mapa-da-obra-producao.s3.amazonaws.com/wp-content/uploads/2018/09/assessoria-de-obras.jpg" width={1000} height={500} alt="Publicação"/>,
-            <img src="https://respostas.sebrae.com.br/wp-content/uploads/2019/09/386a2dfe736952d86d6f4f07387bc1d8.jpg"width={1000} height={500} alt="Publicação"/>,
-            <img src="https://www.institutodaconstrucao.com.br/blog/wp-content/uploads/2017/01/IMG-20151017-WA0016-2-810x425.jpg" width={1000} height={500} alt="Publicação"/>]
+            imgs: [],
 
-        }
+            }
+
+            const url = 'http://localhost:3001/' + localStorage.getItem('idUsuario') + '/publicacoes'
+            console.log(url)
+            axios.get(url,{
+                headers:{
+                    'authorization': localStorage.getItem('token')
+                }
+            })
+                .then(response => {
+
+                    let imagem = {};                
+                    for( var i in response.data){
+                        let idPublicacao = response.data[i].idPublicacao;
+                        let nomeImagem = response.data[i].nomeImagem;
+                        imagem[i] = {idPublicacao,nomeImagem};
+                    }
+                    this.setState({
+                        posts: imagem,
+                    })
+                    
+                    let imgs = []
+                    for(i in response.data){
+                        let nomeImagem = response.data[i].nomeImagem;
+                        imgs.push(<img src={nomeImagem} width={1000} height={500} alt="Publicação"/>)
+                    }
+                    this.setState({
+                        imgs: imgs
+                    })
+
+                    //? console.log(this.state.imgs)
+                })
+                .catch(error => {
+                    console.log(error);
+                })
     }
 
     componentDidMount = () => {
@@ -51,10 +82,9 @@ class PerfilUsuario extends Component {
                     let nomeImagem = response.data[i].nomeImagem;
                     imgs.push(<img src={nomeImagem} width={1000} height={500} alt="Publicação"/>)
                 }
-                //! Para teste manter comentada
-                // this.setState({
-                //     imgs: imgs
-                // })
+                this.setState({
+                    imgs: imgs
+                })
 
                 //? console.log(this.state.imgs)
             })
@@ -71,7 +101,7 @@ class PerfilUsuario extends Component {
                     <Space/>
                     <h2>{localStorage.getItem("name")}</h2>
                     <ProfileCard
-                        src={imgProfileDefault}
+                        src={localStorage.getItem('imagemPerfil')}
                         title="Descrição:"
                         description={localStorage.getItem("descricao") || "Sem descrição"}
                     />
@@ -90,10 +120,12 @@ class PerfilUsuario extends Component {
                             {localStorage.getItem("localidade") == null|| "Não definido"}</p>
                         </Card>
                     </CardGroup>
-                    <div id="carrossel">
-                        <h2>Publicações</h2>
-                        <AliceCarousel mouseTracking items={this.state.imgs}  infinite={true}/>
-                    </div>
+                    { this.state.imgs.length !== 0 && 
+                        <div id="carrossel">
+                            <h2>Publicações</h2>
+                            <AliceCarousel mouseTracking items={this.state.imgs}  infinite={true}/>
+                        </div>
+                    }
                 </main>
                 <Footer/>
             </>
