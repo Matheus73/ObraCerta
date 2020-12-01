@@ -3,14 +3,17 @@ import Item from '../Item';
 
 const Nav = styled.nav`
     max-width: 1240px;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 15px;
-    margin-botton: 25px;
+    margin-bottom: 25px;
     display: flex;
     flex-direction: row;
     flex-flow: row nowrap;
     align-items: baseline;
     justify-content: space-between;
     flex-wrap: wrap;
+
     ${Item}{
         margin: 0px 0px 20px 20px;
     }
