@@ -1,11 +1,13 @@
+
 import React, { Component } from 'react';
 import Footer from '../../components/Footer';
 import Card from '../../components/Card';
 import Space from '../../components/Space';
 import ProfileCard from '../../components/ProfileCard';
 import CardGroup from '../../components/CardGroup';
+import axios from 'axios';
 import Navbar from '../../components/Navbar';
-import api from '../../services/api';
+
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 
@@ -20,18 +22,20 @@ class PerfilUsuario extends Component {
 
             }
 
-            const url = localStorage.getItem('idUsuario') + '/publicacoes'
-            api.get(url,{
+            const url = 'http://localhost:3001/' + localStorage.getItem('idUsuario') + '/publicacoes'
+            console.log(url)
+            axios.get(url,{
                 headers:{
-                    Authorization: localStorage.getItem('token')
+                    'authorization': localStorage.getItem('token')
                 }
             })
                 .then(response => {
+                    // console.log(response)
 
                     let imagem = {};                
                     for( var i in response.data){
                         let idPublicacao = response.data[i].idPublicacao;
-                        let nomeImagem = response.data[i].nomeImagem;
+                        let nomeImagem = response.data[i].url;
                         imagem[i] = {idPublicacao,nomeImagem};
                     }
                     this.setState({
@@ -40,14 +44,14 @@ class PerfilUsuario extends Component {
                     
                     let imgs = []
                     for(i in response.data){
-                        let nomeImagem = response.data[i].nomeImagem;
+                        let nomeImagem = response.data[i].url;
                         imgs.push(<img src={nomeImagem} width={1000} height={500} alt="Publicação"/>)
                     }
                     this.setState({
                         imgs: imgs
                     })
 
-                    //? console.log(this.state.imgs)
+                    console.log(this.state.imgs)
                 })
                 .catch(error => {
                     console.log(error);
@@ -55,10 +59,11 @@ class PerfilUsuario extends Component {
     }
 
     componentDidMount = () => {
-        const url = localStorage.getItem('idUsuario') + '/publicacoes'
-        api.get(url,{
+        const url = 'http://localhost:3001/' + localStorage.getItem('idUsuario') + '/publicacoes'
+        console.log(url)
+        axios.get(url,{
             headers:{
-                Authorization: localStorage.getItem('token')
+                'authorization': localStorage.getItem('token')
             }
         })
             .then(response => {
@@ -66,7 +71,7 @@ class PerfilUsuario extends Component {
                 let imagem = {};                
                 for( var i in response.data){
                     let idPublicacao = response.data[i].idPublicacao;
-                    let nomeImagem = response.data[i].nomeImagem;
+                    let nomeImagem = response.data[i].url;
                     imagem[i] = {idPublicacao,nomeImagem};
                 }
                 this.setState({
@@ -75,14 +80,14 @@ class PerfilUsuario extends Component {
                 
                 let imgs = []
                 for(i in response.data){
-                    let nomeImagem = response.data[i].nomeImagem;
+                    let nomeImagem = response.data[i].url;
                     imgs.push(<img src={nomeImagem} width={1000} height={500} alt="Publicação"/>)
                 }
                 this.setState({
                     imgs: imgs
                 })
 
-                //? console.log(this.state.imgs)
+                console.log(this.state.imgs)
             })
             .catch(error => {
                 console.log(error);
