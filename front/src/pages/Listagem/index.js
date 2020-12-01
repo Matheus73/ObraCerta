@@ -3,7 +3,7 @@ import createHistory from 'history/createBrowserHistory';
 import ProfileCard from '../../components/ProfileCard';
 import Space from '../../components/Space';
 import PageDefault from '../PageDefault';
-import axios from 'axios';
+import api from '../../services/api';
 
 class Listagem extends Component {
     constructor(props){
@@ -18,14 +18,12 @@ class Listagem extends Component {
     }
 
     handleClick = (idUser) =>{
-        axios.get('http://localhost:3001/perfil/' + idUser)
+        api.get('/perfil/' + idUser)
         .then((response) => {
             let userData = response.data;
-            console.log(userData);
-            axios.get('http://localhost:3001/' + idUser + '/publicacoes')
+            api.get('/' + idUser + '/publicacoes')
             .then((response) => {
                 let posts = response.data;
-                console.log(posts);
                 let data = [];
                 data.push(userData);
                 data.push(posts);
@@ -50,7 +48,7 @@ class Listagem extends Component {
             {this.data.map(data => (
                 <>
                     <ProfileCard
-                        src="https://obracertaupload.s3.amazonaws.com/f9f02e7a-142f-4223-ac63-3987dd1c16db-photo%20perfil.jpg"
+                        src={data.imagemPerfil}
                         title={data.nomeCompleto}
                         description={data.descricao}
                         onClick={() => {this.handleClick(data.idUsuario)}}

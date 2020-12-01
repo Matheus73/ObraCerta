@@ -8,6 +8,7 @@ import Space from '../../components/Space';
 import Input2Mask from '../../components/InputMask';
 import Alert from '../../components/Alert';
 import Navbar from '../../components/Navbar';
+import api from '../../services/api';
 
 /**
 * Representauma  página de cadastro, possui 3 atributos state,url e UserData.
@@ -27,6 +28,7 @@ class Cadastro extends Component {
             phone: '',
             confirm_password: '',
             terms: false,
+            errNome: '',
             errEmail: '',
             errPassword: '',
             errConfirmPassword: '',
@@ -35,7 +37,7 @@ class Cadastro extends Component {
 
         }
 
-        this.url = 'http://localhost:3001/registrar'// Colocar a Url do back aqui
+        this.url = '/registrar'
 
         this.userData = {
             nomeCompleto: '',
@@ -46,23 +48,23 @@ class Cadastro extends Component {
     }
 
     validate() {
-        var isCorrect = true
+        
+        let isCorrect = true;
         let initial = this.state.email.substring(0, this.state.email.indexOf("@"));
         let domain = this.state.email.substring(this.state.email.indexOf("@") + 1, this.state.email.length);
         if ((initial.length >= 1) &&
-            (domain.length >= 3) &&
-            (initial.search("@") === -1) &&
-            (domain.search("@") === -1) &&
-            (initial.search(" ") === -1) &&
-            (domain.search(" ") === -1) &&
-            (domain.search(".") !== -1) &&
-            (domain.indexOf(".") >= 1) &&
-            (domain.lastIndexOf(".") < domain.length - 1)) {
+        (domain.length >= 3) &&
+        (initial.search("@") === -1) &&
+        (domain.search("@") === -1) &&
+        (initial.search(" ") === -1) &&
+        (domain.search(" ") === -1) &&
+        (domain.search(".") !== -1) &&
+        (domain.indexOf(".") >= 1) &&
+        (domain.lastIndexOf(".") < domain.length - 1)) {
             // isCorrect = true;
             this.setState({
                 errEmail: ''
-            })
-
+            })           
         }
         else {
             isCorrect = false;
@@ -70,14 +72,14 @@ class Cadastro extends Component {
                 errEmail: "Email inválido"
             })
         }
+        if (this.state.name.length == 0) {
+            this.setState({errNome: "Digite um nome"});
+            isCorrect = false;
+        }
         if (this.state.phone.replace(/\D/gim, '').length < 10) {
             isCorrect = false
             this.setState({
                 errPhone: "Telefone Inválido"
-            })
-        } else {
-            this.setState({
-                errPhone: ""
             })
         }
         if (this.state.password.length < 6) {
@@ -100,15 +102,6 @@ class Cadastro extends Component {
             })
         }
         if (isCorrect) {
-            this.setState({
-                errEmail: ''
-            })
-            this.setState({
-                errConfirmPassword: ''
-            })
-            this.setState({
-                errPassword: ''
-            })
             this.userData.nomeCompleto = this.state.name;
             this.userData.email = this.state.email;
             this.userData.senha = this.state.password;
@@ -162,7 +155,7 @@ class Cadastro extends Component {
         }
 
         if (valid) {
-            axios.post(this.url, this.userData, headers)
+            api.post(this.url, this.userData, headers)
                 .then(response => {
                     this.props.handleLogin(response.data.dados);
                     localStorage.setItem("token",response.data.token)
@@ -187,7 +180,7 @@ class Cadastro extends Component {
     }
 
     render() {
-        const { name, email, password, phone, confirm_password, terms, errEmail, errPassword, errConfirmPassword, errTerms, errPhone } = this.state
+        const { name, email, password, phone, confirm_password, terms, errEmail, errPassword, errConfirmPassword, errTerms, errPhone, errNome } = this.state
         return (
             <>
                 <GlobalStyle />
@@ -208,6 +201,7 @@ class Cadastro extends Component {
                                 value={name}
                                 onChange={this.handleNameChange}
                             />
+                            <Alert>{errNome}</Alert>
                         </label>
                         <Space />
                         <label>Email:

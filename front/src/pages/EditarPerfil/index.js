@@ -69,15 +69,9 @@ class EditarPerfil extends Component {
                 if (this.state.novaDescricao !== '')
                     localStorage.setItem('descricao', this.state.novaDescricao);
                 if (this.state.novaLocalidade !== '')
-                    localStorage.setItem(
-                        'localidade',
-                        this.state.novaLocalidade,
-                    );
+                    localStorage.setItem('localidade', this.state.novaLocalidade);
                 if (this.state.novaImagem !== '')
-                    localStorage.setItem(
-                        'imagemPerfil',
-                        this.state.uploadedNovaImagem,
-                    );
+                    localStorage.setItem('imagemPerfil', this.state.uploadedNovaImagem);
                 this.props.history.push('/');
             })
             .catch((error) => {

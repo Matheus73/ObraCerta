@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import axios from 'axios';
+import api from '../../services/api';
 import Footer from '../../components/Footer';
 import GlobalStyle from './styles';
 import Space from '../../components/Space';
@@ -18,7 +19,7 @@ class Login extends Component {
             err: ''
         }
 
-        this.url = 'http://localhost:3001/login'
+        this.url = '/login'
 
         this.userData = {
             senha: '',
@@ -43,13 +44,12 @@ class Login extends Component {
         this.userData.email = this.state.email;
         this.userData.senha = this.state.password;
 
-        axios.post(this.url, this.userData)
+        api.post(this.url, this.userData)
             .then(response => {
                 this.props.handleLogin(response.data.dados);
                 // console.log(response)
                 localStorage.setItem("token",response.data.token);
                 localStorage.setItem("loggedIn","LOGGED_IN");
-
                 localStorage.setItem("idUsuario",response.data.dados.idUsuario);
                 localStorage.setItem("name",response.data.dados.nomeCompleto);
                 localStorage.setItem("email",response.data.dados.email);
