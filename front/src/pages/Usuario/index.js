@@ -25,7 +25,7 @@ class PerfilUsuario extends Component {
         let imgs = []
         for(let i in this.posts){
             let nomeImagem = this.posts[i].url
-            imgs.push(<img src={nomeImagem} width={1000} height={500} alt="Publicação"/>)
+            imgs.push(<img src={nomeImagem} width={960} height={500} alt="Publicação"/>)
         }
 
         this.posts = imgs;
@@ -58,7 +58,7 @@ class PerfilUsuario extends Component {
                             {this.userData.localidade || "Não definido"}</p>
                         </Card>
                     </CardGroup>
-                    {this.posts.length != 0 && 
+                    {this.posts.length !== 0 && 
                     <div id="carrossel">
                         <h2>Publicações</h2>
                         <AliceCarousel mouseTracking items={this.posts}  infinite={true}/>

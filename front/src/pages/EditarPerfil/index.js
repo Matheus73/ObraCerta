@@ -30,6 +30,7 @@ class EditarPerfil extends Component {
         this.onFormSubmit = this.onFormSubmit.bind(this);
         this.handleNovaDescricao = this.handleNovaDescricao.bind(this);
         this.handleNovaImagem = this.handleNovaImagem.bind(this);
+        this.handleNovaDescricao = this.handleNovaDescricao.bind(this);
         this.handleNovaPublicacao = this.handleNovaPublicacao.bind(this);
     }
 
@@ -45,15 +46,20 @@ class EditarPerfil extends Component {
         };
 
         const userData = new FormData();
-        userData.append('nomeCompleto', '');
-        userData.append('email', '');
-        userData.append('telefone', '');
-        userData.append('descricao', '');
-        userData.append('categoria', '');
-        userData.append('localidade', '');
+        if(this.state.novaImagem !== '')
+        userData.append('nomeCompleto', this.state.novoNomeCompleto);
+        if(this.state.novaImagem !== '')
+        userData.append('email', this.state.novoEmail);
+        if(this.state.novaImagem !== '')
+        userData.append('telefone', this.state.novoTelefone);
+        if(this.state.novaImagem !== '')
+        userData.append('descricao', this.state.novaDescricao);
+        if(this.state.novaImagem !== '')
+        userData.append('categoria', this.state.novaCategoria);
+        if(this.state.novaImagem !== '')
+        userData.append('localidade', this.state.novaLocalidade);
         if(this.state.novaImagem !== '')
         userData.append('imagemPerfil', this.state.novaImagem, ".jpeg");
-        userData.append('imagemPerfil', '');
 
         api
             .put(url, userData, config)
@@ -153,11 +159,9 @@ class EditarPerfil extends Component {
                         />
                         <Space />
                         <InputTextArea
-                            defaultValue={
-                                localStorage.getItem('descricao')
-                            }
+                            defaultValue={localStorage.getItem('descricao')}
                             placeholder="Descreva você e seu trabalho aqui"
-                            onChange={(text) => this.handleNovaDescricao(text)}
+                            onChange={(e) => this.handleNovaDescricao(e.target.value)}
                         />
                         <Space/>
                         <InputDropFile handleNovaPublicacao={this.handleNovaPublicacao}/>
