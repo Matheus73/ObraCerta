@@ -204,9 +204,9 @@ class UserController {
       if (idUsuario != Number(req.params.idUsuario)) return res.status(400).json({ error: "o usuário não pode editar as informações de outro usuário" });
 
       var file_url = ''
-      if (Object.keys(req.files).length != 0){
+      if (req.files.length != 0){
         if (process.env.MULTER_CONFIG == 'local') {
-          file_url = `${process.env.APP_URL}/files/${req.files.imagemPerfil[0].filename}`;
+          file_url = `${process.env.APP_URL}/files/${req.files[0].filename}`;
         } else {
           const url = await knex.select('imagemPerfil').from('usuario').where({ idUsuario }).first();
           if (url.imagemPerfil) {
@@ -217,16 +217,17 @@ class UserController {
               Key: name[0]
             }).promise();
           }
-          file_url = req.files.imagemPerfil[0].location;
+          file_url = req.files[0].location;
         }
       }
 
       const newUserInfo = {
-        nomeCompleto: req.body.novoNomeCompleto,
-        email: req.body.novoEmail,
-        telefone: req.body.novoTelefone,
-        descricao: req.body.novaDescricao,
-        categoria: req.body.novaCategoria,
+        nomeCompleto: req.body.nomeCompleto,
+        email: req.body.email,
+        telefone: req.body.telefone,
+        descricao: req.body.descricao,
+        localidade: req.body.localidade,
+        categoria: req.body.categoria,
         imagemPerfil: file_url
       }
 

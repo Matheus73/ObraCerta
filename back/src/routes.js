@@ -24,7 +24,7 @@ router.get('/perfil/:idUsuario', UserController.one)
 router.get('/search', UserController.list);
 router.post('/registrar', UserController.store);
 router.delete('/usuario/:idUsuario', UserController.delete)
-router.put('/usuario/:idUsuario', [authServices.middlewares, upload.fields([{ name: 'imagemPerfil', maxCount: 1 }])], UserController.update)
+router.put('/usuario/:idUsuario', [authServices.middlewares, upload.array('imagemPerfil', 1)], UserController.update)
 router.post('/alteraSenha', UserController.updatePassword);
 
 //Rotas para o login
@@ -42,7 +42,7 @@ router.put('/:idUsuario/avaliar/update', authServices.middlewares, rateControlle
 router.get('/:idUsuario/avaliar/list', rateController.list);
 
 //Rotas para comentarios
-router.put('/comment', commentController.create);
+router.put(':idUsuario/comment',  authServices.middlewares, commentController.create);
 router.get('/comment/:idUsuario', commentController.list)
 
 module.exports = router

@@ -49,17 +49,11 @@ class EditarPerfil extends Component {
         };
 
         const userData = new FormData();
-        if (this.state.novaImagem !== '')
             userData.append('nomeCompleto', this.state.novoNomeCompleto);
-        if (this.state.novaImagem !== '')
             userData.append('email', this.state.novoEmail);
-        if (this.state.novaImagem !== '')
             userData.append('telefone', this.state.novoTelefone);
-        if (this.state.novaImagem !== '')
             userData.append('descricao', this.state.novaDescricao);
-        if (this.state.novaImagem !== '')
             userData.append('categoria', this.state.novaCategoria);
-        if (this.state.novaImagem !== '')
             userData.append('localidade', this.state.novaLocalidade);
         if (this.state.novaImagem !== '')
             userData.append('imagemPerfil', this.state.novaImagem, '.jpeg');
