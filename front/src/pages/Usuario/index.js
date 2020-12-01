@@ -17,10 +17,11 @@ class PerfilUsuario extends Component {
 
         let history = createHistory();
         let data = history.location.state;
-        this.userData = data[0];
+        // console.log(data)
+        this.userData = data[0][0];
         this.posts = data[1];
-        console.log(this.userData)
-        console.log(this.posts)
+        // console.log(this.userData)
+        // console.log(this.posts)
 
         let imgs = []
         for(let i in this.posts){
