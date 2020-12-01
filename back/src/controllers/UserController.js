@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const knex = require('../database/index.js');
 const authServices = require('../services/authServices');
 const aws = require('aws-sdk');
+const { json } = require('express');
 
 const s3 = new aws.S3();
 
@@ -134,8 +135,33 @@ class UserController {
   async one(req, res) {
     const { idUsuario } = req.params;
 
-    const user = await knex.select('idUsuario', 'nomeCompleto', 'categoria', 'imagemPerfil', 'localidade', 'descricao')
-      .from('usuario').where({ idUsuario: idUsuario }).first()
+    //  const user = await knex.select('idUsuario', 'nomeCompleto', 'categoria', 'imagemPerfil', 'localidade', 'descricao')
+    //    .from('usuario').where({ idUsuario: idUsuario }).first()
+    let user;
+    try{
+      user = await knex('usuario')
+      .select(
+        'idUsuario',
+        'nomeCompleto',
+        'email',
+        'categoria',
+        'imagemPerfil',
+        'localidade',
+        'descricao',
+        'telefone')
+      .where({ idUsuario });
+      user[0].comments = await knex('comentario')
+      .select('conteudo', 'idDono', 'comentarioCriadoEm')
+      .where({idUsuario:idUsuario});
+    }catch (err){
+      console.log('erro no metodo one' + err)
+      return res.status(500);
+    }
+
+      for (let x = 0; x < user[0].comments.length; x++){
+        user[0].comments[x].comentarioCriadoEm = JSON.stringify(user[0].comments[x].comentarioCriadoEm).substring(1,11)
+      }
+    
 
     if (!user) return res.status(404).json({ error: 'usuário não existe' });
 
