@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '../../components/Button';
 import {SiWhatsapp} from 'react-icons/si';
 import Card from '../../components/Card';
 import Space from '../../components/Space';
@@ -7,12 +8,17 @@ import CardGroup from '../../components/CardGroup';
 import createHistory from 'history/createBrowserHistory';
 import AliceCarousel from 'react-alice-carousel';
 import PageDefault from '../PageDefault';
+import InputTextArea from '../../components/InputTextArea';
 import 'react-alice-carousel/lib/alice-carousel.css';
+import api from '../../services/api';
 
 class PerfilUsuario extends Component {
     constructor(props){
         super(props);
 
+        this.state = {
+            addComent : ''
+        }
         this.userData = '';
         this.posts = '';
         this.comments =[];
@@ -39,6 +45,33 @@ class PerfilUsuario extends Component {
         }
         this.comments = aux;
     }
+
+    handleComent = (e) => {
+        this.setState({
+            addComent : e
+        })
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        let url =  this.userData.idUsuario + "/comment";
+        let submit = {
+            canteudo: this.state.addComent
+        };
+        api.post(url,submit,{
+                headers:{
+                    'authorization': localStorage.getItem('token')
+                }
+            })
+        .then(response => {
+            console.log(response)
+            this.props.push('/')
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
 
     render() {
         return (
@@ -80,6 +113,15 @@ class PerfilUsuario extends Component {
                     {this.comments.length !== 0 && 
                             this.comments[0]
                     }
+                    <form onSubmit={this.handleSubmit}>
+                        <Space/>
+                        <h4>Adicionar um comentário:</h4>
+                        <InputTextArea placeholder="Adicionar um comentário..." onChange={(e) => {
+                            this.handleComent(e.target.value)
+                        }}/>
+                        <Space/>
+                        <Button type="submit">Comentar</Button>
+                    </form>
 
 
                 </main>
