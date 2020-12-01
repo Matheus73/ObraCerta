@@ -8,7 +8,7 @@ import Card from '../../components/Card';
 import CardGroup from '../../components/CardGroup';
 import GlobalStyle from './styles';
 
-import axios from 'axios';
+import api from '../../services/api';
 
 import imgPresetation from '../../assets/imgPresetation.png';
 import imgCard1 from '../../assets/VerticalCards/HomeCards/Card1.svg';
@@ -20,7 +20,7 @@ class Home extends Component {
     constructor(props) {
         super(props);
 
-        this.url = "http://localhost:3001/search?searchBar"
+        this.url = "/search?searchBar"
         this.data = {
             searchBar: '',
             categoryFilter: '',
@@ -36,15 +36,13 @@ class Home extends Component {
         if( this.data.searchBar !== ''){
             bar = '=' + this.data.searchBar;
         }
-        if(localStorage.getItem("localidade") !== "Não Definida" && localStorage.getItem("localidade") != null){
+        if(localStorage.getItem("localidade") !== "Não Definida" || localStorage.getItem("localidade") != null){
             loc += '=' + localStorage.getItem('localidade');
         }
         let url_search = this.url + bar +  loc   + '&categoryFilter';
-        console.log(url_search)
 
-        axios.get(url_search)
+        api.get(url_search)
         .then((response) => {
-            console.log(response)
             const data = response.data
             this.props.history.push('/Listagem',data);
         })
@@ -61,11 +59,9 @@ class Home extends Component {
         }
 
         let url_search = this.url + loc  + '&categoryFilter=' + categoria;
-        console.log(url_search)
 
-        axios.get(url_search)
+        api.get(url_search)
         .then((response) => {
-            console.log(response)
             const data = response.data
             this.props.history.push('/Listagem',data);
         })

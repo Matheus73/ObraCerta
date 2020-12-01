@@ -5,9 +5,8 @@ import Card from '../../components/Card';
 import Space from '../../components/Space';
 import ProfileCard from '../../components/ProfileCard';
 import CardGroup from '../../components/CardGroup';
-import axios from 'axios';
 import Navbar from '../../components/Navbar';
-
+import api from '../../services/api';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 
@@ -22,9 +21,8 @@ class PerfilUsuario extends Component {
 
             }
 
-            const url = 'http://localhost:3001/' + localStorage.getItem('idUsuario') + '/publicacoes'
-            console.log(url)
-            axios.get(url,{
+            const url = "/"+localStorage.getItem('idUsuario') + '/publicacoes'
+            api.get(url,{
                 headers:{
                     'authorization': localStorage.getItem('token')
                 }
@@ -59,9 +57,9 @@ class PerfilUsuario extends Component {
     }
 
     componentDidMount = () => {
-        const url = 'http://localhost:3001/' + localStorage.getItem('idUsuario') + '/publicacoes'
+        const url = "/"+localStorage.getItem('idUsuario') + '/publicacoes'
         console.log(url)
-        axios.get(url,{
+        api.get(url,{
             headers:{
                 'authorization': localStorage.getItem('token')
             }
@@ -118,7 +116,7 @@ class PerfilUsuario extends Component {
                         </Card>
                         <Card>
                             <p><strong>Região:</strong><br/>
-                            {localStorage.getItem("localidade") == null|| "Não definido"}</p>
+                            {localStorage.getItem("localidade") || "Não definido"}</p>
                         </Card>
                     </CardGroup>
                     { this.state.imgs.length !== 0 && 
