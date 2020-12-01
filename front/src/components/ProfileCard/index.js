@@ -29,8 +29,8 @@ function ProfileCard(props) {
                     </p>
                     :<></>
                 }
-                {props.onClick ? 
-                    <Button primary onClick={props.onClick}>Acessar perfil</Button>
+                {props.onClick ?
+                    <Button noLabel primary onClick={props.onClick}>Acessar perfil</Button>
                     :<></>
                 }
             </div>
