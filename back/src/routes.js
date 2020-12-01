@@ -7,6 +7,7 @@ const UserController = require('./controllers/UserController');
 const loginController = require('./controllers/loginController');
 const publicationController = require('./controllers/publicationController');
 const rateController = require('./controllers/rateController')
+const commentController = require('./controllers/commentController')
 
 //MIDDLEWARES
 const authServices = require('./services/authServices');
@@ -39,5 +40,8 @@ router.delete('/usuario/:idUsuario/publicacao/:idPublicacao', authServices.middl
 router.post('/:idUsuario/avaliar', authServices.middlewares, rateController.store);
 router.put('/:idUsuario/avaliar/update', authServices.middlewares, rateController.update);
 router.get('/:idUsuario/avaliar/list', rateController.list);
+
+//Rotas para comentarios
+router.put('/comment', commentController.create);
 
 module.exports = router

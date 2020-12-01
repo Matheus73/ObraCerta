@@ -5,11 +5,8 @@ exports.up = function(knex) {
     table.increments('idComentario').primary();
     table.string('conteudo', 300).notNullable();
     table.timestamp('comentarioCriadoEm').defaultTo(knex.fn.now());
-    //table.integer('idPublicacao');
     table.integer('idDono');
     table.integer('idUsuario');  
-    // table.foreign('idPublicacao').references('idPublicacao').inTable('publicacao').
-    // onUpdate('CASCADE').onDelete('CASCADE');
     table.foreign('idUsuario').references('idUsuario').inTable('usuario').
     onUpdate('CASCADE').onDelete('CASCADE');
     table.foreign('idDono').references('idUsuario').inTable('usuario').
