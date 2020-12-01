@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {SiWhatsapp} from 'react-icons/si';
 import Card from '../../components/Card';
 import Space from '../../components/Space';
 import ProfileCard from '../../components/ProfileCard';
@@ -14,13 +15,14 @@ class PerfilUsuario extends Component {
 
         this.userData = '';
         this.posts = '';
+        this.comments =[];
 
         let history = createHistory();
         let data = history.location.state;
         // console.log(data)
         this.userData = data[0][0];
         this.posts = data[1];
-        // console.log(this.userData)
+        console.log(this.userData)
         // console.log(this.posts)
 
         let imgs = []
@@ -28,8 +30,14 @@ class PerfilUsuario extends Component {
             let nomeImagem = this.posts[i].url
             imgs.push(<img src={nomeImagem} width={960} height={500} alt="Publicação"/>)
         }
-
         this.posts = imgs;
+
+        let aux = [];
+        for(let j in this.userData.comments){
+            let com = this.userData.comments[j].conteudo
+            aux.push(<ProfileCard src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pngitem.com%2Fpimgs%2Fm%2F247-2472306_admin-anonymous-person-icon-hd-png-download.png&f=1&nofb=1" title={"Anonimo" + j} description={com}/>)
+        }
+        this.comments = aux;
     }
 
     render() {
@@ -52,7 +60,11 @@ class PerfilUsuario extends Component {
                         </Card>
                         <Card>
                             <p><strong>Telefone:</strong><br/>
-                            {this.userData.telefone || "Não definido"}</p>
+                                {this.userData.telefone ? 
+                                        <a href={"https://web.whatsapp.com/send?1=pt_BR&phone=phone=55" + this.userData.telefone}>
+                                            <SiWhatsapp/> {this.userData.telefone}
+                                        </a>
+                                        :"Não definido"}</p>
                         </Card>
                         <Card>
                             <p><strong>Região:</strong><br/>
@@ -65,6 +77,11 @@ class PerfilUsuario extends Component {
                         <AliceCarousel mouseTracking items={this.posts}  infinite={true}/>
                     </div>
                     }
+                    {this.comments.length !== 0 && 
+                            this.comments[0]
+                    }
+
+
                 </main>
                 </PageDefault>
             </>
