@@ -12,6 +12,7 @@ import RecuperarSenha from '../pages/RecuperarSenha';
 import Sobre from '../pages/Sobre';
 import LinkQuebrado from '../assets/link-quebrado.svg';
 import Usuario from '../pages/Usuario';
+import EditarPerfil from '../pages/EditarPerfil';
 
 
 const Pagina404 = () => (<div>
@@ -116,6 +117,12 @@ class Routes extends Component {
                      <Route component={Pagina404}/>
 
 
+                    <Route
+                        path='/editarperfil'
+                        render={props => (
+                            <EditarPerfil {...props}/>
+                        )}
+                    />
                 </Switch>
             </BrowserRouter>
         );

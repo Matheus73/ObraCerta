@@ -7,28 +7,31 @@ import Box, { Background, Info } from './styles';
 
 /**
  * Representa um componente para troca de imagem de perfil de usuário
- * @param {object} props 
+ * @param {object} props
  * @param {string} props.src - Caminho da imagem atual de perfil
  */
 function ProfileAvatarEditor(props) {
-    const [Img, setImg] = useState(props.src);//Usada para comparação de mudança
-    const [imgFile, setImgFile] = useState(Img);//Armazena um novo upload de imagem
-    const [imgScaled, setImgScaled] = useState(null);//Armazena nova imagem cortada
-    const [scale, setScale] = useState(1);//Defini o zoom do corte da imagem
-    const imgRef = useRef(null);//Referência a imagem editada de dentro do componente AvatarEditor
+    const [Img, setImg] = useState(props.src); //Usada para comparação de mudança
+    const [imgFile, setImgFile] = useState(Img); //Armazena um novo upload de imagem
+    const [scale, setScale] = useState(1); //Defini o zoom do corte da imagem
+    const imgRef = useRef(null); //Referência a imagem editada de dentro do componente AvatarEditor
+    const [resettable, setResettable] = useState(false);
 
     function onClickSave() {
         if (imgRef) {
-            setImgScaled(imgRef.current.getImageScaledToCanvas().toDataURL());
             setImgFile(imgRef.current.getImageScaledToCanvas().toDataURL());
             setImg(imgRef.current.getImageScaledToCanvas().toDataURL());
+            props.handleNovaImagem(imgRef.current.getImageScaledToCanvas());
+            setResettable(true);
             setScale(1);
         }
     }
 
     function onClickReset() {
+        setResettable(false);
         setImgFile(props.src);
-        setImgScaled(null);
+        setImg(props.src);
+        props.handleNovaImagem('');
         setScale(1);
     }
 
@@ -38,7 +41,7 @@ function ProfileAvatarEditor(props) {
                 <Background>
                     <AvatarEditor
                         ref={imgRef}
-                        image={imgScaled || imgFile}
+                        image={imgFile}
                         width={280}
                         height={210}
                         border={0}
@@ -47,17 +50,15 @@ function ProfileAvatarEditor(props) {
                         borderRadius={25}
                     />
                 </Background>
-                {imgFile !== Img ? (
+                {imgFile !== Img && (
                     <Info>Arraste a imagem para posicionar</Info>
-                ) : (
-                    <></>
                 )}
             </div>
             <div>
                 {imgFile !== Img ? (
                     <>
                         <span>
-                            <FaSearchPlus />
+                            <FaSearchMinus />
                             <input
                                 type="range"
                                 step="0.1"
@@ -68,7 +69,7 @@ function ProfileAvatarEditor(props) {
                                 min="0.5"
                                 max="10"
                             />
-                            <FaSearchMinus />
+                            <FaSearchPlus />
                         </span>
                         <Space />
                         <span>
@@ -82,18 +83,24 @@ function ProfileAvatarEditor(props) {
                     </>
                 ) : (
                     <span>
-                        <Button second>
-                            <label>
-                                Alterar foto do perfil
-                                <input
-                                    type="file"
-                                    accept="image/png, image/jpeg"
-                                    onChange={(event) =>
-                                        setImgFile(event.target.files[0])
-                                    }
-                                />
-                            </label>
-                        </Button>
+                        {resettable ? (
+                            <Button second onClick={() => onClickReset()}>
+                                Desfazer alteração
+                            </Button>
+                        ) : (
+                            <Button second>
+                                <label>
+                                    Alterar foto do perfil
+                                    <input
+                                        type="file"
+                                        accept="image/jpeg"
+                                        onChange={(event) =>
+                                            setImgFile(event.target.files[0])
+                                        }
+                                    />
+                                </label>
+                            </Button>
+                        )}
                     </span>
                 )}
             </div>
