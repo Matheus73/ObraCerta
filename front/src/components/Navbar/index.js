@@ -4,19 +4,18 @@ import Nav from './styles';
 import Button from '../Button';
 import Item from '../Item';
 
+
 function Navbar(props){
-    function type(type){
+
+    function type(type) {
 
         if(type === 'secundary'){
             return(
                 <>
                 <div>
                     <Button second href="/editarperfil">Editar Perfil</Button>
-                    <Button second onClick={() => {
-                        localStorage.clear();
-                        props.history.push('/');
-
-                    }}> Sair</Button>
+                    <Button second href="/" onClick={() => localStorage.clear()}
+                    > Sair</Button>
                 </div>
                 </>
 
