@@ -2,7 +2,9 @@ const yup = require('yup');
 const bcrypt = require('bcryptjs');
 const knex = require('../database/index.js');
 const authServices = require('../services/authServices');
-const upload = require('../config/multer.js');
+const aws = require('aws-sdk');
+
+const s3 = new aws.S3();
 
 
 // Usar o yup para validar a entrada de dados. olhar a documentação do modulo para saber como utiliza-lo
@@ -98,18 +100,18 @@ class UserController {
           .from('usuario')
           .leftJoin('avaliacao', 'usuario.idUsuario', '=', 'avaliacao.idAvaliado')
           .where(filters).groupBy('idUsuario');
-        
+
       } catch (error) {
         return res.json({ message: "Algo deu errado na busca com filtros :( ." + error }).status(400);
       }
     }
     let noAvalUsers = []
     for (let i = userList.length - 1; i >= 0; --i) {
-      if(userList[i].notas[0] === null){
-       delete userList[i].notas
-       userList[i].numeroDeAvaliacoes = 0
-       userList[i].notaMedia = 'Sem Avaliações'
-       noAvalUsers.push(userList.splice(i, 1)[0])
+      if (userList[i].notas[0] === null) {
+        delete userList[i].notas
+        userList[i].numeroDeAvaliacoes = 0
+        userList[i].notaMedia = 'Sem Avaliações'
+        noAvalUsers.push(userList.splice(i, 1)[0])
       }
     }
 
@@ -124,21 +126,9 @@ class UserController {
         return a.notaMedia < b.notaMedia ? 1 : a.notaMedia > b.notaMedia ? -1 : 0;
       })//ordenando do mais bem avaliado do pior avaliado
     }
-    
+
     return res.json(userList.concat(noAvalUsers));
 
-    return res.json(user);
-  }
-
-  async one(req, res) {
-    const { idUsuario } = req.params;
-
-    const user = await knex.select('idUsuario', 'nomeCompleto', 'categoria', 'imagemPerfil', 'localidade', 'descricao')
-      .from('usuario').where({ idUsuario: idUsuario }).first()
-
-    if (!user) return res.status(404).json({ error: 'usuário não existe' });
-
-    return res.json(user);
   }
 
   async one(req, res) {
@@ -183,7 +173,27 @@ class UserController {
   async update(req, res, next) {
 
     try {
-      const idUsuario = req.body.idUsuario;
+      const loggedUserData = await authServices.decodeToken(req.headers.authorization);
+      const idUsuario = loggedUserData.data.idUsuario
+      if (idUsuario != Number(req.params.idUsuario)) return res.status(400).json({ error: "o usuário não pode editar as informações de outro usuário" });
+
+      var file_url = ''
+      if (Object.keys(req.files).length != 0){
+        if (process.env.MULTER_CONFIG == 'local') {
+          file_url = `${process.env.APP_URL}/files/${req.files.imagemPerfil[0].filename}`;
+        } else {
+          const url = await knex.select('imagemPerfil').from('usuario').where({ idUsuario }).first();
+          if (url.imagemPerfil) {
+            const pathSplit = url.imagemPerfil.split('/');
+            const name = pathSplit.slice(-1);
+            s3.deleteObject({
+              Bucket: 'obracertaupload',
+              Key: name[0]
+            }).promise();
+          }
+          file_url = req.files.imagemPerfil[0].location;
+        }
+      }
 
       const newUserInfo = {
         nomeCompleto: req.body.novoNomeCompleto,
@@ -191,32 +201,24 @@ class UserController {
         telefone: req.body.novoTelefone,
         descricao: req.body.novaDescricao,
         categoria: req.body.novaCategoria,
-        imagemPerfil: req.body.novaImagem
+        imagemPerfil: file_url
       }
-      if (newUserInfo.imagemPerfil != '') {
-        const uploadS3 = require('../services/s3Services.js')
-        newUserInfo.imagemPerfil = await uploadS3(newUserInfo.imagemPerfil, 'imagens-perfil', idUsuario)
-      } else {
-        delete newUserInfo[imagemPerfil]
-      }
+
       //retirando informações que não serão atualizadas
       let info;
       for (info in newUserInfo) {
-        if (newUserInfo[info] == '') {
+        if (newUserInfo[info] == '' || newUserInfo[info] == undefined) {
           delete newUserInfo[info]
         }
       }
 
+      if (Object.keys(newUserInfo).length === 0) return res.status(200).send({message: 'Nada foi editado'});
+
       await knex('usuario').update(newUserInfo).where({ idUsuario });
-
       return res.send(newUserInfo)
-
     } catch (error) {
-
       next(error);
-
     }
-
   }
 
   async updatePassword(request, response) {
@@ -243,4 +245,3 @@ class UserController {
 }
 
 module.exports = new UserController();
-
