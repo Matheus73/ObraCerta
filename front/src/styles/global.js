@@ -46,6 +46,10 @@ export default createGlobalStyle`
         font-weight: bold;
     }
 
+    label {
+        cursor: pointer;
+    }
+
     a{
         text-decoration: none;
     }
