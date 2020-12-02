@@ -1,8 +1,10 @@
 
-back/knexfile.js
+jest.config.js
 
 static/uploads/
 
-back/static/uploads/
+node_modules/
+
+static/uploads/
 
 .vscode/
