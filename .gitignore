@@ -8,3 +8,7 @@ node_modules/
 static/uploads/
 
 .vscode/
+
+.idea/
+
+.eslintrc.json
