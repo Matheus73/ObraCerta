@@ -40,6 +40,21 @@ class EditarPerfil extends Component {
         this.handleUpload = this.handleUpload.bind(this);
     }
 
+    async componentDidMount() {
+        const response = await api.get('/'+localStorage.getItem('idUsuario')+'/publicacoes');
+
+        this.setState({
+            uploadedFiles: response.data.map((file) => ({
+                id: file._id,
+                name: file.name,
+                readableSize: filesize(file.size),
+                preview: file.url,
+                uploaded: true,
+                url: file.url,
+            })),
+        });
+    }
+
     onFormSubmit(event) {
         event.preventDefault();
         const url = '/usuario/' + localStorage.getItem('idUsuario');
