@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 const Box = styled.div`
-    max-width: 200px;
+    width: 100%;
     select {
-        padding: 5px;
-        background-color: #f0ca45;
+        padding: 10px 0px;
+        background-color: #ffffff;
         font-size: 20px;
         font-weight: bold;
-        border-radius: 25px;
+        border-radius: 10px;
+        box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
     }
     
 `;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import axios from 'axios';
 import api from '../../services/api';
 import Footer from '../../components/Footer';
 import GlobalStyle from './styles';
