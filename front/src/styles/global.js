@@ -37,7 +37,7 @@ export default createGlobalStyle`
         background-size: cover;
         -webkit-font-smoothing: antialiased;
     }
-    body, a, button, input {
+    body, a, button, input, textarea {
         font: 22px Roboto, sans-serif;
     }
 
