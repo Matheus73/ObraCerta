@@ -15,9 +15,9 @@ const FileList = ({ files, onDelete }) => (
             <span>
               {uploadedFile.readableSize}{" "}
               {!!uploadedFile.url && (
-                <button onClick={() => onDelete(uploadedFile.id)}>
+                <a onClick={() => onDelete(uploadedFile.id)}>
                   Excluir
-                </button>
+                </a>
               )}
             </span>
           </div>
@@ -27,11 +27,7 @@ const FileList = ({ files, onDelete }) => (
           {!uploadedFile.uploaded &&
             !uploadedFile.error && (
               <Circle
-                styles={{
-                  root: { width: 24 },
-                  path: { stroke: "#7159c1" }
-                }}
-                strokeWidth={10}
+                strokeWidth="4" strokeColor="#D3D3D3"
                 percentage={uploadedFile.progress}
               />
             )}
@@ -46,7 +42,7 @@ const FileList = ({ files, onDelete }) => (
             </a>
           )}
 
-          {uploadedFile.uploaded && <MdCheckCircle size={24} color="#78e5d5" />}
+          {uploadedFile.uploaded && <MdCheckCircle size={24} color="green" />}
           {uploadedFile.error && <MdError size={24} color="#e57878" />}
         </div>
       </li>

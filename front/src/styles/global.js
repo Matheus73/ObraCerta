@@ -17,6 +17,7 @@ export default createGlobalStyle`
         background-color:#ECF0F1;
         border-radius: 25px;
         margin:15px 0px;
+        max-height: 500px;
         box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
         padding:10px;
 

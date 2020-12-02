@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.ul`
     margin-top: 20px;
+    width: 250px;
     li {
         display: flex;
         justify-content: space-between;
@@ -21,10 +22,10 @@ export const FileInfo = styled.div`
         span {
             font-size: 12px;
             margin-top: 5px;
-            button {
+            a {
                 border: 0;
                 background: transparent;
-                color: #e57878;
+                color: red;
                 margin-left: 5px;
                 cursor: pointer;
             }

@@ -41,18 +41,25 @@ class EditarPerfil extends Component {
     }
 
     async componentDidMount() {
-        const response = await api.get('/'+localStorage.getItem('idUsuario')+'/publicacoes');
+        const response = await api.get(
+            '/' + localStorage.getItem('idUsuario') + '/publicacoes',
+            );
+            //TODO remover console.log's
+            console.log('%cMyProject%cline:44%cresponse', 'color:#fff;background:#ee6f57;padding:3px;border-radius:2px', 'color:#fff;background:#1f3c88;padding:3px;border-radius:2px', 'color:#fff;background:rgb(131, 175, 155);padding:3px;border-radius:2px', response)
+            console.log('%cMyProject%cline:44%cresponsedata', 'color:#fff;background:#ee6f57;padding:3px;border-radius:2px', 'color:#fff;background:#1f3c88;padding:3px;border-radius:2px', 'color:#fff;background:rgb(131, 175, 155);padding:3px;border-radius:2px', response.data)
 
         this.setState({
             uploadedFiles: response.data.map((file) => ({
-                id: file._id,
+                id: file.idPublicacao,
                 name: file.name,
-                readableSize: filesize(file.size),
+                // readableSize: filesize(file.size),
                 preview: file.url,
                 uploaded: true,
                 url: file.url,
             })),
         });
+        //TODO remover console.log's
+        console.log('%cMyProject%cline:57%cthis.state.uploadedFiles', 'color:#fff;background:#ee6f57;padding:3px;border-radius:2px', 'color:#fff;background:#1f3c88;padding:3px;border-radius:2px', 'color:#fff;background:rgb(95, 92, 51);padding:3px;border-radius:2px', this.state.uploadedFiles)
     }
 
     onFormSubmit(event) {
@@ -145,74 +152,91 @@ class EditarPerfil extends Component {
         }
     }
 
-    handleUpload = files => {
-        const uploadedFiles = files.map(file => ({
-          file,
-          id: uniqueId(),
-          name: file.name,
-          readableSize: filesize(file.size),
-          preview: URL.createObjectURL(file),
-          progress: 0,
-          uploaded: false,
-          error: false,
-          url: null
+    handleUpload = (files) => {
+        const uploadedFiles = files.map((file) => ({
+            file,
+            id: uniqueId(),
+            name: file.name,
+            readableSize: filesize(file.size),
+            preview: URL.createObjectURL(file),
+            progress: 0,
+            uploaded: false,
+            error: false,
+            url: null,
         }));
-    
+
         this.setState({
-          uploadedFiles: this.state.uploadedFiles.concat(uploadedFiles)
+            uploadedFiles: this.state.uploadedFiles.concat(uploadedFiles),
         });
-    
+
         uploadedFiles.forEach(this.processUpload);
-      };
-    
-      updateFile = (id, data) => {
+    };
+
+    updateFile = (id, data) => {
         this.setState({
-          uploadedFiles: this.state.uploadedFiles.map(uploadedFile => {
-            return id === uploadedFile.id
-              ? { ...uploadedFile, ...data }
-              : uploadedFile;
-          })
+            uploadedFiles: this.state.uploadedFiles.map((uploadedFile) => {
+                return id === uploadedFile.id
+                    ? { ...uploadedFile, ...data }
+                    : uploadedFile;
+            }),
         });
-      };
-    
-      processUpload = uploadedFile => {
+    };
+
+    processUpload = (uploadedFile) => {
         const data = new FormData();
-    
-        data.append("publicacao", uploadedFile.file, uploadedFile.name);
-    
-        api
-          .post("/nova_publicacao", data, {
-            'content-type': 'multipart/form-data',
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
-            onUploadProgress: e => {
-              const progress = parseInt(Math.round((e.loaded * 100) / e.total));
-    
-              this.updateFile(uploadedFile.id, {
-                progress
-              });
-            }
-          })
-          .then(response => {
-            this.updateFile(uploadedFile.id, {
-              uploaded: true,
-              id: response.data._id,
-              url: response.data.url
+        data.append('publicacao', uploadedFile.file, uploadedFile.name);
+
+        api.post('/nova_publicacao', data, {
+            headers: {
+                'content-type': 'multipart/form-data',
+                Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
+            onUploadProgress: (e) => {
+                const progress = parseInt(
+                    Math.round((e.loaded * 100) / e.total),
+                );
+
+                this.updateFile(uploadedFile.id, {
+                    progress,
+                });
+            },
+        })
+            .then((response) => {
+                this.updateFile(uploadedFile.id, {
+                    uploaded: true,
+                    id: response.data._id,
+                    url: response.data.url,
+                });
+            })
+            .catch(() => {
+                this.updateFile(uploadedFile.id, {
+                    error: true,
+                });
             });
-          })
-          .catch(() => {
-            this.updateFile(uploadedFile.id, {
-              error: true
-            });
-          });
-      };
-    
-      handleDelete = async id => {
-        await api.delete(`/usuario/${localStorage.getItem('idUsuario')}/publicacao/:idPublicacao${id}`);
-    
+    };
+
+    handleDelete = async (id) => {
+        const url = `/usuario/${localStorage.getItem(
+            'idUsuario',
+        )}/publicacao/${id}`;
+
+        const config = {
+            headers: {
+                // 'content-type': 'multipart/form-data',
+                Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
+        };
+        //TODO remover console.log's
+        await api
+            .delete(url, config)
+            .then((response) => console.log(response))
+            .catch(error => console.log(error));
         this.setState({
-          uploadedFiles: this.state.uploadedFiles.filter(file => file.id !== id)
+            uploadedFiles: this.state.uploadedFiles.filter(
+                (file) => file.id !== id,
+            ),
         });
-      };
+    };
 
     render() {
         return (
@@ -245,7 +269,7 @@ class EditarPerfil extends Component {
                                 name="telefone"
                                 alwaysShowMask="true"
                                 mask="(99) 99999-9999"
-                                value={localStorage.getItem('telefone')}
+                                defaultValue={localStorage.getItem('telefone')}
                                 onChange={(e) =>
                                     this.handleNovoTelefone(e.target.value)
                                 }
