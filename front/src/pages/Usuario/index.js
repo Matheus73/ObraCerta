@@ -17,7 +17,8 @@ class PerfilUsuario extends Component {
         super(props);
 
         this.state = {
-            addComent : ''
+            addComent : '',
+            // comments: []
         }
         this.userData = '';
         this.posts = '';
@@ -42,8 +43,13 @@ class PerfilUsuario extends Component {
         for(let j in this.userData.comments){
             let com = this.userData.comments[j].conteudo
             aux.push(<ProfileCard src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pngitem.com%2Fpimgs%2Fm%2F247-2472306_admin-anonymous-person-icon-hd-png-download.png&f=1&nofb=1" title={"Anonimo" + j} description={com}/>)
+            aux.push(<Space/>)
         }
         this.comments = aux;
+        // this.setState({
+        //     comments: aux
+        // })
+        // console.log(this.state.comments)
     }
 
     handleComent = (e) => {
@@ -56,7 +62,7 @@ class PerfilUsuario extends Component {
         e.preventDefault();
         let url =  "/" + this.userData.idUsuario + "/comentar";
         let submit = {
-            conteudo: this.state.addComent
+        conteudo: this.state.addComent
         };
         api.put(url,submit,{
                 headers:{
@@ -65,7 +71,24 @@ class PerfilUsuario extends Component {
             })
         .then(response => {
             console.log(response)
-            this.props.push('/')
+            // this.setState({
+            //     comments: this.state.comments.push(this.state.addComent)
+            // })
+            // console.log(this.state.comments)
+            // api.get('/perfil/' + this.userData.idUsuario)
+            // .then((response) => {
+                // let aux1 = [];
+                // let userData = response.data
+                // aux1.push(userData)
+                // aux1.push(this.posts)
+                // this.props.history.push("/Usuario",aux1)
+                // window.location.reload();
+            // })
+            alert("Comentario adicionado com sucesso!")
+            this.props.history.push("/")
+            .catch((error) => {
+                console.log(error)
+            });
         })
         .catch(error => {
             console.log(error)
@@ -110,9 +133,7 @@ class PerfilUsuario extends Component {
                         <AliceCarousel mouseTracking items={this.posts}  infinite={true}/>
                     </div>
                     }
-                    {this.comments.length !== 0 &&
-                            this.comments[0]
-                    }
+                    {this.comments.length !== 0 && this.comments }
                     <form onSubmit={this.handleSubmit}>
                         <Space/>
                         <h4>Adicionar um comentário:</h4>
