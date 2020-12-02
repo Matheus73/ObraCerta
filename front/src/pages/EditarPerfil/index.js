@@ -10,6 +10,7 @@ import { uniqueId } from 'loadsh';
 import filesize from 'filesize';
 import api from '../../services/api';
 import InputSelect from '../../components/InputSelect';
+import Input2Mask from '../../components/InputMask';
 
 class EditarPerfil extends Component {
     constructor(props) {
@@ -35,6 +36,7 @@ class EditarPerfil extends Component {
         this.handleNovaPublicacao = this.handleNovaPublicacao.bind(this);
         this.handleNovaCategoria = this.handleNovaCategoria.bind(this);
         this.handleNovaLocalidade = this.handleNovaLocalidade.bind(this);
+        this.handleNovoTelefone = this.handleNovoTelefone.bind(this);
     }
 
     onFormSubmit(event) {
@@ -49,12 +51,12 @@ class EditarPerfil extends Component {
         };
 
         const userData = new FormData();
-            userData.append('nomeCompleto', this.state.novoNomeCompleto);
-            userData.append('email', this.state.novoEmail);
-            userData.append('telefone', this.state.novoTelefone);
-            userData.append('descricao', this.state.novaDescricao);
-            userData.append('categoria', this.state.novaCategoria);
-            userData.append('localidade', this.state.novaLocalidade);
+        userData.append('nomeCompleto', this.state.novoNomeCompleto);
+        userData.append('email', this.state.novoEmail);
+        userData.append('telefone', this.state.novoTelefone);
+        userData.append('descricao', this.state.novaDescricao);
+        userData.append('categoria', this.state.novaCategoria);
+        userData.append('localidade', this.state.novaLocalidade);
         if (this.state.novaImagem !== '')
             userData.append('imagemPerfil', this.state.novaImagem, '.jpeg');
 
@@ -69,14 +71,26 @@ class EditarPerfil extends Component {
                 if (this.state.novaDescricao !== '')
                     localStorage.setItem('descricao', this.state.novaDescricao);
                 if (this.state.novaLocalidade !== '')
-                    localStorage.setItem('localidade', this.state.novaLocalidade);
+                    localStorage.setItem(
+                        'localidade',
+                        this.state.novaLocalidade,
+                    );
                 if (this.state.novaImagem !== '')
-                    localStorage.setItem('imagemPerfil', this.state.uploadedNovaImagem);
+                    localStorage.setItem(
+                        'imagemPerfil',
+                        this.state.uploadedNovaImagem,
+                    );
                 this.props.history.push('/');
             })
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    handleNovoTelefone(telefone) {
+        this.setState({
+            novoTelefone: telefone,
+        });
     }
 
     handleNovaLocalidade(localidade) {
@@ -135,14 +149,11 @@ class EditarPerfil extends Component {
         });
     }
 
-    uploadProcess(files, config) {
+    uploadProcess(files) {
         const url = '';
         const data = new FormData();
-        // files.map( file => ({
-        //     data.append('file', file.file)
-        // }));
 
-        api.put(url, data, config)
+        api.put(url, data)
             .then((response) => {
                 console.log(response);
             })
@@ -158,7 +169,7 @@ class EditarPerfil extends Component {
                     <GlobalStyle />
                     <form onSubmit={this.onFormSubmit}>
                         <h1>Alterar perfil</h1>
-                        <Button type="submit">Salvar</Button>
+                        <Button type="submit">Salvar perfil</Button>
                         <Space />
                         <ProfileAvatarEditor
                             handleNovaImagem={this.handleNovaImagem}
@@ -166,6 +177,7 @@ class EditarPerfil extends Component {
                         />
                         <Space />
                         <InputTextArea
+                            maxlength="300"
                             defaultValue={localStorage.getItem('descricao')}
                             placeholder="Descreva você e seu trabalho aqui"
                             onChange={(e) =>
@@ -173,17 +185,32 @@ class EditarPerfil extends Component {
                             }
                         />
                         <Space />
-                        <InputSelect label="Profissão:" onChange={e => this.handleNovaCategoria(e.target.value)}>
-                            <option value="Não definido"></option>
-                            <option value="Pedreiro">Pedreiro</option>
-                            <option value="Marceneiro">Marceneiro</option>
-                            <option value="Encanador">Encanador</option>
-                            <option value="Pintor">Pintor</option>
-                            <option value="Serralheiro">Serralheiro</option>
-                            <option value="Eletricista">Eletricista</option>
-                        </InputSelect>
-                        <InputSelect label="Localidade:" onChange={e => this.handleNovaLocalidade(e.target.value)}>
-                            <option value="Não definido"></option>
+                        <label>
+                            Telefone:
+                            <Input2Mask
+                                type="text"
+                                id="telefone"
+                                name="telefone"
+                                alwaysShowMask="true"
+                                mask="(99) 99999-9999"
+                                value={localStorage.getItem('telefone')}
+                                onChange={(e) =>
+                                    this.handleNovoTelefone(e.target.value)
+                                }
+                            />
+                        </label>
+                        <Space />
+                        <InputSelect
+                            label={'Região: '}
+                            onChange={(e) =>
+                                this.handleNovaLocalidade(e.target.value)
+                            }
+                        >
+                            {this.state.novaLocalidade === '' && (
+                                <option value="">
+                                    {localStorage.getItem('localidade')}
+                                </option>
+                            )}
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
                             <option value="AP">Amapá</option>
@@ -213,12 +240,34 @@ class EditarPerfil extends Component {
                             <option value="TO">Tocantins</option>
                         </InputSelect>
                         <Space />
+                        <InputSelect
+                            label={'Profissão:'}
+                            onChange={(e) =>
+                                this.handleNovaCategoria(e.target.value)
+                            }
+                        >
+                            {this.state.novaCategoria === '' && (
+                                <option value="">
+                                    {localStorage.getItem('categoria')}
+                                </option>
+                            )}
+                            <option value="Pedreiro">Pedreiro</option>
+                            <option value="Marceneiro">Marceneiro</option>
+                            <option value="Encanador">Encanador</option>
+                            <option value="Pintor">Pintor</option>
+                            <option value="Serralheiro">Serralheiro</option>
+                            <option value="Eletricista">Eletricista</option>
+                        </InputSelect>
+                        <Space />
+                    </form>
+                    <form>
                         <InputDropFile
                             handleNovaPublicacao={this.handleNovaPublicacao}
                         />
+                        <Space/>
                     </form>
                 </main>
-                <Footer />
+                <Footer orange />
             </>
         );
     }

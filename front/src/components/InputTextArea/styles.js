@@ -7,6 +7,7 @@ const Box = styled.div`
     box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
     
     textarea {
+        height: 120px;
         ${props => !props.resize && css`resize: none;`};
         width: 100%;
         border-radius: 25px;
