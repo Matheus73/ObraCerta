@@ -45,6 +45,12 @@ class Listagem extends Component {
             <>
             <PageDefault>
             <h1>Busca por profissionais...</h1>
+            {this.data.length === 0 && 
+                <>
+                    <Space/>
+                    <h1>Não encontrado nenhum profissional</h1>
+                </>
+            }
             {this.data.map(data => (
                 <>
                     <ProfileCard
