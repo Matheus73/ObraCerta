@@ -42,7 +42,7 @@ router.put('/:idUsuario/avaliar/update', authServices.middlewares, rateControlle
 router.get('/:idUsuario/avaliar/list', rateController.list);
 
 //Rotas para comentarios
-router.put(':idUsuario/comment',  authServices.middlewares, commentController.create);
-router.get('/comment/:idUsuario', commentController.list)
+router.put('/:idUsuario/comentar',  authServices.middlewares, commentController.create);
+router.get('/comentarios/:idUsuario', commentController.list)
 
 module.exports = router

@@ -54,11 +54,11 @@ class PerfilUsuario extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        let url =  this.userData.idUsuario + "/comment";
+        let url =  "/" + this.userData.idUsuario + "/comentar";
         let submit = {
-            canteudo: this.state.addComent
+            conteudo: this.state.addComent
         };
-        api.post(url,submit,{
+        api.put(url,submit,{
                 headers:{
                     'authorization': localStorage.getItem('token')
                 }
@@ -93,7 +93,7 @@ class PerfilUsuario extends Component {
                         </Card>
                         <Card>
                             <p><strong>Telefone:</strong><br/>
-                                {this.userData.telefone ? 
+                                {this.userData.telefone ?
                                         <a href={"https://web.whatsapp.com/send?1=pt_BR&phone=phone=55" + this.userData.telefone}>
                                             <SiWhatsapp/> {this.userData.telefone}
                                         </a>
@@ -104,13 +104,13 @@ class PerfilUsuario extends Component {
                             {this.userData.localidade || "Não definido"}</p>
                         </Card>
                     </CardGroup>
-                    {this.posts.length !== 0 && 
+                    {this.posts.length !== 0 &&
                     <div id="carrossel">
                         <h2>Publicações</h2>
                         <AliceCarousel mouseTracking items={this.posts}  infinite={true}/>
                     </div>
                     }
-                    {this.comments.length !== 0 && 
+                    {this.comments.length !== 0 &&
                             this.comments[0]
                     }
                     <form onSubmit={this.handleSubmit}>
