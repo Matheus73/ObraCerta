@@ -11,6 +11,8 @@ const Box = styled.div`
     img {
         width: 35%;
         border-radius: 25px 0px 0px 25px;
+        width: ${props => !props.small ? "280px" : "100px" };
+        height: ${props => !props.small ? "210px" : "100px" };
     }
 
     div {

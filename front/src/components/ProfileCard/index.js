@@ -18,7 +18,7 @@ import Box from './styles';
  */
 function ProfileCard(props) {
     return(
-        <Box>
+        <Box {...props}>
             <img alt="" src={props.src} />
             <div>
                 <strong>{props.title}</strong>
