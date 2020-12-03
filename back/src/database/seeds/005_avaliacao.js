@@ -4,23 +4,22 @@ exports.seed = function(knex) {
   return knex('avaliacao').del()
     .then(function () {
       // Inserts seed entries
-      return knex('avaliacao').insert([
-        {
-          nota: '4',
-          idAvaliador: '1',
-          idAvaliado:'4'
-        },
-        {
-          nota: '5',
-          idAvaliador: '2',
-          idAvaliado:'1'
-        },
-        {
-          nota: '0',
-          idAvaliador: '6',
-          idAvaliado:'2'
-        },
-       
-      ]);
+      const numberOfeval = 100
+      const evals = []
+      const notas = [0, 1, 2, 3, 4, 5]
+      const validpairs = []
+      let pair = ''
+      while(validpairs.length<100){
+        pair = {
+          nota: notas[Math.floor(Math.random() * notas.length)],
+          idAvaliador: (Math.floor(Math.random() * 500) + 1),
+          idAvaliado: (Math.floor(Math.random() * 500) + 1)
+        }
+        if(!validpairs.some(vp => vp.idAvaliador === pair.idAvaliador && vp.idAvaliado === pair.idAvaliado || pair.idAvaliado == pair.idAvaliador)){
+          validpairs.push(pair)
+        }
+      }
+      
+      return knex('avaliacao').insert(validpairs);
     });
 };

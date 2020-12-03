@@ -4,17 +4,16 @@ exports.seed = function(knex) {
   return knex('comentario').del()
     .then(function () {
       // Inserts seed entries
-      return knex('comentario').insert([
-        {
-          conteudo: 'conteudo do comentario...',
-          idPublicacao: '1',
-          idUsuario: '3'
-        },
-        {
-          conteudo: 'conteudo do comentario...',
-          idPublicacao: '1',
-          idUsuario: '2'
-        },
-      ]);
+      const numberOfComments = 400
+      const comments = []
+      const comentarios = ["Muito bom, recomendo.", "Trabalha muito bem.", "Não gostei muito do trabalho que ele prestou pra mim.", "Super pontual e organizado."]
+      for (let index = 1; index <= numberOfComments; index++) {
+        comments.push({
+          conteudo: comentarios[Math.floor(Math.random() * comentarios.length)],
+          idDono: (Math.floor(Math.random() * 300) + 1),
+          idUsuario: (Math.floor(Math.random() * 500) + 1)
+        });
+      }
+      return knex('comentario').insert(comments);
     });
 };

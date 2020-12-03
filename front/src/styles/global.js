@@ -1,5 +1,5 @@
-import {createGlobalStyle} from 'styled-components';
-import trianguloBackground2 from '../assets/triangulobackground2.svg';
+import { createGlobalStyle } from 'styled-components';
+import trianguloBackground from '../assets/triangulobackground.svg';
 
 export default createGlobalStyle`
     *{
@@ -13,24 +13,57 @@ export default createGlobalStyle`
         margin: 0 auto;
         padding: 0px 15px;
     }
-    #content{
-        min-height: 100vh;
+
+    #carrossel{
+        background-color:#ECF0F1;
+        border-radius: 25px;
+        margin:15px 0px;
+        box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+        padding:10px;
+        text-align: center;
+
+        .alice-carousel__dots-item {
+            background-color: #14d0ae;
+            width: 20px;
+            height: 20px;
+        }
+
+        .alice-carousel__dots-item.__active {
+            background-color: #f0ca45;
+        }
+
+        .__active {
+            background-color: grey;
+        }
+
+        span {
+            display: none;
+        }
+
+        img {
+            width: auto;
+            height: 500px;
+        }
+
+        h2{
+            text-align: center;
+            padding-bottom: 10px;
+        }
+    }
+    main {
+        min-height: calc(100vh - 150px); //Altura total - Footer
         margin: auto;
         max-width: 970px;
     }
     body {
         height: 100%;
         overflow-x: hidden;
-        background:#FFFFFF url(${trianguloBackground2}) no-repeat center;
+        background:#FFFFFF url(${trianguloBackground}) no-repeat center;
         background-size: cover;
         -webkit-font-smoothing: antialiased;
     }
-    body, a, button, input {
+    body, a, button, input, textarea {
         font: 22px Roboto, sans-serif;
-        
-        @media screen and (max-width: 370px){
-            font-size: 16px;
-        }
     }
 
     a, button {
@@ -38,8 +71,17 @@ export default createGlobalStyle`
         font-weight: bold;
     }
 
+    label {
+        cursor: pointer;
+    }
+
     a{
         text-decoration: none;
+    }
+
+    form {
+        margin: auto;
+        width: 500px;
     }
 
     table {
