@@ -13,14 +13,13 @@ export default createGlobalStyle`
         margin: 0 auto;
         padding: 0px 15px;
     }
+
     #carrossel{
         background-color:#ECF0F1;
         border-radius: 25px;
         margin:15px 0px;
-        max-height: 500px;
         box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
         padding:10px;
-
         text-align: center;
 
         span {

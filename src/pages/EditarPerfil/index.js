@@ -322,6 +322,7 @@ class EditarPerfil extends Component {
                                     {localStorage.getItem('categoria')}
                                 </option>
                             )}
+                            <option value="Não Definida">Não Definir</option>
                             <option value="Pedreiro">Pedreiro</option>
                             <option value="Marceneiro">Marceneiro</option>
                             <option value="Encanador">Encanador</option>
