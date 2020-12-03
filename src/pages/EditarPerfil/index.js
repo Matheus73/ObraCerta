@@ -11,6 +11,7 @@ import filesize from 'filesize';
 import api from '../../services/api';
 import InputSelect from '../../components/InputSelect';
 import Input2Mask from '../../components/InputMask';
+import FileList from '../../components/FileList';
 
 class EditarPerfil extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class EditarPerfil extends Component {
             novaDescricao: '',
             novaCategoria: '',
             novaLocalidade: '',
-            uploadedPublicacoes: [],
+            uploadedFiles: [],
             uploadedNovaImagem: '',
         };
 
@@ -33,10 +34,27 @@ class EditarPerfil extends Component {
         this.handleNovaDescricao = this.handleNovaDescricao.bind(this);
         this.handleNovaImagem = this.handleNovaImagem.bind(this);
         this.handleNovaDescricao = this.handleNovaDescricao.bind(this);
-        this.handleNovaPublicacao = this.handleNovaPublicacao.bind(this);
         this.handleNovaCategoria = this.handleNovaCategoria.bind(this);
         this.handleNovaLocalidade = this.handleNovaLocalidade.bind(this);
         this.handleNovoTelefone = this.handleNovoTelefone.bind(this);
+        this.handleUpload = this.handleUpload.bind(this);
+    }
+
+    async componentDidMount() {
+        const response = await api.get(
+            '/' + localStorage.getItem('idUsuario') + '/publicacoes',
+            );
+
+        this.setState({
+            uploadedFiles: response.data.map((file) => ({
+                id: file.idPublicacao,
+                name: file.name,
+                // readableSize: filesize(file.size),
+                preview: file.url,
+                uploaded: true,
+                url: file.url,
+            })),
+        });
     }
 
     onFormSubmit(event) {
@@ -129,38 +147,91 @@ class EditarPerfil extends Component {
         }
     }
 
-    handleNovaPublicacao(images) {
-        const uploadedImages = images.map((file) => ({
+    handleUpload = (files) => {
+        const uploadedFiles = files.map((file) => ({
             file,
             id: uniqueId(),
             name: file.name,
-            readbleSize: filesize(file.size),
+            readableSize: filesize(file.size),
             preview: URL.createObjectURL(file),
-            progress: '0',
+            progress: 0,
             uploaded: false,
             error: false,
             url: null,
         }));
 
         this.setState({
-            uploadedPublicacoes: this.state.uploadedPublicacoes.concat(
-                uploadedImages,
-            ),
+            uploadedFiles: this.state.uploadedFiles.concat(uploadedFiles),
         });
-    }
 
-    uploadProcess(files) {
-        const url = '';
+        uploadedFiles.forEach(this.processUpload);
+    };
+
+    updateFile = (id, data) => {
+        this.setState({
+            uploadedFiles: this.state.uploadedFiles.map((uploadedFile) => {
+                return id === uploadedFile.id
+                    ? { ...uploadedFile, ...data }
+                    : uploadedFile;
+            }),
+        });
+    };
+
+    processUpload = (uploadedFile) => {
         const data = new FormData();
+        data.append('publicacao', uploadedFile.file, uploadedFile.name);
 
-        api.put(url, data)
+        api.post('/nova_publicacao', data, {
+            headers: {
+                'content-type': 'multipart/form-data',
+                Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
+            onUploadProgress: (e) => {
+                const progress = parseInt(
+                    Math.round((e.loaded * 100) / e.total),
+                );
+
+                this.updateFile(uploadedFile.id, {
+                    progress,
+                });
+            },
+        })
             .then((response) => {
-                console.log(response);
+                this.updateFile(uploadedFile.id, {
+                    uploaded: true,
+                    id: response.data._id,
+                    url: response.data.url,
+                });
             })
-            .catch((error) => {
-                console.log(error);
+            .catch(() => {
+                this.updateFile(uploadedFile.id, {
+                    error: true,
+                });
             });
-    }
+    };
+
+    handleDelete = async (id) => {
+        const url = `/usuario/${localStorage.getItem(
+            'idUsuario',
+        )}/publicacao/${id}`;
+
+        const config = {
+            headers: {
+                // 'content-type': 'multipart/form-data',
+                Authorization: 'Bearer ' + localStorage.getItem('token'),
+            }
+        };
+        await api
+            .delete(url, config)
+            .then(
+                this.setState({
+                uploadedFiles: this.state.uploadedFiles.filter(
+                    (file) => file.id !== id,
+                ),
+            }))
+            .catch(error => console.log(error));
+        
+    };
 
     render() {
         return (
@@ -177,7 +248,7 @@ class EditarPerfil extends Component {
                         />
                         <Space />
                         <InputTextArea
-                            maxlength="300"
+                            maxLength="300"
                             defaultValue={localStorage.getItem('descricao')}
                             placeholder="Descreva você e seu trabalho aqui"
                             onChange={(e) =>
@@ -193,7 +264,7 @@ class EditarPerfil extends Component {
                                 name="telefone"
                                 alwaysShowMask="true"
                                 mask="(99) 99999-9999"
-                                value={localStorage.getItem('telefone')}
+                                defaultValue={localStorage.getItem('telefone')}
                                 onChange={(e) =>
                                     this.handleNovoTelefone(e.target.value)
                                 }
@@ -262,9 +333,13 @@ class EditarPerfil extends Component {
                     </form>
                     <form>
                         <InputDropFile
-                            handleNovaPublicacao={this.handleNovaPublicacao}
+                            handleNovaPublicacao={this.handleUpload}
                         />
-                        <Space/>
+                        <Space />
+                        <FileList
+                            files={this.state.uploadedFiles}
+                            onDelete={this.handleDelete}
+                        />
                     </form>
                 </main>
                 <Footer orange />

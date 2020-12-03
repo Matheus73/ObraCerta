@@ -1,9 +1,5 @@
-# Projeto do front
+# Obracerta - front-end
 
-# Integrantes
-    * Matheus Gabriel Alves Rodrigues
-    * Roberto da Nobrega
-    * Igor Queiroz
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

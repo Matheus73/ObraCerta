@@ -42,8 +42,8 @@ class PerfilUsuario extends Component {
         let aux = [];
         for(let j in this.userData.comments){
             let com = this.userData.comments[j].conteudo
-            aux.push(<ProfileCard src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pngitem.com%2Fpimgs%2Fm%2F247-2472306_admin-anonymous-person-icon-hd-png-download.png&f=1&nofb=1" title={"Anonimo" + j} description={com}/>)
             aux.push(<Space/>)
+            aux.push(<ProfileCard small src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pngitem.com%2Fpimgs%2Fm%2F247-2472306_admin-anonymous-person-icon-hd-png-download.png&f=1&nofb=1" title={"Anonimo" + j} description={com}/>)
         }
         this.comments = aux;
         // this.setState({
@@ -70,19 +70,19 @@ class PerfilUsuario extends Component {
                 }
             })
         .then(response => {
-            console.log(response)
+            // console.log(response)
             // this.setState({
             //     comments: this.state.comments.push(this.state.addComent)
             // })
             // console.log(this.state.comments)
             // api.get('/perfil/' + this.userData.idUsuario)
             // .then((response) => {
-                // let aux1 = [];
-                // let userData = response.data
-                // aux1.push(userData)
-                // aux1.push(this.posts)
-                // this.props.history.push("/Usuario",aux1)
-                // window.location.reload();
+            //     let aux1 = [];
+            //     let userData = response.data
+            //     aux1.push(userData)
+            //     aux1.push(this.posts)
+            //     this.props.history.push("/Usuario",aux1)
+            //     window.location.reload();
             // })
             alert("Comentario adicionado com sucesso!")
             this.props.history.push("/")
