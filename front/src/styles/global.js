@@ -1,4 +1,4 @@
-import {createGlobalStyle} from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import trianguloBackground from '../assets/triangulobackground.svg';
 
 export default createGlobalStyle`
@@ -21,6 +21,20 @@ export default createGlobalStyle`
         box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
         padding:10px;
         text-align: center;
+
+        .alice-carousel__dots-item {
+            background-color: #14d0ae;
+            width: 20px;
+            height: 20px;
+        }
+
+        .alice-carousel__dots-item.__active {
+            background-color: #f0ca45;
+        }
+
+        .__active {
+            background-color: grey;
+        }
 
         span {
             display: none;
