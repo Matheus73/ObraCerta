@@ -44,9 +44,6 @@ class EditarPerfil extends Component {
         const response = await api.get(
             '/' + localStorage.getItem('idUsuario') + '/publicacoes',
             );
-            //TODO remover console.log's
-            console.log('%cMyProject%cline:44%cresponse', 'color:#fff;background:#ee6f57;padding:3px;border-radius:2px', 'color:#fff;background:#1f3c88;padding:3px;border-radius:2px', 'color:#fff;background:rgb(131, 175, 155);padding:3px;border-radius:2px', response)
-            console.log('%cMyProject%cline:44%cresponsedata', 'color:#fff;background:#ee6f57;padding:3px;border-radius:2px', 'color:#fff;background:#1f3c88;padding:3px;border-radius:2px', 'color:#fff;background:rgb(131, 175, 155);padding:3px;border-radius:2px', response.data)
 
         this.setState({
             uploadedFiles: response.data.map((file) => ({
@@ -58,8 +55,6 @@ class EditarPerfil extends Component {
                 url: file.url,
             })),
         });
-        //TODO remover console.log's
-        console.log('%cMyProject%cline:57%cthis.state.uploadedFiles', 'color:#fff;background:#ee6f57;padding:3px;border-radius:2px', 'color:#fff;background:#1f3c88;padding:3px;border-radius:2px', 'color:#fff;background:rgb(95, 92, 51);padding:3px;border-radius:2px', this.state.uploadedFiles)
     }
 
     onFormSubmit(event) {
@@ -224,18 +219,18 @@ class EditarPerfil extends Component {
             headers: {
                 // 'content-type': 'multipart/form-data',
                 Authorization: 'Bearer ' + localStorage.getItem('token'),
-            },
+            }
         };
-        //TODO remover console.log's
         await api
             .delete(url, config)
-            .then((response) => console.log(response))
+            .then(
+                this.setState({
+                uploadedFiles: this.state.uploadedFiles.filter(
+                    (file) => file.id !== id,
+                ),
+            }))
             .catch(error => console.log(error));
-        this.setState({
-            uploadedFiles: this.state.uploadedFiles.filter(
-                (file) => file.id !== id,
-            ),
-        });
+        
     };
 
     render() {
