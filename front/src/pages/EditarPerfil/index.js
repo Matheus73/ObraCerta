@@ -248,7 +248,7 @@ class EditarPerfil extends Component {
                         />
                         <Space />
                         <InputTextArea
-                            maxLength="300"
+                            maxLength="220"
                             defaultValue={localStorage.getItem('descricao')}
                             placeholder="Descreva você e seu trabalho aqui"
                             onChange={(e) =>
