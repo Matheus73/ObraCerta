@@ -21,6 +21,17 @@ export default createGlobalStyle`
         box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
         padding:10px;
 
+        text-align: center;
+
+        span {
+            display: none;
+        }
+
+        img {
+            width: auto;
+            height: 500px;
+        }
+
         h2{
             text-align: center;
             padding-bottom: 10px;
