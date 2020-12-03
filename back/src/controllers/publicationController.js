@@ -58,6 +58,8 @@ class publicationController {
   async delete(req, res, next){
     
     const { idUsuario, idPublicacao} = req.params;
+    const userData =  await authServices.decodeToken(req.headers.authorization);
+    req.body['idUsuario'] = userData.data.idUsuario;
 
     if(idUsuario != req.body.idUsuario) return res.status(400).send({error: "Você nao pode apagar publicações que não são suas"});
 
