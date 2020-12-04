@@ -24,8 +24,8 @@ function ProfileCard(props) {
                 <strong>{props.title}</strong>
                 {props.description ?
                     <p>
-                        {props.description.slice(0, 100)}
-                        {props.description.length > 150 ? "..." : ""}
+                        {props.description.slice(0, 220)}
+                        {props.description.length > 220 ? "..." : ""}
                     </p>
                     :<></>
                 }

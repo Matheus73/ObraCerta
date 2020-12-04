@@ -16,6 +16,7 @@ function Navbar(props){
                     <Button second href="/editarperfil">Editar Perfil</Button>
                     <Button second href="/" onClick={() => localStorage.clear()}
                     > Sair</Button>
+                    <Button second href="/Delete">Deletar Usuário</Button>
                 </div>
                 </>
 

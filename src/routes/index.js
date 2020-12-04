@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Home from '../pages/Home';
 import Cadastro from '../pages/Cadastro';
+import Delete from '../pages/Delete';
 import Login from '../pages/Login';
 import Listagem from '../pages/Listagem';
 
@@ -63,6 +64,12 @@ class Routes extends Component {
                         exact path="/Listagem"
                         render={props => (
                             <Listagem {...props} loggedIn={this.state.loggedIn} />
+                        )}
+                    />
+                    <Route
+                        exact path="/Delete"
+                        render={props => (
+                            <Delete {...props} loggedIn={this.state.loggedIn} />
                         )}
                     />
                     <Route
