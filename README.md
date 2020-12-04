@@ -26,6 +26,7 @@ Para acessar o ambiente de produção, utilize o link a seguir:
 # Configurando Ambiente de Desenvolvimento
 Abaixo temos instruções de como configurar o ambiente de forma rápida.
 
+#### 0. Instale a versão 12.19.0 do node.js 
 #### 1. Clone esse repositório
 #### 2. Entre na pasta do Obra Certa
 #### 3. Entre na pasta front
@@ -34,6 +35,12 @@ Abaixo temos instruções de como configurar o ambiente de forma rápida.
 ``` 
 yarn install
 yarn start
+```
+### ou 
+
+``` 
+npm install
+npm run start
 ```
 
 #### 5. Abra outro terminal e volte uma pasta
@@ -46,7 +53,7 @@ npm install
 #### 8. Com o banco de dados já instalado crie o arquivo com nome .env e as seguintes configurações nele (exemplo utilizando postgreSQL): 
 
 ``` 
-DB_DATABASE = obracerta
+DB_DATABASE = databasename
 DB_CLIENT= postgresql
 DB_USER= <usuario>
 DB_PASSWORD = <senha>
