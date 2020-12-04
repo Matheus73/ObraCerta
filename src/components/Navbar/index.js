@@ -29,7 +29,7 @@ function Navbar(props){
                     {localStorage.getItem('loggedIn') !== "LOGGED_IN" ?
                             <>
                             <Item white href="/login">Entrar</Item>
-                            <Button second href="/cadastro">CADASTRA-SE</Button>
+                            <Button second href="/cadastro">CADASTRE-SE</Button>
                             </>
                             :
                             <Button second href="/PerfilUsuario">Meu perfil</Button>

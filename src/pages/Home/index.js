@@ -93,7 +93,7 @@ class Home extends Component {
                         <Button onClick={() => this.handleCategory("Serralheiro")}>Serralheiro</Button>
                         <Button onClick={() => this.handleCategory("Pintor")}>Pintor</Button>
                         <Button onClick={() => this.handleCategory("Eletricista")}>Eletricista</Button>
-                        <Button onClick={() => this.handleCategory("Marceneiro")}>Macerneiro</Button>
+                        <Button onClick={() => this.handleCategory("Marceneiro")}>Marceneiro</Button>
                         <Button onClick={() => this.handleCategory("Encanador")}>Encanador</Button>
                     </CardGroup>
 
